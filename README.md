@@ -69,7 +69,7 @@ const slider = new KeenSlider('#my-keen-slider', options_and_events)
   <head>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/keen-slider/css/keen-slider.min.css"
+      href="https://cdn.jsdelivr.net/npm/keen-slider/dist/keen-slider.min.css"
     />
   </head>
   <body>
@@ -81,7 +81,7 @@ const slider = new KeenSlider('#my-keen-slider', options_and_events)
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/keen-slider/js/keen-slider.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/keen-slider/dist/keen-slider.min.js"></script>
     <script>
       new KeenSlider('#my-keen-slider')
     </script>
