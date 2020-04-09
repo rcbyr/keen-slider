@@ -4,7 +4,7 @@ The HTML touch slider carousel with the most native feeling you will get.
 
 Features:
 
-- only 5KB (2KB gzipped)
+- only 6.5 KB (2.5 KB gzipped)
 - works great and the same, on all devices and browsers (>= IE10)
 - no dependencies
 - typescript compatible
