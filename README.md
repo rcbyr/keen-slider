@@ -26,7 +26,7 @@ $ npm install --save keen-slider
   <head>
     <link
       rel="stylesheet"
-      href="path/node_modules/keen-slider/dist/css/keen-slider.min.css"
+      href="path/node_modules/keen-slider/dist/keen-slider.min.css"
     />
   </head>
   <body>
@@ -38,7 +38,7 @@ $ npm install --save keen-slider
       </div>
     </div>
 
-    <script src="path/node_modules/keen-slider/dist/css/keen-slider.min.js"></script>
+    <script src="path/node_modules/keen-slider/dist/keen-slider.min.js"></script>
     <script>
       new KeenSlider('#my-keen-slider')
     </script>
