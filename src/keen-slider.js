@@ -428,4 +428,4 @@ if (!Math.sign) {
   }
 }
 
-export default KeenSlider
+module.exports = KeenSlider
