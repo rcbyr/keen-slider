@@ -36,7 +36,7 @@
   "bugs": {
     "url": "https://github.com/rcbyr/keen-slider/issues"
   },
-  "homepage": "https://rcbyr.github.io/fluid-slider",
+  "homepage": "https://rcbyr.github.io/keen-slider/",
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
