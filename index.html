@@ -1,62 +1,98 @@
 <!DOCTYPE html>
 <html lang="en-US">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>
-      keen-slider - the HTML touch slider carousel with the most native feeling
-      you will get.
-    </title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://kit.fontawesome.com/cf394d5804.js"
-      crossorigin="anonymous"
-    ></script>
-  </head>
 
-  <body>
-    <section class="my-5 text-center bg-white">
-      <div class="container">
-        <h1>keen-slider</h1>
-        <p class="lead text-muted">
-          the HTML touch slider carousel with the most native feeling you will
-          get.
-        </p>
-        <div class="links">
-          <a
-            href="https://github.com/rcbyr/keen-slider"
-            style="background: #28a745"
-            class="btn text-white"
-            >Github</a
-          >
-          <a href="#examples" class="btn btn-primary">Examples</a>
-          <a
-            href="https://github.com/rcbyr/keen-slider#getting-started"
-            class="btn btn-outline-primary "
-            >Install</a
-          >
-          <a
-            href="https://github.com/rcbyr/keen-slider#api"
-            class="btn btn-danger"
-            >API</a
-          >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>
+    keen-slider - the HTML touch slider carousel with the most native feeling
+    you will get.
+  </title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <script src="https://kit.fontawesome.com/cf394d5804.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <section class="my-5 text-center bg-white">
+    <div class="container">
+      <h1>keen-slider</h1>
+      <p class="lead text-muted">
+        the HTML touch slider carousel with the most native feeling you will
+        get.
+      </p>
+      <div class="links">
+        <a href="https://github.com/rcbyr/keen-slider" style="background: #28a745" class="btn text-white">Github</a>
+        <a href="#examples" class="btn btn-primary">Examples</a>
+        <a href="https://github.com/rcbyr/keen-slider#getting-started" class="btn btn-outline-primary ">Install</a>
+        <a href="https://github.com/rcbyr/keen-slider#api" class="btn btn-danger">API</a>
+      </div>
+    </div>
+  </section>
+  <div id="examples" class="container py-3 px-0">
+    <section class="text-center bg-white">
+      <h2 class="h4">Default</h2>
+      <div class="slider-wrapper">
+        <div id="slider-basic" class="keen-slider">
+          <div class="keen-slider__track">
+            <div class="keen-slider__slide">
+              <div class="slide bg-primary">
+                <div class="display-4">Slide 1</div>
+              </div>
+            </div>
+            <div class="keen-slider__slide">
+              <div class="slide bg-secondary">
+                <div class="display-4">Slide 2</div>
+              </div>
+            </div>
+            <div class="keen-slider__slide">
+              <div class="slide bg-info">
+                <div class="display-4">Slide 3</div>
+              </div>
+            </div>
+            <div class="keen-slider__slide">
+              <div class="slide bg-success">
+                <div class="display-4">Slide 4</div>
+              </div>
+            </div>
+            <div class="keen-slider__slide">
+              <div class="slide bg-danger">
+                <div class="display-4">Slide 5</div>
+              </div>
+            </div>
+            <div class="keen-slider__slide">
+              <div class="slide bg-warning">
+                <div class="display-4">Slide 6</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="code-links">
+        <div class="code-link-title">Try code in Stackblitz</div>
+        <div class="stack-group">
+          <a href="https://stackblitz.com/edit/keen-basic-js?file=index.html" class="stack-link js">
+            <i class="fab fa-js"></i><span>JavaScript</span>
+          </a>
+          <a href="https://stackblitz.com/edit/keen-basic-react?file=index.js" class="stack-link react">
+            <i class="fab fa-react"></i><span>React</span>
+          </a>
+          <a href="https://stackblitz.com/edit/keen-basic-angular-ts?file=src%2Fapp%2Fslider.component.ts"
+            class="stack-link angular">
+            <i class="fab fa-angular"></i><span>Angular</span>
+          </a>
+          <a href="https://stackblitz.com/edit/keen-basic-vue?file=index.js" class="stack-link vuejs">
+            <i class="fab fa-vuejs"></i><span>Vue</span>
+          </a>
         </div>
       </div>
     </section>
-    <div id="examples" class="container py-3 px-0">
-      <section class="text-center bg-white">
-        <h2 class="h4">Default</h2>
-        <div class="slider-wrapper">
-          <div id="slider-basic" class="keen-slider">
+    <section class="text-center bg-white mt-5">
+      <h2 class="h4">Navigation</h2>
+      <div class="slider-wrapper">
+        <div class="position-relative">
+          <div id="slider-with-arrows" class="keen-slider">
             <div class="keen-slider__track">
               <div class="keen-slider__slide">
                 <div class="slide bg-primary">
@@ -90,121 +126,52 @@
               </div>
             </div>
           </div>
+          <button id="arrow-left" class="arrow">
+            <svg class="svg-icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M9.224 1.553a.5.5 0 01.223.67L6.56 8l2.888 5.776a.5.5 0 11-.894.448l-3-6a.5.5 0 010-.448l3-6a.5.5 0 01.67-.223z"
+                clip-rule="evenodd" />
+            </svg>
+          </button>
+          <button id="arrow-right" class="arrow right">
+            <svg class="svg-icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M6.776 1.553a.5.5 0 01.671.223l3 6a.5.5 0 010 .448l-3 6a.5.5 0 11-.894-.448L9.44 8 6.553 2.224a.5.5 0 01.223-.671z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </button>
         </div>
-        <div class="code-links">
-          <div class="font-weight-bold">Try code in Stackblitz</div>
-          <div class="stack-group">
-            Comming soon...
-            <!-- <a
-              href="https://stackblitz.com/edit/keen-basic-js?file=index.html"
-              class="stack-link js"
-            >
-              <i class="fab fa-js"></i><span>JavaScript</span>
-            </a>
-            <a href="#" class="stack-link react">
-              <i class="fab fa-react"></i><span>React</span>
-            </a>
-            <a href="#" class="stack-link angular">
-              <i class="fab fa-angular"></i><span>Angular</span>
-            </a>
-            <a href="#" class="stack-link vuejs">
-              <i class="fab fa-vuejs"></i><span>Vue</span>
-            </a> -->
-          </div>
+        <div id="dots">
+          <button class="dot"></button>
+          <button class="dot"></button>
+          <button class="dot"></button>
+          <button class="dot"></button>
+          <button class="dot"></button>
+          <button class="dot"></button>
         </div>
-      </section>
-      <!-- <section class="text-center bg-white mt-5">
-        <h2 class="h4">Navigation</h2>
-        <div class="slider-wrapper">
-          <div class="position-relative">
-            <div id="slider-with-arrows" class="keen-slider">
-              <div class="keen-slider__track">
-                <div class="keen-slider__slide">
-                  <div class="slide bg-primary">
-                    <div class="display-4">Slide 1</div>
-                  </div>
-                </div>
-                <div class="keen-slider__slide">
-                  <div class="slide bg-secondary">
-                    <div class="display-4">Slide 2</div>
-                  </div>
-                </div>
-                <div class="keen-slider__slide">
-                  <div class="slide bg-info">
-                    <div class="display-4">Slide 3</div>
-                  </div>
-                </div>
-                <div class="keen-slider__slide">
-                  <div class="slide bg-success">
-                    <div class="display-4">Slide 4</div>
-                  </div>
-                </div>
-                <div class="keen-slider__slide">
-                  <div class="slide bg-danger">
-                    <div class="display-4">Slide 5</div>
-                  </div>
-                </div>
-                <div class="keen-slider__slide">
-                  <div class="slide bg-warning">
-                    <div class="display-4">Slide 6</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <button id="arrow-left" class="arrow">
-              <svg
-                class="svg-icon"
-                width="1em"
-                height="1em"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M9.224 1.553a.5.5 0 01.223.67L6.56 8l2.888 5.776a.5.5 0 11-.894.448l-3-6a.5.5 0 010-.448l3-6a.5.5 0 01.67-.223z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </button>
-            <button id="arrow-right" class="arrow right">
-              <svg
-                class="svg-icon"
-                width="1em"
-                height="1em"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M6.776 1.553a.5.5 0 01.671.223l3 6a.5.5 0 010 .448l-3 6a.5.5 0 11-.894-.448L9.44 8 6.553 2.224a.5.5 0 01.223-.671z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </button>
-          </div>
-          <div id="dots">
-            <button class="dot"></button>
-            <button class="dot"></button>
-            <button class="dot"></button>
-            <button class="dot"></button>
-            <button class="dot"></button>
-            <button class="dot"></button>
-          </div>
+      </div>
+      <div class="code-links">
+        <div class="text-bold">Try code in Stackblitz</div>
+        <div class="stack-group">
+          Comming soon...
+          <!-- <a href="https://stackblitz.com/edit/keen-basic-js?file=index.html" class="stack-link js">
+            <i class="fab fa-js"></i><span>JavaScript</span>
+          </a>
+          <a href="#" class="stack-link react">
+            <i class="fab fa-react"></i><span>React</span>
+          </a>
+          <a href="#" class="stack-link angular">
+            <i class="fab fa-angular"></i><span>Angular</span>
+          </a>
+          <a href="#" class="stack-link vuejs">
+            <i class="fab fa-vuejs"></i><span>Vue</span>
+          </a> -->
         </div>
-        <div class="code-links">
-          <div class="text-bold">Try code in Stackblitz</div>
-          <div class="btn-group mt-1">
-            <a href="#" class="btn btn-sm btn-outline-dark">HTML</a>
-            <a href="#" class="btn btn-sm btn-outline-dark">React</a>
-            <a href="#" class="btn btn-sm btn-outline-dark">Vue</a>
-            <a href="#" class="btn btn-sm btn-outline-dark">Angular</a>
-            <a href="#" class="btn btn-sm btn-outline-dark">lit-element</a>
-          </div>
-        </div>
-      </section>
-      <section class="text-center bg-white mt-5">
+      </div>
+    </section>
+    <!--<section class="text-center bg-white mt-5">
         <h2 class="h4">Autoplay with disabled controls</h2>
         <div class="slider-wrapper">
           <div id="slider-autoplay" class="keen-slider">
@@ -289,10 +256,11 @@
           </div>
         </div>
       </section> -->
-    </div>
+  </div>
 
-    <div class="footer text-center mt-5 mb-1">
-      2020 © keen-slider by <a href="https://github.com/rcbyr">rcbyr</a>
-    </div>
-  <script type="text/javascript" src="keen-slider.bundle.js"></script></body>
+  <div class="footer text-center mt-5 mb-1">
+    2020 © keen-slider by <a href="https://github.com/rcbyr">rcbyr</a>
+  </div>
+<script type="text/javascript" src="keen-slider.bundle.js"></script></body>
+
 </html>
