@@ -69,7 +69,7 @@ const slider = new KeenSlider('#my-keen-slider', options_and_events)
   <head>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/keen-slider/dist/keen-slider.min.css"
+      href="https://cdn.jsdelivr.net/npm/keen-slider@latest/dist/keen-slider.min.css"
     />
   </head>
   <body>
@@ -81,7 +81,7 @@ const slider = new KeenSlider('#my-keen-slider', options_and_events)
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/keen-slider/dist/keen-slider.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/keen-slider@latest/dist/keen-slider.min.js"></script>
     <script>
       new KeenSlider('#my-keen-slider')
     </script>
@@ -167,6 +167,7 @@ The following methods are available on a slider instance.
 
 | Method            | Arguments                                        | Description                                                  |
 | ----------------- | ------------------------------------------------ | ------------------------------------------------------------ |
+| destroy           | -                                                | remove events and helper slides of the loop - refesh() would undo this |
 | moveToSlide       | slide(Integer), instant(Boolean, Default: false) | move to given slide - optionally without animation           |
 | next              | -                                                | move to next slide                                           |
 | prev              | -                                                | move to previous slide                                       |

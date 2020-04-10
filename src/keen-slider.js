@@ -1,15 +1,15 @@
 function KeenSlider(c, o) {
   const defaultOptions = {
-    changed: function(idx) {
+    changed: function (idx) {
       return
     },
-    created: function() {
+    created: function () {
       return
     },
     controls: true,
     classSlide: 'keen-slider__slide',
     classTrack: 'keen-slider__track',
-    moveEasing: function(t) {
+    moveEasing: function (t) {
       return --t * t * t + 1
     },
     initialSlide: 0,
@@ -129,7 +129,7 @@ function KeenSlider(c, o) {
 
   function eventAdd(element, event, handler, options = {}) {
     if (Array.isArray(element)) {
-      element.forEach(function(elem) {
+      element.forEach(function (elem) {
         eventAdd(elem, event, handler, options)
       })
       return
@@ -141,7 +141,7 @@ function KeenSlider(c, o) {
   }
 
   function eventsRemove() {
-    events.forEach(function(event, idx) {
+    events.forEach(function (event, idx) {
       event[0].removeEventListener(event[1], event[2])
       delete events[idx]
     })
@@ -261,7 +261,7 @@ function KeenSlider(c, o) {
       return
     }
     if (options.controls) {
-      eventAdd(container, 'dragstart', function(e) {
+      eventAdd(container, 'dragstart', function (e) {
         e.preventDefault()
       })
       eventAdd(container, 'mousedown', dragstart)
@@ -393,6 +393,9 @@ function KeenSlider(c, o) {
   }
 
   const pubfuncs = {
+    destroy() {
+      unmount()
+    },
     prev() {
       if (isHidden()) return
       moveToIdx(targetIdx - 1)
@@ -401,13 +404,13 @@ function KeenSlider(c, o) {
       if (isHidden()) return
       moveToIdx(targetIdx + 1)
     },
-    moveToSlide: function(slide, instant = false) {
+    moveToSlide: function (slide, instant = false) {
       const idx = clampIdx(translateFromInputIdx(slide))
       return instant ? jumpToIdx(idx) : moveToIdx(idx)
     },
     refresh,
     refreshLoopSlides: refreshLoopItems,
-    resize: function() {
+    resize: function () {
       resize(true)
     },
     get slide() {
@@ -423,7 +426,7 @@ function KeenSlider(c, o) {
 }
 
 if (!Math.sign) {
-  Math.sign = function(x) {
+  Math.sign = function (x) {
     return (x > 0) - (x < 0) || +x
   }
 }
