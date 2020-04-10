@@ -3,7 +3,7 @@ import '../src/keen-slider.scss'
 import KeenSlider from '../src/keen-slider'
 
 if (window.NodeList && !NodeList.prototype.forEach) {
-  NodeList.prototype.forEach = function(callback, thisArg) {
+  NodeList.prototype.forEach = function (callback, thisArg) {
     thisArg = thisArg || window
     for (let i = 0; i < this.length; i++) {
       callback.call(thisArg, this[i], i, this)
@@ -13,47 +13,47 @@ if (window.NodeList && !NodeList.prototype.forEach) {
 
 const c = new KeenSlider('#slider-basic')
 
-// new KeenSlider(document.getElementById('slider-with-arrows'), {
-//   loop: false,
-//   initialSlide: 1,
-//   created: function() {
-//     const slider = this
-//     document.getElementById('arrow-left').addEventListener('click', function() {
-//       slider.prev()
-//     })
+new KeenSlider(document.getElementById('slider-with-arrows'), {
+  loop: false,
+  initialSlide: 1,
+  created: function () {
+    const slider = this
+    document.getElementById('arrow-left').addEventListener('click', function () {
+      slider.prev()
+    })
 
-//     document
-//       .getElementById('arrow-right')
-//       .addEventListener('click', function() {
-//         slider.next()
-//       })
+    document
+      .getElementById('arrow-right')
+      .addEventListener('click', function () {
+        slider.next()
+      })
 
-//     const dots = document.querySelectorAll('.dot')
-//     dots.forEach(function(dot, idx) {
-//       dot.addEventListener('click', function() {
-//         slider.moveToSlide(idx)
-//       })
-//     })
-//   },
-//   changed: function(idx) {
-//     const slider = this
-//     const arrowLeft = document.getElementById('arrow-left')
-//     const arrowRight = document.getElementById('arrow-right')
-//     idx === 0
-//       ? arrowLeft.classList.add('disabled')
-//       : arrowLeft.classList.remove('disabled')
-//     idx === slider.length - 1
-//       ? arrowRight.classList.add('disabled')
-//       : arrowRight.classList.remove('disabled')
+    const dots = document.querySelectorAll('.dot')
+    dots.forEach(function (dot, idx) {
+      dot.addEventListener('click', function () {
+        slider.moveToSlide(idx)
+      })
+    })
+  },
+  changed: function (idx) {
+    const slider = this
+    const arrowLeft = document.getElementById('arrow-left')
+    const arrowRight = document.getElementById('arrow-right')
+    idx === 0
+      ? arrowLeft.classList.add('disabled')
+      : arrowLeft.classList.remove('disabled')
+    idx === slider.length - 1
+      ? arrowRight.classList.add('disabled')
+      : arrowRight.classList.remove('disabled')
 
-//     const dots = document.querySelectorAll('.dot')
-//     dots.forEach(function(dot, idx) {
-//       idx === slider.slide
-//         ? dot.classList.add('active')
-//         : dot.classList.remove('active')
-//     })
-//   },
-// })
+    const dots = document.querySelectorAll('.dot')
+    dots.forEach(function (dot, idx) {
+      idx === slider.slide
+        ? dot.classList.add('active')
+        : dot.classList.remove('active')
+    })
+  },
+})
 
 // const autoplay = new KeenSlider(document.getElementById('slider-autoplay'), {
 //   controls: false,

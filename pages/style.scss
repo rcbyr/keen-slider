@@ -104,6 +104,10 @@ button {
   }
 }
 
+.code-link-title{
+  text-transform: uppercase;
+}
+
 .stack-group {
   display: flex;
   flex-wrap: wrap;
@@ -111,6 +115,7 @@ button {
   .stack-link {
     font-size: 2rem;
     margin: 0.3rem 0.6rem;
+    text-decoration: none;
     &.vuejs {
       color: #4fc08d;
     }
@@ -125,9 +130,11 @@ button {
     }
 
     span {
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       display: block;
       color: #212529;
+      font-weight: bold;
+      margin-top: -5px;
     }
   }
 }
