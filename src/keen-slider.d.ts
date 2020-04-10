@@ -14,6 +14,7 @@ export default class KeenSlider {
   constructor(container: TContainer, options?: TOptionsEvents)
   slide: number
   length: number
+  destroy: () => void
   moveToSlide: (slide: number, instant?: boolean) => void
   next: () => void
   prev: () => void
