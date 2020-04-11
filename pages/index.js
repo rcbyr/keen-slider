@@ -55,31 +55,31 @@ new KeenSlider(document.getElementById('slider-with-arrows'), {
   },
 })
 
-// const autoplay = new KeenSlider(document.getElementById('slider-autoplay'), {
-//   controls: false,
-// })
-// setInterval(autoplay.next, 2000)
+const autoplay = new KeenSlider(document.getElementById('slider-autoplay'), {
+  controls: false,
+})
+setInterval(autoplay.next, 2000)
 
-// const slider_lazy = document.getElementById('slider-lazy-load')
-// const lazy_items = slider_lazy.querySelectorAll('.keen-slider__slide')
+const slider_lazy = document.getElementById('slider-lazy-load')
+const lazy_items = slider_lazy.querySelectorAll('.keen-slider__slide')
 
-// const lazy = new KeenSlider(slider_lazy, {
-//   created: function() {
-//     loadImage(lazy_items[this.slide])
-//   },
-//   changed: function(idx) {
-//     const _this = this
-//     loadImage(lazy_items[idx], function() {
-//       _this.refreshLoopSlides()
-//     })
-//   },
-// })
+const lazy = new KeenSlider(slider_lazy, {
+  created: function () {
+    loadImage(lazy_items[this.slide])
+  },
+  changed: function (idx) {
+    const _this = this
+    loadImage(lazy_items[idx], function () {
+      _this.refreshLoopSlides()
+    })
+  },
+})
 
-// function loadImage(item, func) {
-//   if (!item) return
-//   setTimeout(function() {
-//     const img = item.querySelector('img')
-//     img.setAttribute('src', img.getAttribute('data-src'))
-//     if (func) func()
-//   }, 500)
-// }
+function loadImage(item, func) {
+  if (!item) return
+  setTimeout(function () {
+    const img = item.querySelector('img')
+    img.setAttribute('src', img.getAttribute('data-src'))
+    if (func) func()
+  }, 500)
+}
