@@ -174,7 +174,7 @@ The following methods are available on a slider instance.
 | refresh           | -                                                | refresh slider - for example when you add/remove slides      |
 | refreshLoopSlides | -                                                | refresh loop slides - if slide content was changed           |
 | addTouchContols | -                                                  | add touch control events |
-| removeTouchControls | -                                              | remove touch control events (possibly needed, if SPA's like react make a rerendering)|
+| removeTouchControls | -                                              | remove touch control events |
 
 Example:
 
