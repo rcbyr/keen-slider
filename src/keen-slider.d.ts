@@ -2,17 +2,17 @@ type TContainer = HTMLElement | string
 type TOptionsEvents = {
   changed?: (idx: number) => void
   created?: () => void
-  controls?: boolean
-  initialIdx?: number
-  itemClassName?: string
+  touchControl?: boolean
+  initialSlide?: number
+  classSlide?: string
   loop?: boolean
   moveDuration?: number
-  trackClassName?: string
+  classTrack?: string
 }
 
 export default class KeenSlider {
   constructor(container: TContainer, options?: TOptionsEvents)
-  slide: number
+  current: number
   length: number
   destroy: () => void
   moveToSlide: (slide: number, instant?: boolean) => void
@@ -20,5 +20,6 @@ export default class KeenSlider {
   prev: () => void
   refresh: () => void
   refreshLoopSlides: () => void
-  resize: () => void
+  addTouchContols: () => void
+  removeTouchControls: () => void
 }
