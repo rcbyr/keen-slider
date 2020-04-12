@@ -109,7 +109,7 @@ The following options are available.
 
 | Option       | Type     | Default                                 | Description                                 |
 | ------------ | -------- | --------------------------------------- | ------------------------------------------- |
-| controls     | Boolean  | true                                    | control slider with mouse or touch gestures |
+| touchControl | Boolean  | true                                    | control slider with mouse or touch gestures |
 | classSlide   | String   | "keen-slider\_\_slide"                  | necessary class name for a slide            |
 | classTrack   | String   | "keen-slider\_\_track"                  | necessary class name for the track          |
 | initialSlide | Integer  | 0                                       | initial activate slide                      |
@@ -151,8 +151,8 @@ The following getters are available on a slider instance.
 
 | Getter | Description       |
 | ------ | ----------------- |
+| current  | get number of current slide (starts with 0) |
 | length | number of slides  |
-| slide  | get current slide |
 
 Example:
 
@@ -173,7 +173,8 @@ The following methods are available on a slider instance.
 | prev              | -                                                | move to previous slide                                       |
 | refresh           | -                                                | refresh slider - for example when you add/remove slides      |
 | refreshLoopSlides | -                                                | refresh loop slides - if slide content was changed           |
-| resize            | -                                                | resize slider - internal resize event ignores height changes |
+| addTouchContols | -                                                  | add touch control events |
+| removeTouchControls | -                                              | remove touch control events (possibly needed, if SPA's like react make a rerendering)|
 
 Example:
 

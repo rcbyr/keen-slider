@@ -48,7 +48,7 @@ new KeenSlider(document.getElementById('slider-with-arrows'), {
 
     const dots = document.querySelectorAll('.dot')
     dots.forEach(function (dot, idx) {
-      idx === slider.slide
+      idx === slider.current
         ? dot.classList.add('active')
         : dot.classList.remove('active')
     })
@@ -56,7 +56,7 @@ new KeenSlider(document.getElementById('slider-with-arrows'), {
 })
 
 const autoplay = new KeenSlider(document.getElementById('slider-autoplay'), {
-  controls: false,
+  touchControl: false,
 })
 setInterval(autoplay.next, 2000)
 
@@ -65,7 +65,7 @@ const lazy_items = slider_lazy.querySelectorAll('.keen-slider__slide')
 
 const lazy = new KeenSlider(slider_lazy, {
   created: function () {
-    loadImage(lazy_items[this.slide])
+    loadImage(lazy_items[this.current])
   },
   changed: function (idx) {
     const _this = this

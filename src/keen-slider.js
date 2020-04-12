@@ -6,7 +6,7 @@ function KeenSlider(c, o) {
     created: function () {
       return
     },
-    controls: true,
+    touchControl: true,
     classSlide: 'keen-slider__slide',
     classTrack: 'keen-slider__track',
     moveEasing: function (t) {
@@ -140,6 +140,25 @@ function KeenSlider(c, o) {
     events.push([element, event, handler])
   }
 
+  function eventsAdd() {
+    eventAdd(container, 'dragstart', function (e) {
+      e.preventDefault()
+    })
+    eventAdd(container, 'mousedown', dragstart)
+    eventAdd(container, 'mousemove', drag)
+    eventAdd(container, 'mouseleave', dragend)
+    eventAdd(container, 'mouseup', dragend)
+    eventAdd(container, 'touchstart', dragstart)
+    eventAdd(container, 'touchmove', drag)
+    eventAdd(container, 'touchend', dragend)
+    eventAdd(container, 'touchcancel', dragend)
+    eventAdd(container, 'touchleave', dragend)
+    eventAdd(window, 'wheel', wheel, {
+      passive: !1,
+    })
+    eventAdd(window, 'scroll', scroll)
+  }
+
   function eventsRemove() {
     events.forEach(function (event, idx) {
       event[0].removeEventListener(event[1], event[2])
@@ -257,32 +276,10 @@ function KeenSlider(c, o) {
 
   function mount(idx) {
     items = track.getElementsByClassName(options.classSlide)
-    if (items.length <= 1) {
-      return
-    }
-    if (options.controls) {
-      eventAdd(container, 'dragstart', function (e) {
-        e.preventDefault()
-      })
-      eventAdd(container, 'mousedown', dragstart)
-      eventAdd(container, 'mousemove', drag)
-      eventAdd(container, 'mouseleave', dragend)
-      eventAdd(container, 'mouseup', dragend)
-      eventAdd(container, 'touchstart', dragstart)
-      eventAdd(container, 'touchmove', drag)
-      eventAdd(container, 'touchend', dragend)
-      eventAdd(container, 'touchcancel', dragend)
-      eventAdd(container, 'touchleave', dragend)
-      eventAdd(window, 'wheel', wheel, {
-        passive: !1,
-      })
-      eventAdd(window, 'scroll', scroll)
-    }
+    if (options.touchControl) eventsAdd()
     eventAdd(window, 'orientationchange', multipleResizes)
     eventAdd(window, 'resize', multipleResizes)
-
     if (options.loop) loopItemsAppend()
-
     jumpToIdx(idx)
     resize()
   }
@@ -337,9 +334,9 @@ function KeenSlider(c, o) {
     eventsRemove()
   }
 
-  function resize(all = false) {
+  function resize() {
     const windowWidth = window.innerWidth
-    if (windowWidth === lastWindowWidth && !all) return
+    if (windowWidth === lastWindowWidth) return
     const width = getContainerWidth()
 
     track.style.width = width * items.length + 'px'
@@ -410,10 +407,13 @@ function KeenSlider(c, o) {
     },
     refresh,
     refreshLoopSlides: refreshLoopItems,
-    resize: function () {
-      resize(true)
+    addTouchContols: () => {
+      eventsAdd()
     },
-    get slide() {
+    removeTouchControls: () => {
+      eventsRemove()
+    },
+    get current() {
       return translateToInputIdx(targetIdx)
     },
     get length() {
