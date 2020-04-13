@@ -11,7 +11,7 @@ if (window.NodeList && !NodeList.prototype.forEach) {
   }
 }
 
-const c = new KeenSlider('#slider-basic')
+new KeenSlider('#slider-basic')
 
 new KeenSlider(document.getElementById('slider-with-arrows'), {
   loop: false,
