@@ -1,6 +1,6 @@
 {
   "name": "keen-slider",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "The HTML touch slider carousel with the most native feeling you will get.",
   "main": "dist/keen-slider.min.js",
   "jsnext:main": "src/keen-slider.js",

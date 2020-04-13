@@ -269,8 +269,9 @@ function KeenSlider(c, o) {
 
   function loopItemsRemove() {
     const loopItems = track.querySelectorAll('[' + loopItemAttrName + ']')
-    for (var i = 0; i < getInterpolatedItemCount(); i++) {
-      track.removeChild(loopItems[i])
+    for (let i = 0; i < loopItems.length; i++) {
+      const child = loopItems[i]
+      child.parentNode.removeChild(child)
     }
   }
 
