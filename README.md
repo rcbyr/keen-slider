@@ -129,10 +129,10 @@ var slider = new KeenSlider('#my-slider', options)
 
 The following event hooks are available.
 
-| Event   | Params | Description                                   |
-| ------- | ------ | --------------------------------------------- |
-| changed | slide  | will be triggered after the slide has changed |
-| created | -      | will be triggered after initialization        |
+| Event   | Params | Description                                                                      |
+| ------- | ------ | -------------------------------------------------------------------------------- |
+| changed | slide  | Fires after current slide has changed, but before the move animation has started |
+| created | -      | will be triggered after initialization                                           |
 
 Example:
 
@@ -149,10 +149,10 @@ var slider = new KeenSlider('#my-slider', options)
 
 The following getters are available on a slider instance.
 
-| Getter | Description       |
-| ------ | ----------------- |
-| current  | get number of current slide (starts with 0) |
-| length | number of slides  |
+| Getter  | Description                                 |
+| ------- | ------------------------------------------- |
+| current | get number of current slide (starts with 0) |
+| length  | number of slides                            |
 
 Example:
 
@@ -165,16 +165,16 @@ console.log('number of slides:' + slider.length)
 
 The following methods are available on a slider instance.
 
-| Method            | Arguments                                        | Description                                                  |
-| ----------------- | ------------------------------------------------ | ------------------------------------------------------------ |
-| destroy           | -                                                | remove events and helper slides of the loop - refesh() would undo this |
-| moveToSlide       | slide(Integer), instant(Boolean, Default: false) | move to given slide - optionally without animation           |
-| next              | -                                                | move to next slide                                           |
-| prev              | -                                                | move to previous slide                                       |
-| refresh           | -                                                | refresh slider - for example when you add/remove slides      |
-| refreshLoopSlides | -                                                | refresh loop slides - if slide content was changed           |
-| addTouchContols | -                                                  | add touch control events |
-| removeTouchControls | -                                              | remove touch control events |
+| Method              | Arguments                                        | Description                                                            |
+| ------------------- | ------------------------------------------------ | ---------------------------------------------------------------------- |
+| destroy             | -                                                | remove events and helper slides of the loop - refesh() would undo this |
+| moveToSlide         | slide(Integer), instant(Boolean, Default: false) | move to given slide - optionally without animation                     |
+| next                | -                                                | move to next slide                                                     |
+| prev                | -                                                | move to previous slide                                                 |
+| refresh             | -                                                | refresh slider - for example when you add/remove slides                |
+| refreshLoopSlides   | -                                                | refresh loop slides - if slide content was changed                     |
+| addTouchContols     | -                                                | add touch control events                                               |
+| removeTouchControls | -                                                | remove touch control events                                            |
 
 Example:
 
@@ -185,6 +185,6 @@ setInterval(slider.next, 5000)
 
 ## Examples
 
-Demo: https://rcbyr.github.io/keen-slider/
+Demo & Examples: https://rcbyr.github.io/keen-slider/
 
-If you miss a features to build the slider you need, create an issue and I will try to help you out.
+If you miss a feature to build the slider you need, create an issue and I will try to help you out.
