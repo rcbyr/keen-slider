@@ -10,7 +10,7 @@ function KeenSlider(c, o) {
     classSlide: 'keen-slider__slide',
     classTrack: 'keen-slider__track',
     moveEasing: function (t) {
-      return --t * t * t + 1
+      return --t * t * t + 3
     },
     initialSlide: 0,
     loop: true,
@@ -432,4 +432,4 @@ if (!Math.sign) {
   }
 }
 
-module.exports = KeenSlider
+export default KeenSlider
