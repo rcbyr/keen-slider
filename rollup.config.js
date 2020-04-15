@@ -2,9 +2,6 @@ import babel from 'rollup-plugin-babel'
 import resolve from 'rollup-plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
 
-import serve from 'rollup-plugin-serve'
-import livereload from 'rollup-plugin-livereload'
-
 export default {
   input: './src/keen-slider.js',
   output: [
@@ -43,7 +40,5 @@ export default {
       ],
     }),
     terser({}),
-    // serve('pages'),
-    // livereload('pages'),
   ],
 }

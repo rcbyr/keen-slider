@@ -1,6 +1,6 @@
 import './style.scss'
 import '../src/keen-slider.scss'
-import KeenSlider from '../src/keen-slider'
+import KeenSlider from '../dist/keen-slider.esm.js'
 
 if (window.NodeList && !NodeList.prototype.forEach) {
   NodeList.prototype.forEach = function (callback, thisArg) {
@@ -18,9 +18,11 @@ new KeenSlider(document.getElementById('slider-with-arrows'), {
   initialSlide: 1,
   created: function () {
     const slider = this
-    document.getElementById('arrow-left').addEventListener('click', function () {
-      slider.prev()
-    })
+    document
+      .getElementById('arrow-left')
+      .addEventListener('click', function () {
+        slider.prev()
+      })
 
     document
       .getElementById('arrow-right')

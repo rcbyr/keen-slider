@@ -4,11 +4,11 @@ The HTML touch slider carousel with the most native feeling you will get.
 
 Features:
 
-- only 6.5 KB (2.5 KB gzipped)
+- only 4.5 KB (2 KB gzipped)
 - works great and the same, on all devices and browsers (>= IE10)
 - no dependencies
 - typescript compatible
-- examples for the most common SPA's (e.g. react, vue, angular)
+- examples for the most common SPA's (react, vue, angular)
 - simple API
 
 Demo: https://rcbyr.github.io/keen-slider/
@@ -138,7 +138,7 @@ Example:
 
 ```javascript
 var options = {
-  changed: function(slide) {
+  changed: function (slide) {
     console.log('Slide ' + slide + ' of ' + this.length)
   },
 }
