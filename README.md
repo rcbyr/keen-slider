@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/rcbyr/keen-slider.svg?branch=release)](https://travis-ci.org/rcbyr/keen-slider)
+[![dependencies Status](https://david-dm.org/rcbyr/keen-slider/status.svg)](https://david-dm.org/rcbyr/keen-slider)
 [![devDependency Status](https://david-dm.org/rcbyr/keen-slider/dev-status.svg)](https://david-dm.org/rcbyr/keen-slider#info=devDependencies)
 
 # keen-slider
