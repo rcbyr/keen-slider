@@ -26,19 +26,7 @@ export default {
   ],
   plugins: [
     resolve(),
-    babel({
-      include: ['*keen-slider.min.js'],
-      babelrc: false,
-      presets: [
-        [
-          '@babel/env',
-          {
-            targets: 'last 2 versions, ie >= 10',
-            modules: false,
-          },
-        ],
-      ],
-    }),
-    terser({}),
+    babel(),
+    terser()
   ],
 }
