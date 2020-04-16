@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/rcbyr/keen-slider.svg?branch=release)](https://travis-ci.org/rcbyr/keen-slider)
+[![devDependency Status](https://david-dm.org/rcbyr/keen-slider/dev-status.svg)](https://david-dm.org/rcbyr/keen-slider#info=devDependencies)
+
 # keen-slider
 
 The HTML touch slider carousel with the most native feeling you will get.
