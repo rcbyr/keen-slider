@@ -9,6 +9,7 @@ The HTML touch slider carousel with the most native feeling you will get.
 
 Features:
 
+- greate performance and fully responsive
 - only 5.3 KB (2.2 KB gzipped)
 - works great and the same, on all devices and browsers (>= IE10)
 - no dependencies
