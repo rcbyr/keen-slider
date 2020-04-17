@@ -335,9 +335,9 @@ function KeenSlider(c, o) {
     eventsRemove()
   }
 
-  function resize() {
+  function resize(force = false) {
     const windowWidth = window.innerWidth
-    if (windowWidth === lastWindowWidth) return
+    if (windowWidth === lastWindowWidth && !force) return
     const width = getContainerWidth()
 
     track.style.width = width * items.length + 'px'
@@ -413,6 +413,9 @@ function KeenSlider(c, o) {
     },
     removeTouchControls: () => {
       eventsRemove()
+    },
+    resize() {
+      resize(true)
     },
     get current() {
       return translateToInputIdx(targetIdx)

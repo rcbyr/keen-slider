@@ -22,4 +22,5 @@ export default class KeenSlider {
   refreshLoopSlides: () => void
   addTouchContols: () => void
   removeTouchControls: () => void
+  resize: () => void
 }

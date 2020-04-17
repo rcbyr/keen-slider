@@ -181,6 +181,7 @@ The following methods are available on a slider instance.
 | refreshLoopSlides   | -                                                | refresh loop slides - if slide content was changed                     |
 | addTouchContols     | -                                                | add touch control events                                               |
 | removeTouchControls | -                                                | remove touch control events                                            |
+| resize              | -                                                | manually trigger a resize, to recalculate width of slides              |
 
 Example:
 
