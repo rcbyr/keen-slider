@@ -6,6 +6,7 @@ function KeenSlider(c, o) {
     created: function () {
       return
     },
+    move: null,
     touchControl: true,
     classSlide: 'keen-slider__slide',
     classTrack: 'keen-slider__track',
@@ -15,6 +16,7 @@ function KeenSlider(c, o) {
     initialSlide: 0,
     loop: true,
     moveDuration: 500,
+    virtualSlides: null,
   }
 
   let options = null
@@ -73,7 +75,8 @@ function KeenSlider(c, o) {
     if (!options.loop) {
       trackX = clampValue(trackX, -getContainerWidth() * getItemLastIdx(), 0)
     }
-    track.style.transform = `translate3d(${trackX}px, 0, 0)`
+    if (options.move) options.move.call(pubfuncs, getPositionDetails(trackX))
+    if (!options.virtualSlides) track.style.transform = `translate3d(${trackX}px, 0, 0)`
   }
 
   function clampIdx(idx) {
@@ -196,15 +199,27 @@ function KeenSlider(c, o) {
   }
 
   function getItemCount() {
-    return options.loop ? items.length - 2 : items.length
+    return options.loop ? getSlides() - 2 : getSlides()
   }
 
   function getInterpolatedItemCount() {
-    return items.length
+    return getSlides()
   }
 
   function getItemLastIdx() {
-    return items.length - 1
+    return getSlides() - 1
+  }
+
+  function getSlides() {
+    return !options.virtualSlides ? items.length : (options.loop) ? options.virtualSlides + 2 : options.virtualSlides
+  }
+
+  function getIdxOfX(x) {
+    return Math.round(-(x / getContainerWidth())) - 1
+  }
+
+  function getPositionDetails(x) {
+    return x
   }
 
   function getXOfIdx(idx) {
@@ -265,6 +280,7 @@ function KeenSlider(c, o) {
   }
 
   function refreshLoopItems() {
+    if (options.virtualSlide) return
     const parent = items[0].parentNode
     const firstToReplace = items[0]
     const first = items[1].cloneNode(true)
@@ -289,7 +305,7 @@ function KeenSlider(c, o) {
     if (options.touchControl) eventsAdd()
     eventAdd(window, 'orientationchange', multipleResizes)
     eventAdd(window, 'resize', multipleResizes)
-    if (options.loop) loopItemsAppend()
+    if (options.loop && !options.virtualSlides) loopItemsAppend()
     jumpToIdx(idx)
     resize()
   }
@@ -348,15 +364,16 @@ function KeenSlider(c, o) {
     const windowWidth = window.innerWidth
     if (windowWidth === lastWindowWidth && !force) return
     const width = getContainerWidth()
-
-    track.style.width = width * items.length + 'px'
-    setItemWidth(getContainerWidth())
+    if (!options.virtualSlides) {
+      track.style.width = width * getSlides() + 'px'
+      setItemWidth(getContainerWidth())
+    }
     lastWindowWidth = windowWidth
     if (!touchActive) jumpToIdx(targetIdx)
   }
 
   function setItemWidth(width) {
-    for (let i = 0; i < items.length; i++) {
+    for (let i = 0; i < getSlides(); i++) {
       items[i].style.width = width + 'px'
     }
   }

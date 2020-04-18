@@ -11,7 +11,7 @@ if (window.NodeList && !NodeList.prototype.forEach) {
   }
 }
 
-new KeenSlider('#slider-basic')
+new KeenSlider('#slider-basic', { virtualSlides: 4, move: function (x) { console.log(x) } })
 
 new KeenSlider(document.getElementById('slider-with-arrows'), {
   loop: false,
@@ -60,7 +60,7 @@ new KeenSlider(document.getElementById('slider-with-arrows'), {
 const autoplay = new KeenSlider(document.getElementById('slider-autoplay'), {
   touchControl: false,
 })
-setInterval(autoplay.next, 2000)
+// setInterval(autoplay.next, 2000)
 
 const slider_lazy = document.getElementById('slider-lazy-load')
 const lazy_items = slider_lazy.querySelectorAll('.keen-slider__slide')
