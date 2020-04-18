@@ -36,6 +36,7 @@ function KeenSlider(c, o) {
   let trackXBeforeTouch = null
   let lastTouchClientX = null
   let lastTouchClientY = null
+  let touchIdentifier = null
 
   // positioning
   let trackX = null
@@ -84,18 +85,22 @@ function KeenSlider(c, o) {
     return Math.min(Math.max(value, min), max)
   }
 
+  function getIdentifier(e) {
+    return e.targetTouches === undefined ? "default" : e.targetTouches[0].identifier
+  }
 
   function isCorrectTouch(e) {
-    return true
+    return e.targetTouches === undefined ? true : e.targetTouches[0].identifier === touchIdentifier
   }
 
   function isEndtouch(e) {
-    return true
+    return e.changedTouches === undefined ? true : e.changedTouches[0].identifier === touchIdentifier
   }
 
   function dragstart(e) {
-    if (touchActive || !isCorrectTouch(e)) return
+    if (touchActive) return
     touchActive = true
+    touchIdentifier = getIdentifier(e)
     moveAbortAnimate()
     touchStartX = getEventX(e)
     touchLastX = touchStartX
