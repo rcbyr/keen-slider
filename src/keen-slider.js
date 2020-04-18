@@ -86,11 +86,11 @@ function KeenSlider(c, o) {
 
 
   function isCorrectTouch(e) {
-    return e.targetTouches === undefined ? true : e.targetTouches[0].identifier === 0
+    return true
   }
 
   function isEndtouch(e) {
-    return e.changedTouches === undefined ? true : e.changedTouches[0].identifier === 0
+    return true
   }
 
   function dragstart(e) {
