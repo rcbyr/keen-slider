@@ -87,7 +87,7 @@ function KeenSlider(c, o) {
   }
 
   function dragstart(e) {
-    if (touchActive) return
+    if (touchActive || wheelActive) return
     touchActive = true
     moveAbortAnimate()
     touchStartX = getEventX(e)
