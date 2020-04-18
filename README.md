@@ -177,8 +177,8 @@ The following methods are available on a slider instance.
 | moveToSlide         | slide(Integer), instant(Boolean, Default: false) | move to given slide - optionally without animation                     |
 | next                | -                                                | move to next slide                                                     |
 | prev                | -                                                | move to previous slide                                                 |
-| refresh             | -                                                | refresh slider - for example when you add/remove slides                |
-| refreshLoopSlides   | -                                                | refresh loop slides - if slide content was changed                     |
+| refresh             | -                                                | reinitialize the loop and events and resize the slides  -  when you add/remove slides                |
+| refreshLoopSlides   | -                                                | since the first and last slides are cloned to make the loop work, you may want to update the cloned items when the slider content changes                   |
 | addTouchContols     | -                                                | add touch control events                                               |
 | removeTouchControls | -                                                | remove touch control events                                            |
 | resize              | -                                                | manually trigger a resize, to recalculate width of slides              |
