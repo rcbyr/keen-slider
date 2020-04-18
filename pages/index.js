@@ -1,6 +1,6 @@
 import './style.scss'
 import '../src/keen-slider.scss'
-import KeenSlider from '../dist/keen-slider.esm.js'
+import KeenSlider from '../src/keen-slider.js'
 
 if (window.NodeList && !NodeList.prototype.forEach) {
   NodeList.prototype.forEach = function (callback, thisArg) {
