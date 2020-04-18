@@ -255,23 +255,25 @@ function KeenSlider(c, o) {
   }
 
   function loopItemsAppend() {
+    const parent = items[0].parentNode
     const first = items[0].cloneNode(true)
     const last = items[getItemLastIdx()].cloneNode(true)
     first.setAttribute(loopItemAttrName, true)
     last.setAttribute(loopItemAttrName, true)
-    track.appendChild(first)
-    track.insertBefore(last, track.firstChild)
+    parent.appendChild(first)
+    parent.insertBefore(last, parent.firstChild)
   }
 
   function refreshLoopItems() {
+    const parent = items[0].parentNode
     const firstToReplace = items[0]
     const first = items[1].cloneNode(true)
     const lastToReplace = items[getItemLastIdx()]
     const last = items[getItemLastIdx() - 1].cloneNode(true)
     first.setAttribute(loopItemAttrName, true)
     last.setAttribute(loopItemAttrName, true)
-    track.replaceChild(first, lastToReplace)
-    track.replaceChild(last, firstToReplace)
+    parent.replaceChild(first, lastToReplace)
+    parent.replaceChild(last, firstToReplace)
   }
 
   function loopItemsRemove() {
