@@ -28,7 +28,6 @@ function KeenSlider(c, o) {
 
   // touch/swipe helper
   const events = []
-  let wheelActive = false
   let touchDirection = null
   let touchActive = false
   let touchStartX = null
@@ -37,7 +36,6 @@ function KeenSlider(c, o) {
   let trackXBeforeTouch = null
   let lastTouchClientX = null
   let lastTouchClientY = null
-  let scrollingTimeout = null
 
   // positioning
   let trackX = null
@@ -86,8 +84,17 @@ function KeenSlider(c, o) {
     return Math.min(Math.max(value, min), max)
   }
 
+
+  function isCorrectTouch(e) {
+    return e.targetTouches === undefined ? true : e.targetTouches[0].identifier === 0
+  }
+
+  function isEndtouch(e) {
+    return e.changedTouches === undefined ? true : e.changedTouches[0].identifier === 0
+  }
+
   function dragstart(e) {
-    if (touchActive || wheelActive) return
+    if (touchActive || !isCorrectTouch(e)) return
     touchActive = true
     moveAbortAnimate()
     touchStartX = getEventX(e)
@@ -97,7 +104,7 @@ function KeenSlider(c, o) {
   }
 
   function drag(e) {
-    if (touchStartX === null || !touchActive) return
+    if (touchStartX === null || !touchActive || !isCorrectTouch(e)) return
     const x = getEventX(e)
 
     if (isVerticalSlide(e)) {
@@ -115,7 +122,7 @@ function KeenSlider(c, o) {
   }
 
   function dragend(e) {
-    if (!touchActive) return
+    if (!touchActive || !isEndtouch(e)) return
     touchActive = false
     const diff = trackX - trackXBeforeTouch
     let idx = getDragEndIdx(diff)
@@ -362,11 +369,6 @@ function KeenSlider(c, o) {
       touchActive = false
       moveToIdx(targetIdx)
     }
-    wheelActive = true
-    window.clearTimeout(scrollingTimeout)
-    scrollingTimeout = setTimeout(() => {
-      wheelActive = false
-    }, 100)
   }
 
   function translateFromInputIdx(idx) {
