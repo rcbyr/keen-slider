@@ -175,14 +175,13 @@ The following methods are available on a slider instance.
 
 | Method              | Arguments                                        | Description                                                            |
 | ------------------- | ------------------------------------------------ | ---------------------------------------------------------------------- |
-| destroy             | -                                                | remove events and helper slides of the loop - refesh() would undo this |
+| destroy             | -                                                | remove events and helper slides of the loop - reset() would undo this |
 | moveToSlide         | slide(Integer), instant(Boolean, Default: false) | move to given slide - optionally without animation                     |
 | next                | -                                                | move to next slide                                                     |
 | prev                | -                                                | move to previous slide                                                 |
-| refresh             | -                                                | reinitialize the loop and events and resize the slides  -  when you add/remove slides                |
-| refreshLoopSlides   | -                                                | since the first and last slides are cloned to make the loop work, you may want to update the cloned items when the slider content changes                   |
-| addTouchContols     | -                                                | add touch control events                                               |
-| removeTouchControls | -                                                | remove touch control events                                            |
+| reset             | -                                                | reinitialize the loop and events and resize the slides  -  when you add/remove slides                |
+| updateLoop   | -     | since the first and last slides are cloned to make the loop work, you may want to update the cloned items when the slider content changes                   |
+| setTouchControls     | activate(Boolean)                              | add touch control events                                               |
 | resize              | -                                                | manually trigger a resize, to recalculate width of slides              |
 
 Example:

@@ -72,7 +72,7 @@ const lazy = new KeenSlider(slider_lazy, {
   changed: function (idx) {
     const _this = this
     loadImage(lazy_items[idx], function () {
-      _this.refreshLoopSlides()
+      _this.updateLoop()
     })
   },
 })

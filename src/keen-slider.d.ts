@@ -22,9 +22,8 @@ export default class KeenSlider {
   moveToSlide: (slide: number, instant?: boolean) => void
   next: () => void
   prev: () => void
-  refresh: () => void
-  refreshLoopSlides: () => void
-  addTouchContols: () => void
-  removeTouchControls: () => void
+  reset: () => void
+  updateLoop: () => void
   resize: () => void
+  setTouchControls: (activate: boolean) => void
 }

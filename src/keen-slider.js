@@ -432,16 +432,13 @@ function KeenSlider(c, o) {
       const idx = clampIdx(translateFromInputIdx(slide))
       return instant ? jumpToIdx(idx) : moveToIdx(idx)
     },
-    refresh,
-    refreshLoopSlides: refreshLoopItems,
-    addTouchContols: () => {
-      eventsAdd()
-    },
-    removeTouchControls: () => {
-      eventsRemove()
-    },
+    reset: refresh,
+    updateLoop: refreshLoopItems,
     resize() {
       resize(true)
+    },
+    setTouchControls: (activate) => {
+      activate ? eventsAdd() : eventsRemove()
     },
     get current() {
       return translateToInputIdx(targetIdx)
