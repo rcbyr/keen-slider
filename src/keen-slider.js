@@ -21,7 +21,6 @@ function KeenSlider(c, o) {
   let track = null
   let items = []
   const loopItemAttrName = 'data-ke-sl-lo'
-  let loopNeedUpdate = true
   let lastWindowWidth = null
 
   // touch/swipe helper
