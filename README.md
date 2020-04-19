@@ -116,8 +116,8 @@ The following options are available.
 | Option       | Type     | Default                                     | Description                                 |
 | ------------ | -------- | ------------------------------------------- | ------------------------------------------- |
 | touchControl | Boolean  | true                                        | control slider with mouse or touch gestures |
-| classSlide   | String   | "keen-slider\_\_slide"                      | necessary class name for a slide            |
-| classTrack   | String   | "keen-slider\_\_track"                      | necessary class name for the track          |
+| selectorSlide   | String or Function   | ".keen-slider\_\_slide"                      | selector for the slides or function that returns a list of HtmlElements            |
+| selectorTrack   | String or HtmlElement  | ".keen-slider\_\_track"                      | selector for the track          |
 | initialSlide | Integer  | 0                                           | initial activate slide                      |
 | loop         | Boolean  | true                                        | infinity loop of slides                     |
 | moveDuration | Integer  | 500                                         | animation time                              |
@@ -138,7 +138,9 @@ The following event hooks are available.
 | Event   | Params | Description                                                                      |
 | ------- | ------ | -------------------------------------------------------------------------------- |
 | changed | slide  | Fires after current slide has changed, but before the move animation has started |
-| created | -      | will be triggered after initialization                                           |
+| created | -      | triggered after initialization                                                   |
+| dragStart | -    | triggered after dragging is started and scrolling is blocked                     |
+| dragEnd | -      | triggered after dragging was stopped                                             |
 
 Example:
 

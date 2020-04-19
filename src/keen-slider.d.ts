@@ -2,6 +2,8 @@ type TContainer = HTMLElement | string
 type TOptionsEvents = {
   changed?: (idx: number) => void
   created?: () => void
+  dragStart?: () => void
+  dragEnd?: () => void
   touchControl?: boolean
   initialSlide?: number
   classSlide?: string
