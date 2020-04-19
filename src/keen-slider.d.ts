@@ -1,4 +1,6 @@
-type TContainer = HTMLElement | string
+type TSelectorOrElement = HTMLElement | string
+type TSlideFunction = () => HTMLElement[]
+
 type TOptionsEvents = {
   changed?: (idx: number) => void
   created?: () => void
@@ -6,14 +8,14 @@ type TOptionsEvents = {
   dragEnd?: () => void
   touchControl?: boolean
   initialSlide?: number
-  classSlide?: string
   loop?: boolean
   moveDuration?: number
-  classTrack?: string
+  selectorSlide?: string | TSlideFunction
+  selectorTrack?: TSelectorOrElement
 }
 
 export default class KeenSlider {
-  constructor(container: TContainer, options?: TOptionsEvents)
+  constructor(container: TSelectorOrElement, options?: TOptionsEvents)
   current: number
   length: number
   destroy: () => void

@@ -369,6 +369,10 @@ function KeenSlider(c, o) {
   }
 
   function updateItems() {
+    if (typeof options.selectorSlide === 'function') {
+      items = options.selectorSlide()
+      return
+    }
     items = container.querySelectorAll(options.selectorSlide)
   }
 
