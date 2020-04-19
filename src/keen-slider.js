@@ -273,11 +273,11 @@ function KeenSlider(c, o) {
     last.setAttribute(loopItemAttrName, true)
     parent.appendChild(first)
     parent.insertBefore(last, parent.firstChild)
-    setItems()
+    updateItems()
   }
 
   function refreshLoopItems() {
-    setItems()
+    updateItems()
     const parent = items[0].parentNode
     const firstToReplace = items[0]
     const first = items[1].cloneNode(true)
@@ -298,7 +298,7 @@ function KeenSlider(c, o) {
   }
 
   function mount(idx) {
-    setItems()
+    updateItems()
     if (options.touchControl) eventsAdd()
     eventAdd(window, 'orientationchange', multipleResizes)
     eventAdd(window, 'resize', multipleResizes)
@@ -368,7 +368,7 @@ function KeenSlider(c, o) {
     if (!touchActive) jumpToIdx(targetIdx)
   }
 
-  function setItems() {
+  function updateItems() {
     items = container.querySelectorAll(options.selectorSlide)
   }
 
