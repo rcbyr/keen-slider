@@ -1,5 +1,5 @@
 type TSelectorOrElement = HTMLElement | string
-type TSlideFunction = () => HTMLElement[]
+type TSlideFunction = () => NodeListOf<Element>
 
 type TOptionsEvents = {
   changed?: (idx: number) => void
