@@ -113,15 +113,15 @@ var slider = new KeenSlider('#my-slider')
 
 The following options are available.
 
-| Option       | Type     | Default                                     | Description                                 |
-| ------------ | -------- | ------------------------------------------- | ------------------------------------------- |
-| touchControl | Boolean  | true                                        | control slider with mouse or touch gestures |
-| selectorSlide   | String or Function   | ".keen-slider\_\_slide"                      | selector for the slides or function that returns a list of HtmlElements            |
-| selectorTrack   | String or HtmlElement  | ".keen-slider\_\_track"                      | selector for the track          |
-| initialSlide | Integer  | 0                                           | initial activate slide                      |
-| loop         | Boolean  | true                                        | infinity loop of slides                     |
-| moveDuration | Integer  | 500                                         | animation time                              |
-| moveEasing   | Function | function (t) { return \-\-t \* t \* t + 1 } | method animation easing                     |
+| Option        | Type                  | Default                                     | Description                                                             |
+| ------------- | --------------------- | ------------------------------------------- | ----------------------------------------------------------------------- |
+| initialSlide  | Integer               | 0                                           | initial activate slide                                                  |
+| loop          | Boolean               | true                                        | infinity loop of slides                                                 |
+| moveDuration  | Integer               | 500                                         | animation time                                                          |
+| moveEasing    | Function              | function (t) { return \-\-t \* t \* t + 1 } | method animation easing                                                 |
+| selectorSlide | String or Function    | ".keen-slider\_\_slide"                     | selector for the slides or function that returns a list of HtmlElements |
+| selectorTrack | String or HtmlElement | ".keen-slider\_\_track"                     | selector for the track                                                  |
+| touchControl  | Boolean               | true                                        | control slider with mouse or touch gestures                             |
 
 ```javascript
 var options = {
@@ -135,12 +135,12 @@ var slider = new KeenSlider('#my-slider', options)
 
 The following event hooks are available.
 
-| Event   | Params | Description                                                                      |
-| ------- | ------ | -------------------------------------------------------------------------------- |
-| changed | slide  | Fires after current slide has changed, but before the move animation has started |
-| created | -      | triggered after initialization                                                   |
-| dragStart | -    | triggered after dragging is started and scrolling is blocked                     |
-| dragEnd | -      | triggered after dragging was stopped                                             |
+| Event     | Params | Description                                                                      |
+| --------- | ------ | -------------------------------------------------------------------------------- |
+| changed   | slide  | Fires after current slide has changed, but before the move animation has started |
+| created   | -      | triggered after initialization                                                   |
+| dragStart | -      | triggered after dragging is started and scrolling is blocked                     |
+| dragEnd   | -      | triggered after dragging was stopped                                             |
 
 Example:
 
@@ -173,16 +173,16 @@ console.log('number of slides:' + slider.length)
 
 The following methods are available on a slider instance.
 
-| Method              | Arguments                                        | Description                                                            |
-| ------------------- | ------------------------------------------------ | ---------------------------------------------------------------------- |
-| destroy             | -                                                | remove events and helper slides of the loop - reset() would undo this |
-| moveToSlide         | slide(Integer), instant(Boolean, Default: false) | move to given slide - optionally without animation                     |
-| next                | -                                                | move to next slide                                                     |
-| prev                | -                                                | move to previous slide                                                 |
-| reset             | -                                                | reinitialize the loop and events and resize the slides  -  when you add/remove slides                |
-| updateLoop   | -     | since the first and last slides are cloned to make the loop work, you may want to update the cloned items when the slider content changes                   |
-| setTouchControls     | activate(Boolean)                              | add touch control events                                               |
-| resize              | -                                                | manually trigger a resize, to recalculate width of slides              |
+| Method           | Arguments                                        | Description                                                                                                                               |
+| ---------------- | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| destroy          | -                                                | remove events and helper slides of the loop - reset() would undo this                                                                     |
+| moveToSlide      | slide(Integer), instant(Boolean, Default: false) | move to given slide - optionally without animation                                                                                        |
+| next             | -                                                | move to next slide                                                                                                                        |
+| prev             | -                                                | move to previous slide                                                                                                                    |
+| reset            | -                                                | reinitialize the loop and events and resize the slides - when you add/remove slides                                                       |
+| updateLoop       | -                                                | since the first and last slides are cloned to make the loop work, you may want to update the cloned items when the slider content changes |
+| setTouchControls | activate(Boolean)                                | add touch control events                                                                                                                  |
+| resize           | -                                                | manually trigger a resize, to recalculate width of slides                                                                                 |
 
 Example:
 

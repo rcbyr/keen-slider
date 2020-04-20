@@ -140,7 +140,7 @@ function KeenSlider(c, o) {
     touchActive = false
     const diff = trackX - trackXBeforeTouch
     let idx = getDragEndIdx(diff)
-    moveToIdx(idx)
+    // m  oveToIdx(idx)
   }
 
   function errorOnInit() {
@@ -229,12 +229,12 @@ function KeenSlider(c, o) {
       : options.virtualSlides
   }
 
-  function getIdxOfX(x) {
-    let idx = Math.abs(Math.round(-(x / getContainerWidth())))
+  function getEstimatedXOfX(x) {
+    let idx = parseFloat(Math.abs(-(x / getContainerWidth())).toFixed(10), 10)
     if (!options.loop) return idx
     idx -= 1
-    if (idx === -1) return getItemCount() - 1
-    if (idx === getItemLastIdx() - 1) return 0
+    if (idx === -1) return idx + getItemCount()
+    if (idx === getItemLastIdx() - 1) return idx - getItemCount()
     return idx
   }
 
@@ -242,9 +242,9 @@ function KeenSlider(c, o) {
     console.log(getProgressSlides(x))
     return {
       progress: getProgress(x),
-      // progressSlides: getProgressSlides(x),
-      currentSlide: getIdxOfX(x),
-      targetSlide: targetIdx,
+      progressSlides: getProgressSlides(x),
+      currentSlide: Math.abs(Math.round(getEstimatedXOfX(x))),
+      targetSlide: translateToInputIdx(targetIdx),
     }
   }
 
@@ -256,15 +256,19 @@ function KeenSlider(c, o) {
     )
   }
 
-  // function getProgressSlides(x) {
-  //   let idx = Math.abs(Math.round(-(x / getContainerWidth())))
-  //   // console.log(Math.abs(-(x / getContainerWidth())))
-  //   const progress = []
-  //   for (let i = 0; i < getItemCount(); i++) {
-  //     progress[i] = 0
-  //   }
-  //   return progress
-  // }
+  function getProgressSlides(x) {
+    x = getEstimatedXOfX(x)
+    const slides = []
+    for (let i = 0; i < getItemCount(); i++) {
+      const progress = i - x
+      // console.log(x, progress, i)
+      // slides[i] = progress >= -1 && progress <= 1 ? progress : 5
+      // slides[i] = progress > 0 ? 1 - Math.abs(progress) : -1 - progress
+      slides[i] = progress
+      // slides[i] = Math.abs(progress) <= 1 ? progress : 0
+    }
+    return slides
+  }
 
   function getXOfIdx(idx) {
     return -(getContainerWidth() * clampValue(idx, 0, getItemLastIdx()))
