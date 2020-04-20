@@ -230,12 +230,41 @@ function KeenSlider(c, o) {
   }
 
   function getIdxOfX(x) {
-    return Math.round(-(x / getContainerWidth())) - 1
+    let idx = Math.abs(Math.round(-(x / getContainerWidth())))
+    if (!options.loop) return idx
+    idx -= 1
+    if (idx === -1) return getItemCount() - 1
+    if (idx === getItemLastIdx() - 1) return 0
+    return idx
   }
 
   function getPositionDetails(x) {
-    return x
+    console.log(getProgressSlides(x))
+    return {
+      progress: getProgress(x),
+      // progressSlides: getProgressSlides(x),
+      currentSlide: getIdxOfX(x),
+      targetSlide: targetIdx,
+    }
   }
+
+  function getProgress(x) {
+    if (options.loop) x += getContainerWidth()
+    return parseFloat(
+      -(x / (getContainerWidth() * (getItemCount() - 1))).toFixed(10),
+      10
+    )
+  }
+
+  // function getProgressSlides(x) {
+  //   let idx = Math.abs(Math.round(-(x / getContainerWidth())))
+  //   // console.log(Math.abs(-(x / getContainerWidth())))
+  //   const progress = []
+  //   for (let i = 0; i < getItemCount(); i++) {
+  //     progress[i] = 0
+  //   }
+  //   return progress
+  // }
 
   function getXOfIdx(idx) {
     return -(getContainerWidth() * clampValue(idx, 0, getItemLastIdx()))
@@ -292,7 +321,7 @@ function KeenSlider(c, o) {
   }
 
   function loopItemsAppend() {
-    if (options.virtualSlide) return
+    if (options.virtualSlides) return
     const parent = items[0].parentNode
     const first = items[0].cloneNode(true)
     const last = items[getItemLastIdx()].cloneNode(true)
@@ -304,7 +333,7 @@ function KeenSlider(c, o) {
   }
 
   function refreshLoopItems() {
-    if (options.virtualSlide) return
+    if (options.virtualSlides) return
     updateItems()
     const parent = items[0].parentNode
     const firstToReplace = items[0]
