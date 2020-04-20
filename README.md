@@ -10,11 +10,11 @@ The HTML touch slider carousel with the most native feeling you will get.
 Features:
 
 - great performance and fully responsive
-- only 5.3 KB (2.2 KB gzipped)
+- only 2.3 KB gzipped
 - works great and the same, on all devices and browsers (>= IE10)
 - no dependencies
 - typescript compatible
-- examples for the most common SPA's (react, vue, angular)
+- examples for the most common frameworks/libraries (React, Vue.js, Angular and LitElement)
 - simple API
 
 Demo: https://rcbyr.github.io/keen-slider/
@@ -116,8 +116,8 @@ The following options are available.
 | Option       | Type     | Default                                     | Description                                 |
 | ------------ | -------- | ------------------------------------------- | ------------------------------------------- |
 | touchControl | Boolean  | true                                        | control slider with mouse or touch gestures |
-| classSlide   | String   | "keen-slider\_\_slide"                      | necessary class name for a slide            |
-| classTrack   | String   | "keen-slider\_\_track"                      | necessary class name for the track          |
+| selectorSlide   | String or Function   | ".keen-slider\_\_slide"                      | selector for the slides or function that returns a list of HtmlElements            |
+| selectorTrack   | String or HtmlElement  | ".keen-slider\_\_track"                      | selector for the track          |
 | initialSlide | Integer  | 0                                           | initial activate slide                      |
 | loop         | Boolean  | true                                        | infinity loop of slides                     |
 | moveDuration | Integer  | 500                                         | animation time                              |
@@ -138,7 +138,9 @@ The following event hooks are available.
 | Event   | Params | Description                                                                      |
 | ------- | ------ | -------------------------------------------------------------------------------- |
 | changed | slide  | Fires after current slide has changed, but before the move animation has started |
-| created | -      | will be triggered after initialization                                           |
+| created | -      | triggered after initialization                                                   |
+| dragStart | -    | triggered after dragging is started and scrolling is blocked                     |
+| dragEnd | -      | triggered after dragging was stopped                                             |
 
 Example:
 
@@ -173,14 +175,13 @@ The following methods are available on a slider instance.
 
 | Method              | Arguments                                        | Description                                                            |
 | ------------------- | ------------------------------------------------ | ---------------------------------------------------------------------- |
-| destroy             | -                                                | remove events and helper slides of the loop - refesh() would undo this |
+| destroy             | -                                                | remove events and helper slides of the loop - reset() would undo this |
 | moveToSlide         | slide(Integer), instant(Boolean, Default: false) | move to given slide - optionally without animation                     |
 | next                | -                                                | move to next slide                                                     |
 | prev                | -                                                | move to previous slide                                                 |
-| refresh             | -                                                | reinitialize the loop and events and resize the slides  -  when you add/remove slides                |
-| refreshLoopSlides   | -                                                | since the first and last slides are cloned to make the loop work, you may want to update the cloned items when the slider content changes                   |
-| addTouchContols     | -                                                | add touch control events                                               |
-| removeTouchControls | -                                                | remove touch control events                                            |
+| reset             | -                                                | reinitialize the loop and events and resize the slides  -  when you add/remove slides                |
+| updateLoop   | -     | since the first and last slides are cloned to make the loop work, you may want to update the cloned items when the slider content changes                   |
+| setTouchControls     | activate(Boolean)                              | add touch control events                                               |
 | resize              | -                                                | manually trigger a resize, to recalculate width of slides              |
 
 Example:

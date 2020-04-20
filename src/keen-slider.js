@@ -1,21 +1,19 @@
 function KeenSlider(c, o) {
   const defaultOptions = {
-    changed: function (idx) {
-      return
-    },
-    created: function () {
-      return
-    },
+    changed: null,
+    created: null,
+    dragEnd: null,
+    dragStart: null,
+    initialSlide: 0,
+    loop: true,
     move: null,
-    touchControl: true,
-    classSlide: 'keen-slider__slide',
-    classTrack: 'keen-slider__track',
+    moveDuration: 500,
     moveEasing: function (t) {
       return --t * t * t + 1
     },
-    initialSlide: 0,
-    loop: true,
-    moveDuration: 500,
+    selectorSlide: '.keen-slider__slide',
+    selectorTrack: '.keen-slider__track',
+    touchControl: true,
     virtualSlides: null,
   }
 
@@ -25,7 +23,6 @@ function KeenSlider(c, o) {
   let track = null
   let items = []
   const loopItemAttrName = 'data-ke-sl-lo'
-  let loopNeedUpdate = true
   let lastWindowWidth = null
 
   // touch/swipe helper
@@ -77,7 +74,8 @@ function KeenSlider(c, o) {
       trackX = clampValue(trackX, -getContainerWidth() * getItemLastIdx(), 0)
     }
     if (options.move) options.move.call(pubfuncs, getPositionDetails(trackX))
-    if (!options.virtualSlides) track.style.transform = `translate3d(${trackX}px, 0, 0)`
+    if (!options.virtualSlides)
+      track.style.transform = `translate3d(${trackX}px, 0, 0)`
   }
 
   function clampIdx(idx) {
@@ -89,19 +87,26 @@ function KeenSlider(c, o) {
   }
 
   function getIdentifier(e) {
-    return e.targetTouches === undefined ? "default" : e.targetTouches[0].identifier
+    return e.targetTouches === undefined
+      ? 'default'
+      : e.targetTouches[0].identifier
   }
 
   function isCorrectTouch(e) {
-    return e.targetTouches === undefined ? true : e.targetTouches[0].identifier === touchIdentifier
+    return e.targetTouches === undefined
+      ? true
+      : e.targetTouches[0].identifier === touchIdentifier
   }
 
   function isEndtouch(e) {
-    return e.changedTouches === undefined ? true : e.changedTouches[0].identifier === touchIdentifier
+    return e.changedTouches === undefined
+      ? true
+      : e.changedTouches[0].identifier === touchIdentifier
   }
 
   function dragstart(e) {
     if (touchActive) return
+    if (options.dragStart) options.dragStart.call(pubfuncs)
     touchActive = true
     touchIdentifier = getIdentifier(e)
     moveAbortAnimate()
@@ -131,6 +136,7 @@ function KeenSlider(c, o) {
 
   function dragend(e) {
     if (!touchActive || !isEndtouch(e)) return
+    if (options.dragEnd) options.dragEnd.call(pubfuncs)
     touchActive = false
     const diff = trackX - trackXBeforeTouch
     let idx = getDragEndIdx(diff)
@@ -216,7 +222,11 @@ function KeenSlider(c, o) {
   }
 
   function getSlides() {
-    return !options.virtualSlides ? items.length : (options.loop) ? options.virtualSlides + 2 : options.virtualSlides
+    return !options.virtualSlides
+      ? items.length
+      : options.loop
+      ? options.virtualSlides + 2
+      : options.virtualSlides
   }
 
   function getIdxOfX(x) {
@@ -235,10 +245,10 @@ function KeenSlider(c, o) {
     container = getContainer(c)
     if (container instanceof HTMLElement === false) return errorOnInit()
     options = { ...defaultOptions, ...o }
-    track = container.getElementsByClassName(options.classTrack)[0]
+    track = getTrack(options.selectorTrack)
     if (track instanceof HTMLElement === false) return errorOnInit()
     mount(translateFromInputIdx(options.initialSlide))
-    options.created.call(pubfuncs)
+    if (options.created) options.created.call(pubfuncs)
     return true
   }
 
@@ -247,6 +257,13 @@ function KeenSlider(c, o) {
       return document.querySelector(container)
     }
     return container
+  }
+
+  function getTrack(track) {
+    if (typeof track === 'string') {
+      return container.querySelector(track)
+    }
+    return track
   }
 
   function isHidden() {
@@ -275,6 +292,7 @@ function KeenSlider(c, o) {
   }
 
   function loopItemsAppend() {
+    if (options.virtualSlide) return
     const parent = items[0].parentNode
     const first = items[0].cloneNode(true)
     const last = items[getItemLastIdx()].cloneNode(true)
@@ -282,10 +300,12 @@ function KeenSlider(c, o) {
     last.setAttribute(loopItemAttrName, true)
     parent.appendChild(first)
     parent.insertBefore(last, parent.firstChild)
+    updateItems()
   }
 
   function refreshLoopItems() {
     if (options.virtualSlide) return
+    updateItems()
     const parent = items[0].parentNode
     const firstToReplace = items[0]
     const first = items[1].cloneNode(true)
@@ -306,11 +326,11 @@ function KeenSlider(c, o) {
   }
 
   function mount(idx) {
-    items = track.getElementsByClassName(options.classSlide)
+    updateItems()
     if (options.touchControl) eventsAdd()
     eventAdd(window, 'orientationchange', multipleResizes)
     eventAdd(window, 'resize', multipleResizes)
-    if (options.loop && !options.virtualSlides) loopItemsAppend()
+    if (options.loop) loopItemsAppend()
     jumpToIdx(idx)
     resize()
   }
@@ -377,6 +397,14 @@ function KeenSlider(c, o) {
     if (!touchActive) jumpToIdx(targetIdx)
   }
 
+  function updateItems() {
+    if (typeof options.selectorSlide === 'function') {
+      items = options.selectorSlide()
+      return
+    }
+    items = container.querySelectorAll(options.selectorSlide)
+  }
+
   function setItemWidth(width) {
     for (let i = 0; i < getSlides(); i++) {
       items[i].style.width = width + 'px'
@@ -385,12 +413,14 @@ function KeenSlider(c, o) {
 
   function setTargetIdx(idx, clamp) {
     targetIdx = clamp ? clampIdx(idx) : idx
-    options.changed.call(pubfuncs, translateToInputIdx(targetIdx))
+    if (options.changed)
+      options.changed.call(pubfuncs, translateToInputIdx(targetIdx))
   }
 
   function scroll(e) {
     if (touchActive) {
       touchActive = false
+      if (options.dragEnd) options.dragEnd.call(pubfuncs)
       moveToIdx(targetIdx)
     }
   }
@@ -432,16 +462,13 @@ function KeenSlider(c, o) {
       const idx = clampIdx(translateFromInputIdx(slide))
       return instant ? jumpToIdx(idx) : moveToIdx(idx)
     },
-    refresh,
-    refreshLoopSlides: refreshLoopItems,
-    addTouchContols: () => {
-      eventsAdd()
-    },
-    removeTouchControls: () => {
-      eventsRemove()
-    },
+    reset: refresh,
+    updateLoop: refreshLoopItems,
     resize() {
       resize(true)
+    },
+    setTouchControls: activate => {
+      activate ? eventsAdd() : eventsRemove()
     },
     get current() {
       return translateToInputIdx(targetIdx)
