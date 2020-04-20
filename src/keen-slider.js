@@ -76,7 +76,7 @@ function KeenSlider(c, o) {
       trackX = clampValue(trackX, -getContainerWidth() * getItemLastIdx(), 0)
     }
     if (options.move) options.move.call(pubfuncs, getPositionDetails(trackX))
-    if (!options.virtualSlides)
+    if (!isVirtual())
       track.style.transform = `translate3d(${trackX}px, 0, 0)`
   }
 
@@ -224,7 +224,7 @@ function KeenSlider(c, o) {
   }
 
   function getSlides() {
-    return !options.virtualSlides
+    return !isVirtual()
       ? items.length
       : options.loop
         ? options.virtualSlides + 2
@@ -282,7 +282,7 @@ function KeenSlider(c, o) {
     if (container instanceof HTMLElement === false) return errorOnInit()
     options = { ...defaultOptions, ...o }
     track = getTrack(options.selectorTrack)
-    if (track instanceof HTMLElement === false) return errorOnInit()
+    if (track instanceof HTMLElement === false && !isVirtual()) return errorOnInit()
     mount(translateFromInputIdx(options.initialSlide))
     if (options.created) options.created.call(pubfuncs)
     return true
@@ -304,6 +304,10 @@ function KeenSlider(c, o) {
 
   function isHidden() {
     return document.hidden
+  }
+
+  function isVirtual() {
+    return options.virtualSlides !== null
   }
 
   function isVerticalSlide(e) {
@@ -328,7 +332,7 @@ function KeenSlider(c, o) {
   }
 
   function loopItemsAppend() {
-    if (options.virtualSlides) return
+    if (isVirtual()) return
     const parent = items[0].parentNode
     const first = items[0].cloneNode(true)
     const last = items[getItemLastIdx()].cloneNode(true)
@@ -340,7 +344,7 @@ function KeenSlider(c, o) {
   }
 
   function refreshLoopItems() {
-    if (options.virtualSlides) return
+    if (isVirtual()) return
     updateItems()
     const parent = items[0].parentNode
     const firstToReplace = items[0]
@@ -425,7 +429,7 @@ function KeenSlider(c, o) {
     const windowWidth = window.innerWidth
     if (windowWidth === lastWindowWidth && !force) return
     const width = getContainerWidth()
-    if (!options.virtualSlides) {
+    if (!isVirtual()) {
       track.style.width = width * getSlides() + 'px'
       setItemWidth(getContainerWidth())
     }

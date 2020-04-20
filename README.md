@@ -15,7 +15,7 @@ Features:
 - no dependencies
 - typescript compatible
 - examples for the most common frameworks/libraries (React, Vue.js, Angular and LitElement)
-- simple API
+- simple but powerful API
 
 Demo: https://rcbyr.github.io/keen-slider/
 
@@ -122,6 +122,7 @@ The following options are available.
 | selectorSlide | String or Function    | ".keen-slider\_\_slide"                     | selector for the slides or function that returns a list of HtmlElements |
 | selectorTrack | String or HtmlElement | ".keen-slider\_\_track"                     | selector for the track                                                  |
 | touchControl  | Boolean               | true                                        | control slider with mouse or touch gestures                             |
+| virtualSlides | Integer               | null                                        | Disables dom manipulation and ignores track and slides. Simulates slider with given number of slides. Use move hook to get slider details. |
 
 ```javascript
 var options = {
@@ -137,10 +138,23 @@ The following event hooks are available.
 
 | Event     | Params | Description                                                                      |
 | --------- | ------ | -------------------------------------------------------------------------------- |
-| changed   | slide  | Fires after current slide has changed, but before the move animation has started |
+| changed   | slide: number  | Fires after current slide has changed, but before the move animation has started |
 | created   | -      | triggered after initialization                                                   |
 | dragStart | -      | triggered after dragging is started and scrolling is blocked                     |
 | dragEnd   | -      | triggered after dragging was stopped                                             |
+| move      | details: TDetails | triggered after slider has moved by any reason |
+
+TDetails
+
+| Property  | Description                                 |
+| ------- | ------------------------------------------- |
+| currentSlide | number of the slide in viewport  |
+| direction | current direction of movement -1, 0 or 1  |
+| progress  | progress of slider 0 to 1 - with loop enabled, +-(1 / slides * .5)|
+| progressSlides | to be written  |
+| targetSlide | number of the slide, where the slider will move to  |
+
+
 
 Example:
 
