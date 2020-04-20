@@ -11,12 +11,7 @@ if (window.NodeList && !NodeList.prototype.forEach) {
   }
 }
 
-new KeenSlider('#slider-basic', {
-  loop: true,
-  move: function (x) {
-    // console.log(x)
-  },
-})
+new KeenSlider('#slider-basic')
 
 new KeenSlider(document.getElementById('slider-with-arrows'), {
   loop: false,

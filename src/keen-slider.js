@@ -38,6 +38,7 @@ function KeenSlider(c, o) {
   let touchIdentifier = null
 
   // positioning
+  let lastTrackX = null
   let trackX = null
   let targetIdx = 0
 
@@ -69,6 +70,7 @@ function KeenSlider(c, o) {
           (trackX - -getContainerWidth() / 2)
       }
     }
+    lastTrackX = trackX
     trackX = trackX - val
     if (!options.loop) {
       trackX = clampValue(trackX, -getContainerWidth() * getItemLastIdx(), 0)
@@ -140,7 +142,7 @@ function KeenSlider(c, o) {
     touchActive = false
     const diff = trackX - trackXBeforeTouch
     let idx = getDragEndIdx(diff)
-    // m  oveToIdx(idx)
+    moveToIdx(idx)
   }
 
   function errorOnInit() {
@@ -225,8 +227,8 @@ function KeenSlider(c, o) {
     return !options.virtualSlides
       ? items.length
       : options.loop
-      ? options.virtualSlides + 2
-      : options.virtualSlides
+        ? options.virtualSlides + 2
+        : options.virtualSlides
   }
 
   function getEstimatedXOfX(x) {
@@ -239,8 +241,8 @@ function KeenSlider(c, o) {
   }
 
   function getPositionDetails(x) {
-    console.log(getProgressSlides(x))
     return {
+      direction: Math.sign(x - lastTrackX),
       progress: getProgress(x),
       progressSlides: getProgressSlides(x),
       currentSlide: Math.abs(Math.round(getEstimatedXOfX(x))),
@@ -260,12 +262,13 @@ function KeenSlider(c, o) {
     x = getEstimatedXOfX(x)
     const slides = []
     for (let i = 0; i < getItemCount(); i++) {
-      const progress = i - x
-      // console.log(x, progress, i)
-      // slides[i] = progress >= -1 && progress <= 1 ? progress : 5
-      // slides[i] = progress > 0 ? 1 - Math.abs(progress) : -1 - progress
-      slides[i] = progress
-      // slides[i] = Math.abs(progress) <= 1 ? progress : 0
+      const relative = i - x
+      const distance = relative > getItemCount() - 1 ? relative - getItemCount() : relative < -(getItemCount() - 1) ? relative + getItemCount() : relative
+      const progress = 1 - Math.abs(distance)
+      slides[i] = {
+        distance,
+        progress: progress < 0 || progress > 1 ? 0 : progress
+      }
     }
     return slides
   }
