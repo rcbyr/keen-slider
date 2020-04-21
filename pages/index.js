@@ -60,12 +60,12 @@ new KeenSlider(document.getElementById('slider-with-arrows'), {
 const autoplay = new KeenSlider(document.getElementById('slider-autoplay'), {
   touchControl: false,
 })
-// setInterval(autoplay.next, 2000)
+setInterval(autoplay.next, 2000)
 
 const slider_lazy = document.getElementById('slider-lazy-load')
 const lazy_items = slider_lazy.querySelectorAll('.keen-slider__slide')
 
-const lazy = new KeenSlider(slider_lazy, {
+new KeenSlider(slider_lazy, {
   created: function () {
     loadImage(lazy_items[this.current])
   },
