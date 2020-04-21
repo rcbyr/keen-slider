@@ -89,9 +89,11 @@ function loadImage(item, func) {
 const slider_fade = document.getElementById('slider-virtual')
 const fade_items = slider_fade.querySelectorAll('.slide')
 new KeenSlider(slider_fade, {
-  virtualSlides: 6, move(details) {
+  virtualSlides: 6,
+  moveDuration: 2000,
+  move(details) {
     fade_items.forEach(function (item, idx) {
       item.style.opacity = details.progressSlides[idx].progress
     })
-  }
+  },
 })
