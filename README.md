@@ -113,16 +113,16 @@ var slider = new KeenSlider('#my-slider')
 
 The following options are available.
 
-| Option        | Type                  | Default                                     | Description                                                             |
-| ------------- | --------------------- | ------------------------------------------- | ----------------------------------------------------------------------- |
-| initialSlide  | Integer               | 0                                           | initial activate slide                                                  |
-| loop          | Boolean               | true                                        | infinity loop of slides                                                 |
-| moveDuration  | Integer               | 500                                         | animation time                                                          |
-| moveEasing    | Function              | function (t) { return \-\-t \* t \* t + 1 } | method animation easing                                                 |
-| selectorSlide | String or Function    | ".keen-slider\_\_slide"                     | selector for the slides or function that returns a list of HtmlElements |
-| selectorTrack | String or HtmlElement | ".keen-slider\_\_track"                     | selector for the track                                                  |
-| touchControl  | Boolean               | true                                        | control slider with mouse or touch gestures                             |
-| virtualSlides | Integer               | null                                        | Disables dom manipulation and ignores track and slides. Simulates slider with given number of slides. Use move hook to get slider details. |
+| Option        | Type                  | Default                                     | Description                                                                                                                                                                                               |
+| ------------- | --------------------- | ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| initialSlide  | Integer               | 0                                           | initial activate slide                                                                                                                                                                                    |
+| loop          | Boolean               | true                                        | infinity loop of slides                                                                                                                                                                                   |
+| moveDuration  | Integer               | 500                                         | animation time                                                                                                                                                                                            |
+| moveEasing    | Function              | function (t) { return \-\-t \* t \* t + 1 } | method animation easing                                                                                                                                                                                   |
+| selectorSlide | String or Function    | ".keen-slider\_\_slide"                     | selector for the slides or function that returns a list of HtmlElements                                                                                                                                   |
+| selectorTrack | String or HtmlElement | ".keen-slider\_\_track"                     | selector for the track                                                                                                                                                                                    |
+| touchControl  | Boolean               | true                                        | control slider with mouse or touch gestures                                                                                                                                                               |
+| virtualSlides | Integer               | null                                        | Disables dom manipulation and ignores track and slides. Simulates slider with given number of slides. Use move hook to get slider details. [Example](https://rcbyr.github.io/keen-slider/#virtual-slides) |
 
 ```javascript
 var options = {
@@ -136,25 +136,23 @@ var slider = new KeenSlider('#my-slider', options)
 
 The following event hooks are available.
 
-| Event     | Params | Description                                                                      |
-| --------- | ------ | -------------------------------------------------------------------------------- |
-| changed   | slide: number  | Fires after current slide has changed, but before the move animation has started |
-| created   | -      | triggered after initialization                                                   |
-| dragStart | -      | triggered after dragging is started and scrolling is blocked                     |
-| dragEnd   | -      | triggered after dragging was stopped                                             |
-| move      | details: TDetails | triggered after slider has moved by any reason |
+| Event     | Params            | Description                                                                                                   |
+| --------- | ----------------- | ------------------------------------------------------------------------------------------------------------- |
+| changed   | slide(Integer)    | Fires after current slide has changed, but before the move animation has started                              |
+| created   | -                 | triggered after initialization                                                                                |
+| dragStart | -                 | triggered after dragging is started and scrolling is blocked                                                  |
+| dragEnd   | -                 | triggered after dragging was stopped                                                                          |
+| move      | details(TDetails) | triggered after slider has moved by any reason [Example](https://rcbyr.github.io/keen-slider/#virtual-slides) |
 
 TDetails
 
-| Property  | Description                                 |
-| ------- | ------------------------------------------- |
-| currentSlide | number of the slide in viewport  |
-| direction | current direction of movement -1, 0 or 1  |
-| progress  | progress of slider 0 to 1 - with loop enabled, +-(1 / slides * .5)|
-| progressSlides | to be written  |
-| targetSlide | number of the slide, where the slider will move to  |
-
-
+| Property       | Type                                      | Description                                                           |
+| -------------- | ----------------------------------------- | --------------------------------------------------------------------- |
+| currentSlide   | Integer                                   | slide in viewport                                                     |
+| direction      | Integer(-1..1)                            | current direction of movement                                         |
+| progress       | Float(0..1)                               | progress of slider - 0 to 1 - with loop enabled, +-(1 / slides \* .5) |
+| progressSlides | Array({distance(Float), progress(Float)}) | distance to viewport and progress of visibility for each slide        |
+| targetSlide    | Integer                                   | slide to which the slider is moving                                   |
 
 Example:
 
