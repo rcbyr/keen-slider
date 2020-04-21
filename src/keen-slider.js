@@ -76,8 +76,7 @@ function KeenSlider(c, o) {
       trackX = clampValue(trackX, -getContainerWidth() * getItemLastIdx(), 0)
     }
     if (options.move) options.move.call(pubfuncs, getPositionDetails(trackX))
-    if (!isVirtual())
-      track.style.transform = `translate3d(${trackX}px, 0, 0)`
+    if (!isVirtual()) track.style.transform = `translate3d(${trackX}px, 0, 0)`
   }
 
   function clampIdx(idx) {
@@ -227,8 +226,8 @@ function KeenSlider(c, o) {
     return !isVirtual()
       ? items.length
       : options.loop
-        ? options.virtualSlides + 2
-        : options.virtualSlides
+      ? options.virtualSlides + 2
+      : options.virtualSlides
   }
 
   function getEstimatedXOfX(x) {
@@ -263,11 +262,16 @@ function KeenSlider(c, o) {
     const slides = []
     for (let i = 0; i < getItemCount(); i++) {
       const relative = i - x
-      const distance = relative > getItemCount() - 1 ? relative - getItemCount() : relative < -(getItemCount() - 1) ? relative + getItemCount() : relative
+      const distance =
+        relative > getItemCount() - 1
+          ? relative - getItemCount()
+          : relative < -(getItemCount() - 1)
+          ? relative + getItemCount()
+          : relative
       const progress = 1 - Math.abs(distance)
       slides[i] = {
         distance,
-        progress: progress < 0 || progress > 1 ? 0 : progress
+        progress: progress < 0 || progress > 1 ? 0 : progress,
       }
     }
     return slides
@@ -282,7 +286,8 @@ function KeenSlider(c, o) {
     if (container instanceof HTMLElement === false) return errorOnInit()
     options = { ...defaultOptions, ...o }
     track = getTrack(options.selectorTrack)
-    if (track instanceof HTMLElement === false && !isVirtual()) return errorOnInit()
+    if (track instanceof HTMLElement === false && !isVirtual())
+      return errorOnInit()
     mount(translateFromInputIdx(options.initialSlide))
     if (options.created) options.created.call(pubfuncs)
     return true
@@ -358,6 +363,7 @@ function KeenSlider(c, o) {
   }
 
   function loopItemsRemove() {
+    if (isVirtual()) return
     const loopItems = track.querySelectorAll('[' + loopItemAttrName + ']')
     for (let i = 0; i < loopItems.length; i++) {
       const child = loopItems[i]
