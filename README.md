@@ -7,6 +7,8 @@
 
 The HTML touch slider carousel with the most native feeling you will get.
 
+Demo: https://rcbyr.github.io/keen-slider/
+
 Features:
 
 - great performance and fully responsive
@@ -16,8 +18,6 @@ Features:
 - typescript compatible
 - examples for the most common frameworks/libraries (React, Vue.js, Angular and LitElement)
 - simple but powerful API
-
-Demo: https://rcbyr.github.io/keen-slider/
 
 ## Getting Started
 
