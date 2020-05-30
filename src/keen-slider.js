@@ -237,7 +237,7 @@ function KeenSlider(initialContainer, initialOptions) {
       return
     }
     if (offset !== 0 && isrubberband() && !moveForceFinish) {
-      return moverubberband(Math.sign(offset))
+      return moveRubberband(Math.sign(offset))
     }
     moved += add
     trackAdd(add, false)
@@ -307,16 +307,17 @@ function KeenSlider(initialContainer, initialOptions) {
     moveTo(idx * (width / slidesPerView) - trackPosition, duration, easing)
   }
 
-  function moverubberband() {
+  function moveRubberband() {
     moveAnimateAbort()
     const cb = () => {
+      console.log(2)
       moveToIdx(trackCurrentIdx, true)
     }
     if (trackSpeed === 0) return cb()
     const friction = 0.05 / Math.pow(Math.abs(trackSpeed), -0.5)
     const distance =
       (Math.pow(trackSpeed, 2) / friction) * Math.sign(trackSpeed)
-    const duration = Math.abs(trackSpeed / friction) * 4
+    const duration = Math.abs(trackSpeed / friction) * 2
     const easing = function (t) {
       return t * (2 - t)
     }
