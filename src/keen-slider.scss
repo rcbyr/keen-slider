@@ -2,7 +2,6 @@
   display: block;
   overflow: hidden;
   position: relative;
-
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -14,12 +13,9 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.keen-slider__track {
-  display: flex;
-  height: 100%;
-}
-
 .keen-slider__slide {
-  height: 100%;
+  position: absolute;
   overflow: hidden;
+  width: 100%;
+  min-height: 100%;
 }

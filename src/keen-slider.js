@@ -1,417 +1,215 @@
-function KeenSlider(c, o) {
-  const defaultOptions = {
-    changed: null,
-    created: null,
-    dragEnd: null,
-    dragStart: null,
-    initialSlide: 0,
-    loop: true,
-    move: null,
-    moveDuration: 500,
-    moveEasing: function (t) {
-      return --t * t * t + 1
-    },
-    selectorSlide: '.keen-slider__slide',
-    selectorTrack: '.keen-slider__track',
-    touchControl: true,
-    virtualSlides: null,
-  }
+import './polyfills'
+import { useKeenSlider } from './react-hook'
 
-  let options = null
+export { useKeenSlider }
 
-  let container = null
-  let track = null
-  let items = []
-  const loopItemAttrName = 'data-ke-sl-lo'
-  let lastWindowWidth = null
+function KeenSlider(initialContainer, initialOptions) {
+  const events = []
+
+  let container
+  let touchControls
+  let length
+  let origin
+  let slides
+  let width
+  let slidesPerView
+  let spacing
+  let resizeLastWidth
+  let breakpointCurrent = null
+  let optionsChanged = false
+  let sliderCreated = false
+
+  let trackCurrentIdx
+  let trackPosition = 0
+  let trackMeasurePoints = []
+  let trackDirection
+  let trackMeasureTimeout
+  let trackSpeed
+  let trackSlidePositions
+  let trackProgress
+
+  let options
 
   // touch/swipe helper
-  const events = []
-  let touchDirection = null
-  let touchActive = false
-  let touchStartX = null
-  let touchLastX = null
-  let touchDistance = 0
-  let trackXBeforeTouch = null
-  let lastTouchClientX = null
-  let lastTouchClientY = null
-  let touchIdentifier = null
-
-  // positioning
-  let lastTrackX = null
-  let trackX = null
-  let targetIdx = 0
+  let touchActive
+  let touchIdentifier
+  let touchLastX
+  let touchLastClientX
+  let touchLastClientY
+  let touchMultiplicator
+  let touchJustStarted
 
   // animation
-  let reqId = null
-  let startTime = 0
-  let moveDistance = null
-  let moved = null
-
-  function addToPosition(val) {
-    if (trackX !== null && options.loop) {
-      if (
-        trackX <
-        -getContainerWidth() * getItemCount() - getContainerWidth() / 2
-      ) {
-        targetIdx -= getItemCount()
-        trackX =
-          -getContainerWidth() +
-          getContainerWidth() / 2 -
-          (-getContainerWidth() * getItemCount() -
-            getContainerWidth() / 2 -
-            trackX)
-      }
-      if (trackX > -getContainerWidth() / 2) {
-        targetIdx += getItemCount()
-        trackX =
-          -getContainerWidth() * getItemLastIdx() +
-          getContainerWidth() / 2 +
-          (trackX - -getContainerWidth() / 2)
-      }
-    }
-    lastTrackX = trackX
-    trackX = trackX - val
-    if (!options.loop) {
-      trackX = clampValue(trackX, -getContainerWidth() * getItemLastIdx(), 0)
-    }
-    if (options.move) options.move.call(pubfuncs, getPositionDetails(trackX))
-    if (!isVirtual()) track.style.transform = `translate3d(${trackX}px, 0, 0)`
-  }
-
-  function clampIdx(idx) {
-    return clampValue(idx, 0, getItemLastIdx())
-  }
-
-  function clampValue(value, min, max) {
-    return Math.min(Math.max(value, min), max)
-  }
-
-  function getIdentifier(e) {
-    return e.targetTouches === undefined
-      ? 'default'
-      : e.targetTouches[0].identifier
-  }
-
-  function isCorrectTouch(e) {
-    return e.targetTouches === undefined
-      ? true
-      : e.targetTouches[0].identifier === touchIdentifier
-  }
-
-  function isEndtouch(e) {
-    return e.changedTouches === undefined
-      ? true
-      : e.changedTouches[0].identifier === touchIdentifier
-  }
-
-  function dragstart(e) {
-    if (touchActive) return
-    if (options.dragStart) options.dragStart.call(pubfuncs)
-    touchActive = true
-    touchIdentifier = getIdentifier(e)
-    moveAbortAnimate()
-    touchStartX = getEventX(e)
-    touchLastX = touchStartX
-    touchDistance = 0
-    trackXBeforeTouch = trackX
-  }
-
-  function drag(e) {
-    if (touchStartX === null || !touchActive || !isCorrectTouch(e)) return
-    const x = getEventX(e)
-
-    if (isVerticalSlide(e)) {
-      touchLastX = x
-      return
-    }
-    e.preventDefault()
-    touchDistance = x - touchLastX
-    touchDirection = touchLastX
-      ? Math.sign(x - touchLastX)
-      : Math.sign(touchDistance - touchStartX)
-
-    addToPosition(touchLastX - x)
-    touchLastX = x
-  }
-
-  function dragend(e) {
-    if (!touchActive || !isEndtouch(e)) return
-    if (options.dragEnd) options.dragEnd.call(pubfuncs)
-    touchActive = false
-    const diff = trackX - trackXBeforeTouch
-    let idx = getDragEndIdx(diff)
-    moveToIdx(idx)
-  }
-
-  function errorOnInit() {
-    console.error('keen-slider error: markup not correct')
-    return false
-  }
+  let reqId
+  let startTime
+  let moveDistance
+  let moveDuration
+  let moveEasing
+  let moved
+  let moveForceFinish
+  let moveCallBack
 
   function eventAdd(element, event, handler, options = {}) {
-    if (Array.isArray(element)) {
-      element.forEach(function (elem) {
-        eventAdd(elem, event, handler, options)
-      })
-      return
-    }
-    if (!element || !element.addEventListener)
-      return console.info('event handler could not be assigned')
     element.addEventListener(event, handler, options)
     events.push([element, event, handler])
   }
 
+  function eventDrag(e) {
+    if (
+      !touchActive ||
+      touchIdentifier !== eventGetIdentifier(e) ||
+      !isTouchable()
+    )
+      return
+    const x = eventGetX(e).x
+    if (!eventIsSlide(e) && touchJustStarted) {
+      return eventDragStop(e)
+    }
+    // if (!eventIsSlide(e)) {
+    // make this optionally -> currently swiping is blocked when dragging is active
+    // if (touchJustStarted) return eventDragStop(e)
+    // if (e.cancelable) e.preventDefault()
+    // touchLastX = x
+    // return
+    // }
+    if (e.cancelable) e.preventDefault()
+    touchJustStarted = false
+    const touchDistance = touchLastX - x
+    trackAdd(touchMultiplicator(touchDistance, pubfuncs))
+    touchLastX = x
+  }
+
+  function eventDragStart(e) {
+    if (touchActive || !isTouchable()) return
+    touchActive = true
+    touchJustStarted = true
+    touchIdentifier = eventGetIdentifier(e)
+    eventIsSlide(e)
+    moveAnimateAbort()
+    touchLastX = eventGetX(e).x
+    trackAdd(0)
+    hook('dragStart')
+  }
+
+  function eventDragStop(e) {
+    if (
+      !touchActive ||
+      touchIdentifier !== eventGetIdentifier(e, true) ||
+      !isTouchable()
+    )
+      return
+    touchActive = false
+    moveWithSpeed()
+
+    hook('dragEnd')
+  }
+
+  function eventGetChangedTouches(e) {
+    return e.changedTouches
+  }
+
+  function eventGetIdentifier(e, changedTouches = false) {
+    const touches = changedTouches
+      ? eventGetChangedTouches(e)
+      : eventGetTargetTouches(e)
+    return !touches ? 'default' : touches[0] ? touches[0].identifier : 'error'
+  }
+
+  function eventGetTargetTouches(e) {
+    return e.targetTouches
+  }
+
+  function eventGetX(e) {
+    const touches = eventGetTargetTouches(e)
+    return {
+      x: isVertialSlider()
+        ? !touches
+          ? e.pageY
+          : touches[0].screenY
+        : !touches
+        ? e.pageX
+        : touches[0].screenX,
+      timestamp: e.timeStamp,
+    }
+  }
+
+  function eventIsSlide(e) {
+    const touches = eventGetTargetTouches(e)
+    if (!touches) return true
+    const touch = touches[0]
+    const x = isVertialSlider() ? touch.clientY : touch.clientX
+    const y = isVertialSlider() ? touch.clientX : touch.clientY
+    const isSlide =
+      touchLastClientX !== undefined &&
+      touchLastClientY !== undefined &&
+      Math.abs(touchLastClientY - y) <= Math.abs(touchLastClientX - x)
+
+    touchLastClientX = x
+    touchLastClientY = y
+    return isSlide
+  }
+
+  function eventWheel(e) {
+    if (!isTouchable()) return
+    if (touchActive) e.preventDefault()
+  }
+
   function eventsAdd() {
+    eventAdd(window, 'orientationchange', sliderResizeFix)
+    eventAdd(window, 'resize', sliderResize)
     eventAdd(container, 'dragstart', function (e) {
+      if (!isTouchable()) return
       e.preventDefault()
     })
-    eventAdd(container, 'mousedown', dragstart)
-    eventAdd(container, 'mousemove', drag)
-    eventAdd(container, 'mouseleave', dragend)
-    eventAdd(container, 'mouseup', dragend)
-    eventAdd(container, 'touchstart', dragstart)
-    eventAdd(container, 'touchmove', drag)
-    eventAdd(container, 'touchend', dragend)
-    eventAdd(container, 'touchcancel', dragend)
-    eventAdd(container, 'touchleave', dragend)
-    eventAdd(window, 'wheel', wheel, {
+    eventAdd(container, 'mousedown', eventDragStart)
+    eventAdd(container, 'mousemove', eventDrag)
+    eventAdd(container, 'mouseleave', eventDragStop)
+    eventAdd(container, 'mouseup', eventDragStop)
+    eventAdd(container, 'touchstart', eventDragStart)
+    eventAdd(container, 'touchmove', eventDrag)
+    eventAdd(container, 'touchend', eventDragStop)
+    eventAdd(container, 'touchcancel', eventDragStop)
+    eventAdd(window, 'wheel', eventWheel, {
       passive: !1,
     })
-    eventAdd(window, 'scroll', scroll)
   }
 
   function eventsRemove() {
     events.forEach(function (event, idx) {
       event[0].removeEventListener(event[1], event[2])
-      delete events[idx]
     })
+    events.length = 0
   }
 
-  function getContainerWidth() {
-    return container.offsetWidth
+  function hook(hook) {
+    if (options[hook]) options[hook](pubfuncs)
   }
 
-  function getDragEndIdx(diff) {
-    if (diff < 0 && touchDirection < 0) {
-      return targetIdx + 1
-    }
-    if (diff > 0 && touchDirection > 0) {
-      return targetIdx - 1
-    }
-    return targetIdx
+  function isCenterMode() {
+    return options.centered
   }
 
-  function getEventX(e) {
-    return e.targetTouches === undefined ? e.pageX : e.targetTouches[0].screenX
+  function isTouchable() {
+    return touchControls !== undefined ? touchControls : options.controls
   }
 
-  function getAsumendXOfIdx(idx) {
-    return -(getContainerWidth() * idx)
+  function isLoop() {
+    return options.loop
   }
 
-  function getItemCount() {
-    return options.loop ? getSlides() - 2 : getSlides()
+  function isrubberband() {
+    return !options.loop && options.rubberband
   }
 
-  function getInterpolatedItemCount() {
-    return getSlides()
+  function isVertialSlider() {
+    return !!options.vertical
   }
 
-  function getItemLastIdx() {
-    return getSlides() - 1
+  function moveAnimate() {
+    reqId = window.requestAnimationFrame(moveAnimateUpdate)
   }
 
-  function getSlides() {
-    return !isVirtual()
-      ? items.length
-      : options.loop
-      ? options.virtualSlides + 2
-      : options.virtualSlides
-  }
-
-  function getEstimatedXOfX(x) {
-    let idx = parseFloat(Math.abs(-(x / getContainerWidth())).toFixed(10), 10)
-    if (!options.loop) return idx
-    idx -= 1
-    if (idx === -1) return idx + getItemCount()
-    if (idx === getItemLastIdx() - 1) return idx - getItemCount()
-    return idx
-  }
-
-  function getPositionDetails(x) {
-    return {
-      direction: Math.sign(x - lastTrackX),
-      progress: getProgress(x),
-      progressSlides: getProgressSlides(x),
-      currentSlide: Math.abs(Math.round(getEstimatedXOfX(x))),
-      targetSlide: translateToInputIdx(targetIdx),
-    }
-  }
-
-  function getProgress(x) {
-    if (options.loop) x += getContainerWidth()
-    return parseFloat(
-      -(x / (getContainerWidth() * (getItemCount() - 1))).toFixed(10),
-      10
-    )
-  }
-
-  function getProgressSlides(x) {
-    x = getEstimatedXOfX(x)
-    const slides = []
-    for (let i = 0; i < getItemCount(); i++) {
-      const relative = i - x
-      const distance =
-        relative > getItemCount() - 1
-          ? relative - getItemCount()
-          : relative < -(getItemCount() - 1)
-          ? relative + getItemCount()
-          : relative
-      const progress = 1 - Math.abs(distance)
-      slides[i] = {
-        distance,
-        progress: progress < 0 || progress > 1 ? 0 : progress,
-      }
-    }
-    return slides
-  }
-
-  function getXOfIdx(idx) {
-    return -(getContainerWidth() * clampValue(idx, 0, getItemLastIdx()))
-  }
-
-  function init(c, o) {
-    container = getContainer(c)
-    if (container instanceof HTMLElement === false) return errorOnInit()
-    options = { ...defaultOptions, ...o }
-    track = getTrack(options.selectorTrack)
-    if (track instanceof HTMLElement === false && !isVirtual())
-      return errorOnInit()
-    mount(translateFromInputIdx(options.initialSlide))
-    if (options.created) options.created.call(pubfuncs)
-    return true
-  }
-
-  function getContainer(container) {
-    if (typeof container === 'string') {
-      return document.querySelector(container)
-    }
-    return container
-  }
-
-  function getTrack(track) {
-    if (typeof track === 'string') {
-      return container.querySelector(track)
-    }
-    return track
-  }
-
-  function isHidden() {
-    return document.hidden
-  }
-
-  function isVirtual() {
-    return options.virtualSlides !== null
-  }
-
-  function isVerticalSlide(e) {
-    if (e.targetTouches === undefined) return
-    const x = e.targetTouches[0].clientX
-    const y = e.targetTouches[0].clientY
-    if (lastTouchClientX === null) lastTouchClientX = x
-    if (lastTouchClientY === null) lastTouchClientY = y
-
-    if (Math.abs(lastTouchClientY - y) >= Math.abs(lastTouchClientX - x)) {
-      lastTouchClientX = x
-      lastTouchClientY = y
-      return true
-    }
-  }
-
-  function jumpToIdx(idx) {
-    setTargetIdx(idx, true)
-    const x = getXOfIdx(idx)
-    addToPosition(trackX - x)
-    return
-  }
-
-  function loopItemsAppend() {
-    if (isVirtual()) return
-    const parent = items[0].parentNode
-    const first = items[0].cloneNode(true)
-    const last = items[getItemLastIdx()].cloneNode(true)
-    first.setAttribute(loopItemAttrName, true)
-    last.setAttribute(loopItemAttrName, true)
-    parent.appendChild(first)
-    parent.insertBefore(last, parent.firstChild)
-    updateItems()
-  }
-
-  function refreshLoopItems() {
-    if (isVirtual()) return
-    updateItems()
-    const parent = items[0].parentNode
-    const firstToReplace = items[0]
-    const first = items[1].cloneNode(true)
-    const lastToReplace = items[getItemLastIdx()]
-    const last = items[getItemLastIdx() - 1].cloneNode(true)
-    first.setAttribute(loopItemAttrName, true)
-    last.setAttribute(loopItemAttrName, true)
-    parent.replaceChild(first, lastToReplace)
-    parent.replaceChild(last, firstToReplace)
-  }
-
-  function loopItemsRemove() {
-    if (isVirtual()) return
-    const loopItems = track.querySelectorAll('[' + loopItemAttrName + ']')
-    for (let i = 0; i < loopItems.length; i++) {
-      const child = loopItems[i]
-      child.parentNode.removeChild(child)
-    }
-  }
-
-  function mount(idx) {
-    updateItems()
-    if (options.touchControl) eventsAdd()
-    eventAdd(window, 'orientationchange', multipleResizes)
-    eventAdd(window, 'resize', multipleResizes)
-    if (options.loop) loopItemsAppend()
-    jumpToIdx(idx)
-    resize()
-  }
-
-  function moveAnimate(timestamp) {
-    if (!startTime) startTime = timestamp
-    const duration = timestamp - startTime
-    if (duration >= options.moveDuration) {
-      const add = moveDistance - moved
-      startTime = null
-      addToPosition(add)
-      return
-    }
-
-    const add = moveCalcValue(duration)
-    moved += add
-    addToPosition(add)
-    reqId = window.requestAnimationFrame(moveAnimate)
-  }
-
-  function moveCalcValue(progress) {
-    const value =
-      moveDistance * options.moveEasing(progress / options.moveDuration) - moved
-    return value
-  }
-
-  function moveToIdx(idx) {
-    setTargetIdx(idx, !options.loop)
-    moveAbortAnimate()
-    moveDistance = -(getAsumendXOfIdx(idx) - trackX)
-    moved = 0
-    window.requestAnimationFrame(moveAnimate)
-  }
-
-  function moveAbortAnimate() {
+  function moveAnimateAbort() {
     if (reqId) {
       window.cancelAnimationFrame(reqId)
       reqId = null
@@ -419,119 +217,444 @@ function KeenSlider(c, o) {
     startTime = null
   }
 
-  // ipad orientationchange fix
-  function multipleResizes() {
-    resize()
-    setTimeout(resize, 500)
-    setTimeout(resize, 2000)
-  }
-
-  function unmount() {
-    if (options.loop) loopItemsRemove()
-    eventsRemove()
-  }
-
-  function resize(force = false) {
-    const windowWidth = window.innerWidth
-    if (windowWidth === lastWindowWidth && !force) return
-    const width = getContainerWidth()
-    if (!isVirtual()) {
-      track.style.width = width * getSlides() + 'px'
-      setItemWidth(getContainerWidth())
-    }
-    lastWindowWidth = windowWidth
-    if (!touchActive) jumpToIdx(targetIdx)
-  }
-
-  function updateItems() {
-    if (typeof options.selectorSlide === 'function') {
-      items = options.selectorSlide()
+  function moveAnimateUpdate(timestamp) {
+    if (!startTime) startTime = timestamp
+    const duration = timestamp - startTime
+    let add = moveCalcValue(duration)
+    if (duration >= moveDuration) {
+      trackAdd(moveDistance - moved, false)
+      if (moveCallBack) return moveCallBack()
+      hook('afterChange')
       return
     }
-    items = container.querySelectorAll(options.selectorSlide)
+
+    const offset = trackCalculateOffset(add)
+    // hard break in free or snap mode
+    if (offset !== 0 && !isLoop() && !isrubberband() && !moveForceFinish) {
+      trackAdd(add - offset, false)
+      return
+    }
+    if (offset !== 0 && isrubberband() && !moveForceFinish) {
+      return moverubberband(Math.sign(offset))
+    }
+    moved += add
+    trackAdd(add, false)
+    moveAnimate()
   }
 
-  function setItemWidth(width) {
-    for (let i = 0; i < getSlides(); i++) {
-      items[i].style.width = width + 'px'
+  function moveCalcValue(progress) {
+    const value = moveDistance * moveEasing(progress / moveDuration) - moved
+    return value
+  }
+
+  function moveWithSpeed() {
+    hook('beforeChange')
+    switch (options.mode) {
+      case 'free':
+        moveFree()
+        break
+      case 'free-snap':
+        moveSnapFree()
+        break
+      case 'snap':
+      default:
+        moveSnapOne()
+        break
     }
   }
 
-  function setTargetIdx(idx, clamp) {
-    targetIdx = clamp ? clampIdx(idx) : idx
-    if (options.changed)
-      options.changed.call(pubfuncs, translateToInputIdx(targetIdx))
+  function moveSnapOne() {
+    moveToIdx(trackCurrentIdx + Math.sign(trackDirection))
   }
 
-  function scroll(e) {
-    if (touchActive) {
-      touchActive = false
-      if (options.dragEnd) options.dragEnd.call(pubfuncs)
-      moveToIdx(targetIdx)
+  function moveToIdx(idx, forceFinish, duration = options.duration) {
+    // forceFinish is used to ignore rubberband and other boundaries - because the rubberband uses this function too
+    idx = trackClampIndex(idx)
+    const easing = t => 1 + --t * t * t * t * t
+    moveTo(trackGetIdxDistance(idx), duration, easing, forceFinish)
+  }
+
+  function moveFree() {
+    if (trackSpeed === 0)
+      return trackCalculateOffset(0) && !isLoop()
+        ? moveToIdx(trackCurrentIdx)
+        : false
+    const friction = options.friction / Math.pow(Math.abs(trackSpeed), -0.5)
+    const distance =
+      (Math.pow(trackSpeed, 2) / friction) * Math.sign(trackSpeed)
+    const duration = Math.abs(trackSpeed / friction) * 6
+    const easing = function (t) {
+      return 1 - Math.pow(1 - t, 5)
+    }
+    moveTo(distance, duration, easing)
+  }
+
+  function moveSnapFree() {
+    if (trackSpeed === 0) return moveToIdx(trackCurrentIdx)
+    const friction = options.friction / Math.pow(Math.abs(trackSpeed), -0.5)
+    const distance =
+      (Math.pow(trackSpeed, 2) / friction) * Math.sign(trackSpeed)
+    const duration = Math.abs(trackSpeed / friction) * 6
+    const easing = function (t) {
+      return 1 - Math.pow(1 - t, 5)
+    }
+    const idx_trend = (trackPosition + distance) / (width / slidesPerView)
+    const idx =
+      trackDirection === -1 ? Math.floor(idx_trend) : Math.ceil(idx_trend)
+    moveTo(idx * (width / slidesPerView) - trackPosition, duration, easing)
+  }
+
+  function moverubberband() {
+    moveAnimateAbort()
+    const cb = () => {
+      moveToIdx(trackCurrentIdx, true)
+    }
+    if (trackSpeed === 0) return cb()
+    const friction = 0.05 / Math.pow(Math.abs(trackSpeed), -0.5)
+    const distance =
+      (Math.pow(trackSpeed, 2) / friction) * Math.sign(trackSpeed)
+    const duration = Math.abs(trackSpeed / friction) * 4
+    const easing = function (t) {
+      return t * (2 - t)
+    }
+    moveTo(distance, duration, easing, true, cb)
+  }
+
+  function moveTo(distance, duration, easing, forceFinish, cb) {
+    moveAnimateAbort()
+    moveDistance = distance
+    moved = 0
+    moveDuration = duration
+    moveEasing = easing
+    moveForceFinish = forceFinish
+    moveCallBack = cb
+    startTime = null
+    moveAnimate()
+  }
+
+  function sliderBind() {
+    let _container = getElements(initialContainer)
+    if (!_container.length) return
+    container = _container[0]
+    sliderResize()
+    eventsAdd()
+    hook('mounted')
+  }
+
+  function sliderCheckBreakpoint() {
+    const breakpoints = initialOptions.breakpoints || []
+    let lastValid
+    for (let value in breakpoints) {
+      if (window.matchMedia(value).matches) lastValid = value
+    }
+    if (lastValid === breakpointCurrent) return true
+    breakpointCurrent = lastValid
+    const _options = breakpointCurrent
+      ? breakpoints[breakpointCurrent]
+      : initialOptions
+    if (_options.breakpoints && breakpointCurrent) delete _options.breakpoints
+    options = { ...defaultOptions, ...initialOptions, ..._options }
+    optionsChanged = true
+    sliderRebind()
+  }
+
+  function sliderInit() {
+    sliderCheckBreakpoint()
+    sliderCreated = true
+    hook('created')
+  }
+
+  function sliderRebind(new_options) {
+    if (new_options) initialOptions = new_options
+    sliderUnbind()
+    sliderBind()
+  }
+
+  function sliderResize(force) {
+    const windowWidth = window.innerWidth
+    if (!sliderCheckBreakpoint() || (windowWidth === resizeLastWidth && !force))
+      return
+    resizeLastWidth = windowWidth
+    const optionSlides = options.slides
+    if (typeof optionSlides === 'number') {
+      slides = null
+      length = optionSlides
+    } else {
+      slides = getElements(optionSlides, container)
+      length = slides ? slides.length : 0
+    }
+    const dragSpeed = options.dragSpeed
+    touchMultiplicator =
+      typeof dragSpeed === 'function' ? dragSpeed : val => val * dragSpeed
+    width = isVertialSlider() ? container.offsetHeight : container.offsetWidth
+    slidesPerView = clampValue(options.slidesPerView, 1, length - 1)
+    spacing = clampValue(options.spacing, 0, width / (slidesPerView - 1) - 1)
+    width += spacing
+    origin = isCenterMode()
+      ? (width / 2 - width / slidesPerView / 2) / width
+      : 0
+    slidesSetWidths()
+    sliderSetHeight()
+    trackSetPositionByIdx(
+      !sliderCreated || (optionsChanged && options.resetSlide)
+        ? options.initial
+        : trackCurrentIdx
+    )
+    optionsChanged = false
+  }
+
+  function sliderResizeFix(force) {
+    sliderResize()
+    setTimeout(sliderResize, 500)
+    setTimeout(sliderResize, 2000)
+  }
+
+  function sliderUnbind() {
+    eventsRemove()
+    slidesRemoveStyles()
+    hook('destroyed')
+  }
+
+  function sliderSetHeight() {
+    if (!slides || !options.autoHeight || isVertialSlider()) return
+    const height = slides.reduce(
+      (acc, slide) => Math.max(acc, slide.offsetHeight),
+      0
+    )
+    container.style.height = height + 'px'
+  }
+
+  function slidesSetPositions() {
+    if (!slides) return
+    slides.forEach((slide, idx) => {
+      const absoluteDistance = trackSlidePositions[idx].distance * width
+      const x = isVertialSlider() ? 0 : absoluteDistance
+      const y = isVertialSlider() ? absoluteDistance : 0
+      slide.style.transform = `translate3d(${x}px, ${y}px, 0)`
+    })
+  }
+
+  function slidesSetWidths() {
+    if (!slides) return
+    slides.forEach(slide => {
+      const key = isVertialSlider() ? 'minHeight' : 'width'
+      slide.style[key] = `calc(${100 / slidesPerView}% - ${
+        (spacing / slidesPerView) * (slidesPerView - 1)
+      }px)`
+    })
+  }
+
+  function slidesRemoveStyles() {
+    if (!slides) return
+    slides.forEach(slide => {
+      slide.style.removeProperty(isVertialSlider() ? 'minHeight' : 'width')
+      slide.style.removeProperty('transform')
+    })
+  }
+
+  function trackAdd(val, drag = true) {
+    trackMeasure(val)
+    if (drag) val = trackrubberband(val)
+    trackPosition += val
+    trackMove()
+  }
+
+  function trackCalculateOffset(add) {
+    const trackLength =
+      (width * (length - 1 * (isCenterMode() ? 1 : slidesPerView))) /
+      slidesPerView
+    const position = trackPosition + add
+    return position > trackLength
+      ? position - trackLength
+      : position < 0
+      ? position
+      : 0
+  }
+
+  function trackClampIndex(idx) {
+    return !isLoop()
+      ? clampValue(
+          idx,
+          0,
+          length - 1 - (isCenterMode() ? 0 : slidesPerView - 1)
+        )
+      : idx
+  }
+
+  function trackGetDetails() {
+    return {
+      direction: trackDirection,
+      progressTrack: Math.abs(trackProgress),
+      progressSlides: (Math.abs(trackProgress) * length) / (length - 1),
+      positions: trackSlidePositions,
+      position: trackPosition,
+      speed: trackSpeed,
+      relativeSlide: ((trackCurrentIdx % length) + length) % length,
+      absoluteSlide: trackCurrentIdx,
+      size: length,
+      widthOrHeight: width,
     }
   }
 
-  function translateFromInputIdx(idx) {
-    return options.loop ? idx + 1 : idx
+  function trackGetIdxDistance(idx) {
+    return -(-((width / slidesPerView) * idx) + trackPosition)
   }
 
-  function translateToInputIdx(idx) {
-    if (!options.loop) return idx
-    if (idx === 0) idx = getInterpolatedItemCount() - 2
-    if (idx === getInterpolatedItemCount() - 1) idx = 1
-    idx -= 1
-    return idx % getItemCount()
+  function trackMeasure(val) {
+    clearTimeout(trackMeasureTimeout)
+    const direction = Math.sign(val)
+    if (direction !== trackDirection) trackMeasurePoints = []
+    trackDirection = direction
+    trackMeasurePoints.push({
+      distance: val,
+      time: Date.now(),
+    })
+    trackMeasureTimeout = setTimeout(() => {
+      trackMeasurePoints = []
+      trackSpeed = 0
+    }, 50)
+    trackMeasurePoints = trackMeasurePoints.slice(-6)
+    if (trackMeasurePoints.length <= 1 || trackDirection === 0)
+      return (trackSpeed = 0)
+
+    const distance = trackMeasurePoints
+      .slice(0, -1)
+      .reduce((acc, next) => acc + next.distance, 0)
+    const end = trackMeasurePoints[trackMeasurePoints.length - 1].time
+    const start = trackMeasurePoints[0].time
+    trackSpeed = distance / (end - start)
   }
 
-  function refresh() {
-    unmount()
-    mount(targetIdx)
+  // todo - option for not calculating slides that are not in sight
+  function trackMove() {
+    trackProgress = isLoop()
+      ? (trackPosition % ((width * length) / slidesPerView)) /
+        ((width * length) / slidesPerView)
+      : trackPosition / ((width * length) / slidesPerView)
+
+    trackSetCurrentIdx()
+    const slidePositions = []
+    for (let idx = 0; idx < length; idx++) {
+      let distance =
+        (((1 / length) * idx -
+          (trackProgress < 0 && isLoop() ? trackProgress + 1 : trackProgress)) *
+          length) /
+          slidesPerView +
+        origin
+      if (isLoop())
+        distance +=
+          distance > (length - 1) / slidesPerView
+            ? -(length / slidesPerView)
+            : distance < -(length / slidesPerView) + 1
+            ? length / slidesPerView
+            : 0
+
+      const slideWidth = 1 / slidesPerView
+      const left = distance + slideWidth
+      const portion =
+        left < slideWidth
+          ? left / slideWidth
+          : left > 1
+          ? 1 - ((left - 1) * slidesPerView) / 1
+          : 1
+      slidePositions.push({
+        portion: portion < 0 || portion > 1 ? 0 : portion,
+        distance,
+      })
+      trackSlidePositions = slidePositions
+    }
+    slidesSetPositions()
+    hook('move')
   }
 
-  function wheel(e) {
-    if (touchActive) e.preventDefault()
+  function trackrubberband(add) {
+    if (isLoop()) return add
+    const offset = trackCalculateOffset(add)
+    if (!isrubberband()) return add - offset
+    if (offset === 0) return add
+    const easing = t => (1 - Math.abs(t)) * (1 - Math.abs(t))
+    return add * easing(offset / width)
+  }
+
+  function trackSetCurrentIdx() {
+    const new_idx = Math.round(trackPosition / (width / slidesPerView))
+    if (new_idx === trackCurrentIdx) return
+    trackCurrentIdx = new_idx
+    hook('slideChanged')
+  }
+
+  function trackSetPositionByIdx(idx) {
+    hook('beforeChange')
+    trackAdd(trackGetIdxDistance(idx))
+    hook('afterChange')
+  }
+
+  const defaultOptions = {
+    autoHeight: true,
+    centered: false,
+    breakpoints: null,
+    controls: true,
+    dragSpeed: 1,
+    friction: 0.0025,
+    loop: false,
+    initial: 0,
+    duration: 500,
+    slides: '.keen-slider__slide',
+    vertical: false,
+    resetSlide: false,
+    slidesPerView: 1,
+    spacing: 0,
+    mode: 'snap',
+    rubberband: true,
   }
 
   const pubfuncs = {
-    destroy() {
-      unmount()
+    controls: active => {
+      touchControls = active
+    },
+    destroy: sliderUnbind,
+    refresh: sliderRebind,
+    next() {
+      moveToIdx(trackCurrentIdx + 1)
     },
     prev() {
-      if (isHidden()) return
-      moveToIdx(targetIdx - 1)
+      moveToIdx(trackCurrentIdx - 1)
     },
-    next() {
-      if (isHidden()) return
-      moveToIdx(targetIdx + 1)
+    moveToSlide(idx, duration) {
+      moveToIdx(idx, false, duration)
     },
-    moveToSlide: function (slide, instant = false) {
-      const idx = clampIdx(translateFromInputIdx(slide))
-      return instant ? jumpToIdx(idx) : moveToIdx(idx)
-    },
-    reset: refresh,
-    updateLoop: refreshLoopItems,
     resize() {
-      resize(true)
+      sliderResize(true)
     },
-    setTouchControls: activate => {
-      activate ? eventsAdd() : eventsRemove()
-    },
-    get current() {
-      return translateToInputIdx(targetIdx)
-    },
-    get length() {
-      return getItemCount()
+    details() {
+      return trackGetDetails()
     },
   }
 
-  init(c, o)
+  sliderInit()
   return pubfuncs
 }
 
-if (!Math.sign) {
-  Math.sign = function (x) {
-    return (x > 0) - (x < 0) || +x
-  }
+export default KeenSlider
+
+// helper functions
+
+function convertToArray(nodeList) {
+  return Array.prototype.slice.call(nodeList)
 }
 
-export default KeenSlider
+function getElements(element, wrapper = document) {
+  return typeof element === 'function'
+    ? convertToArray(element())
+    : typeof element === 'string'
+    ? convertToArray(wrapper.querySelectorAll(element))
+    : element instanceof HTMLElement !== false
+    ? [element]
+    : element instanceof NodeList !== false
+    ? element
+    : []
+}
+
+function clampValue(value, min, max) {
+  return Math.min(Math.max(value, min), max)
+}
