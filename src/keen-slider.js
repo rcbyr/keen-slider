@@ -31,6 +31,7 @@ function KeenSlider(initialContainer, initialOptions) {
   let options
 
   // touch/swipe helper
+  let touchIndexStart
   let touchActive
   let touchIdentifier
   let touchLastX
@@ -87,6 +88,7 @@ function KeenSlider(initialContainer, initialOptions) {
     eventIsSlide(e)
     moveAnimateAbort()
     touchLastX = eventGetX(e).x
+    touchIndexStart = trackCurrentIdx
     trackAdd(0)
     hook('dragStart')
   }
@@ -264,7 +266,8 @@ function KeenSlider(initialContainer, initialOptions) {
   }
 
   function moveSnapOne() {
-    moveToIdx(trackCurrentIdx + Math.sign(trackDirection))
+    const startIndex = slidesPerView === 1 ? touchIndexStart : trackCurrentIdx
+    moveToIdx(startIndex + Math.sign(trackDirection))
   }
 
   function moveToIdx(idx, forceFinish, duration = options.duration) {
@@ -632,6 +635,7 @@ function KeenSlider(initialContainer, initialOptions) {
   }
 
   sliderInit()
+
   return pubfuncs
 }
 

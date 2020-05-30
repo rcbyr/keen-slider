@@ -9,9 +9,7 @@
   "scripts": {
     "build": "npm run build:libs && npm run build:styles",
     "build:libs": "rollup -c",
-    "build:styles": "sass src/keen-slider.scss:dist/keen-slider.min.css --style compressed && sass src/keen-slider.scss:dist/keen-slider.css",
-    "build:pages": "webpack --config ./webpack.config.pages.js",
-    "dev": "webpack-dev-server --config ./webpack.config.js --host 0.0.0.0 --disableHostCheck true"
+    "build:styles": "sass src/keen-slider.scss:dist/keen-slider.min.css --style compressed && sass src/keen-slider.scss:dist/keen-slider.css"
   },
   "repository": {
     "type": "git",
