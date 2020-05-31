@@ -266,7 +266,10 @@ function KeenSlider(initialContainer, initialOptions) {
   }
 
   function moveSnapOne() {
-    const startIndex = slidesPerView === 1 ? touchIndexStart : trackCurrentIdx
+    const startIndex =
+      slidesPerView === 1 && trackDirection !== 0
+        ? touchIndexStart
+        : trackCurrentIdx
     moveToIdx(startIndex + Math.sign(trackDirection))
   }
 
