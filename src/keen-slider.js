@@ -199,7 +199,7 @@ function KeenSlider(initialContainer, initialOptions) {
     return options.loop
   }
 
-  function isrubberband() {
+  function isRubberband() {
     return !options.loop && options.rubberband
   }
 
@@ -232,11 +232,11 @@ function KeenSlider(initialContainer, initialOptions) {
 
     const offset = trackCalculateOffset(add)
     // hard break in free or snap mode
-    if (offset !== 0 && !isLoop() && !isrubberband() && !moveForceFinish) {
+    if (offset !== 0 && !isLoop() && !isRubberband() && !moveForceFinish) {
       trackAdd(add - offset, false)
       return
     }
-    if (offset !== 0 && isrubberband() && !moveForceFinish) {
+    if (offset !== 0 && isRubberband() && !moveForceFinish) {
       return moveRubberband(Math.sign(offset))
     }
     moved += add
@@ -312,19 +312,27 @@ function KeenSlider(initialContainer, initialOptions) {
 
   function moveRubberband() {
     moveAnimateAbort()
-    const cb = () => {
-      console.log(2)
-      moveToIdx(trackCurrentIdx, true)
-    }
-    if (trackSpeed === 0) return cb()
-    const friction = 0.05 / Math.pow(Math.abs(trackSpeed), -0.5)
+    // default on release
+    if (trackSpeed === 0) return moveToIdx(trackCurrentIdx, true)
+    const friction = 0.04 / Math.pow(Math.abs(trackSpeed), -0.5)
     const distance =
       (Math.pow(trackSpeed, 2) / friction) * Math.sign(trackSpeed)
-    const duration = Math.abs(trackSpeed / friction) * 2
+
     const easing = function (t) {
-      return t * (2 - t)
+      return 1 - (1 - t) * (1 - t)
     }
-    moveTo(distance, duration, easing, true, cb)
+
+    const speed = trackSpeed
+    const cb = () => {
+      const easing2 = t => t * t
+      moveTo(
+        trackGetIdxDistance(trackClampIndex(trackCurrentIdx)),
+        Math.abs(speed / friction) * 3,
+        easing2,
+        true
+      )
+    }
+    moveTo(distance, Math.abs(speed / friction) * 1.5, easing, true, cb)
   }
 
   function moveTo(distance, duration, easing, forceFinish, cb) {
@@ -577,7 +585,7 @@ function KeenSlider(initialContainer, initialOptions) {
   function trackrubberband(add) {
     if (isLoop()) return add
     const offset = trackCalculateOffset(add)
-    if (!isrubberband()) return add - offset
+    if (!isRubberband()) return add - offset
     if (offset === 0) return add
     const easing = t => (1 - Math.abs(t)) * (1 - Math.abs(t))
     return add * easing(offset / width)
