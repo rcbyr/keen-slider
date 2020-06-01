@@ -69,7 +69,7 @@ function KeenSlider(initialContainer, initialOptions) {
     if (e.cancelable) e.preventDefault()
     touchJustStarted = false
     const touchDistance = touchLastX - x
-    trackAdd(touchMultiplicator(touchDistance, pubfuncs))
+    trackAdd(touchMultiplicator(touchDistance, pubfuncs), e.timeStamp)
     touchLastX = x
   }
 
@@ -82,7 +82,7 @@ function KeenSlider(initialContainer, initialOptions) {
     moveAnimateAbort()
     touchLastX = eventGetX(e).x
     touchIndexStart = trackCurrentIdx
-    trackAdd(0)
+    trackAdd(0, e.timeStamp)
     hook('dragStart')
   }
 
@@ -460,8 +460,8 @@ function KeenSlider(initialContainer, initialOptions) {
     })
   }
 
-  function trackAdd(val, drag = true) {
-    trackMeasure(val)
+  function trackAdd(val, drag = true, timestamp = Date.now()) {
+    trackMeasure(val, timestamp)
     if (drag) val = trackrubberband(val)
     trackPosition += val
     trackMove()
@@ -508,14 +508,15 @@ function KeenSlider(initialContainer, initialOptions) {
     return -(-((width / slidesPerView) * idx) + trackPosition)
   }
 
-  function trackMeasure(val) {
+  function trackMeasure(val, timestamp) {
+    // todo - improve measurement - it could be better for ios
     clearTimeout(trackMeasureTimeout)
     const direction = Math.sign(val)
     if (direction !== trackDirection) trackMeasurePoints = []
     trackDirection = direction
     trackMeasurePoints.push({
       distance: val,
-      time: Date.now(),
+      time: timestamp,
     })
     trackMeasureTimeout = setTimeout(() => {
       trackMeasurePoints = []
@@ -530,7 +531,7 @@ function KeenSlider(initialContainer, initialOptions) {
       .reduce((acc, next) => acc + next.distance, 0)
     const end = trackMeasurePoints[trackMeasurePoints.length - 1].time
     const start = trackMeasurePoints[0].time
-    trackSpeed = distance / (end - start)
+    trackSpeed = clampValue(distance / (end - start), -10, 10)
   }
 
   // todo - option for not calculating slides that are not in sight
