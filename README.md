@@ -11,9 +11,9 @@ and is compatible to
 
 ## Getting Started
 
-- [Installation](https://keen-slider.io/#installation)
-- [API](https://keen-slider.io/api/#api)
-- [Examples](https://keen-slider.io/examples/#examples)
+- [Installation](https://www.keen-slider.io/#installation)
+- [API](https://www.keen-slider.io/api/#api)
+- [Examples](https://www.keen-slider.io/examples/#examples)
 
 ## Contributing
 
