@@ -66,13 +66,6 @@ function KeenSlider(initialContainer, initialOptions) {
     if (!eventIsSlide(e) && touchJustStarted) {
       return eventDragStop(e)
     }
-    // if (!eventIsSlide(e)) {
-    // make this optionally -> currently swiping is blocked when dragging is active
-    // if (touchJustStarted) return eventDragStop(e)
-    // if (e.cancelable) e.preventDefault()
-    // touchLastX = x
-    // return
-    // }
     if (e.cancelable) e.preventDefault()
     touchJustStarted = false
     const touchDistance = touchLastX - x
@@ -231,7 +224,6 @@ function KeenSlider(initialContainer, initialOptions) {
     }
 
     const offset = trackCalculateOffset(add)
-    // hard break in free or snap mode
     if (offset !== 0 && !isLoop() && !isRubberband() && !moveForceFinish) {
       trackAdd(add - offset, false)
       return
@@ -274,13 +266,14 @@ function KeenSlider(initialContainer, initialOptions) {
   }
 
   function moveToIdx(idx, forceFinish, duration = options.duration) {
-    // forceFinish is used to ignore rubberband and other boundaries - because the rubberband uses this function too
+    // forceFinish is used to ignore boundaries when rubberband movement is active
     idx = trackClampIndex(idx)
     const easing = t => 1 + --t * t * t * t * t
     moveTo(trackGetIdxDistance(idx), duration, easing, forceFinish)
   }
 
   function moveFree() {
+    // todo: refactor!
     if (trackSpeed === 0)
       return trackCalculateOffset(0) && !isLoop()
         ? moveToIdx(trackCurrentIdx)
@@ -296,6 +289,7 @@ function KeenSlider(initialContainer, initialOptions) {
   }
 
   function moveSnapFree() {
+    // todo: refactor!
     if (trackSpeed === 0) return moveToIdx(trackCurrentIdx)
     const friction = options.friction / Math.pow(Math.abs(trackSpeed), -0.5)
     const distance =
@@ -312,27 +306,26 @@ function KeenSlider(initialContainer, initialOptions) {
 
   function moveRubberband() {
     moveAnimateAbort()
-    // default on release
+    // todo: refactor!
     if (trackSpeed === 0) return moveToIdx(trackCurrentIdx, true)
     const friction = 0.04 / Math.pow(Math.abs(trackSpeed), -0.5)
     const distance =
       (Math.pow(trackSpeed, 2) / friction) * Math.sign(trackSpeed)
 
     const easing = function (t) {
-      return 1 - (1 - t) * (1 - t)
+      return --t * t * t + 1
     }
 
     const speed = trackSpeed
     const cb = () => {
-      const easing2 = t => t * t
       moveTo(
         trackGetIdxDistance(trackClampIndex(trackCurrentIdx)),
-        Math.abs(speed / friction) * 3,
-        easing2,
+        500,
+        easing,
         true
       )
     }
-    moveTo(distance, Math.abs(speed / friction) * 1.5, easing, true, cb)
+    moveTo(distance, Math.abs(speed / friction) * 3, easing, true, cb)
   }
 
   function moveTo(distance, duration, easing, forceFinish, cb) {
