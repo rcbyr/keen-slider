@@ -4,6 +4,7 @@
 # keen-slider
 
 [![Rotation](https://keen-slider.io/images/demo1.gif)](https://keen-slider.io/examples/#background-rotation) [![DatePicker](https://keen-slider.io/images/demo2.gif)](https://keen-slider.io/examples/#datepicker)
+
 **keen-slider** is a free library agnostic touch slider
 with native touch/swipe behavior and great performance. It comes with
 **no dependencies**, **typescript support**, **multitouch support**
