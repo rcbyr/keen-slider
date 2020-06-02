@@ -18,28 +18,44 @@ Released on: ${date.getFullYear()}-${(date.getMonth() + 1)
   .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}
 `.trim()}`
 
-export default {
-  input: './src/keen-slider.js',
-  output: [
-    {
-      format: 'es',
-      name: 'KeenSlider',
-      strict: true,
-      // banner,
-      sourcemap: true,
-      file: './dist/keen-slider.esm.js',
-      sourcemap: true,
-    },
-    {
-      format: 'umd',
-      name: 'KeenSlider',
-      strict: true,
-      sourcemap: true,
-      file: './dist/keen-slider.min.js',
-      format: 'umd',
-      sourcemap: true,
-    },
-  ],
-  external: ['react'],
-  plugins: [resolve(), babel(), terser(), banner(bannerText)],
-}
+export default [
+  {
+    input: './src/keen-slider.js',
+    output: [
+      {
+        format: 'es',
+        name: 'KeenSlider',
+        strict: true,
+        sourcemap: true,
+        file: './dist/keen-slider.esm.js',
+        sourcemap: true,
+      },
+      {
+        format: 'umd',
+        name: 'KeenSlider',
+        strict: true,
+        sourcemap: true,
+        file: './dist/keen-slider.min.js',
+        format: 'umd',
+        sourcemap: true,
+      },
+    ],
+    external: ['react'],
+    plugins: [resolve(), babel(), terser(), banner(bannerText)],
+  },
+  {
+    input: './src/react-hook.js',
+    output: [
+      {
+        format: 'es',
+        name: 'KeenSlider',
+        strict: true,
+        sourcemap: true,
+        file: './dist/react.esm.js',
+        sourcemap: true,
+      },
+    ],
+    external: ['react'],
+    plugins: [resolve(), babel(), terser(), banner(bannerText)],
+  },
+]

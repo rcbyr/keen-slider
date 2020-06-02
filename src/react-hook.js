@@ -14,4 +14,6 @@ function useKeenSlider(options = {}) {
   return [ref, slider]
 }
 
+export default KeenSlider
+
 export { useKeenSlider }

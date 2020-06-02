@@ -1,7 +1,4 @@
 import './polyfills'
-import { useKeenSlider } from './react-hook'
-
-export { useKeenSlider }
 
 function KeenSlider(initialContainer, initialOptions) {
   const events = []
