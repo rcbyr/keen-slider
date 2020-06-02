@@ -66,5 +66,3 @@ export default class KeenSlider {
   resize: () => void
   details: () => TDetails
 }
-
-export function useKeenSlider(options?: TOptionsEvents): THookReturn

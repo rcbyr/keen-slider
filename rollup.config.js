@@ -43,19 +43,4 @@ export default [
     external: ['react'],
     plugins: [resolve(), babel(), terser(), banner(bannerText)],
   },
-  {
-    input: './src/react-hook.js',
-    output: [
-      {
-        format: 'es',
-        name: 'KeenSlider',
-        strict: true,
-        sourcemap: true,
-        file: './dist/react.esm.js',
-        sourcemap: true,
-      },
-    ],
-    external: ['react'],
-    plugins: [resolve(), babel(), terser(), banner(bannerText)],
-  },
 ]
