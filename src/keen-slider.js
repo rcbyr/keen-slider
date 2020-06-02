@@ -1,6 +1,6 @@
 import './polyfills'
 
-function KeenSlider(initialContainer, initialOptions) {
+function KeenSlider(initialContainer, initialOptions = {}) {
   const events = []
 
   let container
