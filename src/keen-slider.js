@@ -487,10 +487,12 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   }
 
   function trackGetDetails() {
+    const trackProgressAbs = Math.abs(trackProgress)
+    const progress = trackPosition < 0 ? 1 - trackProgressAbs : trackProgressAbs
     return {
       direction: trackDirection,
-      progressTrack: Math.abs(trackProgress),
-      progressSlides: (Math.abs(trackProgress) * length) / (length - 1),
+      progressTrack: progress,
+      progressSlides: (progress * length) / (length - 1),
       positions: trackSlidePositions,
       position: trackPosition,
       speed: trackSpeed,
