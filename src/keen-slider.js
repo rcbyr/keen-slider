@@ -436,6 +436,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
       const x = isVertialSlider() ? 0 : absoluteDistance
       const y = isVertialSlider() ? absoluteDistance : 0
       slide.style.transform = `translate3d(${x}px, ${y}px, 0)`
+      slide.style['-webkit-transform'] = `translate3d(${x}px, ${y}px, 0)`
     })
   }
 
