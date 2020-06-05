@@ -1,7 +1,13 @@
 import React from 'react'
 
 type THtmlElementGetter = () => NodeListOf<Element>
-type TContainer = HTMLElement | string | THtmlElementGetter | number
+type TContainer =
+  | NodeListOf<Element>
+  | string
+  | THtmlElementGetter
+  | number
+  | undefined
+type TSlides = NodeListOf<Element> | string | THtmlElementGetter | undefined
 
 type THookReturn = [React.RefObject<HTMLElement>, KeenSlider]
 
@@ -35,22 +41,22 @@ type TOptions = {
   mode?: 'snap' | 'free' | 'free-snap'
   resetSlide?: boolean
   rubberband?: boolean
-  slides?: THtmlElementGetter
+  slides?: TSlides
   slidesPerView?: number
   spacing?: number
   vertical?: boolean
 }
 
 type TEvents = {
-  afterChange: (instance: KeenSlider) => void
-  beforeChange: (instance: KeenSlider) => void
-  created: (instance: KeenSlider) => void
-  dragEnd: (instance: KeenSlider) => void
-  dragStart: (instance: KeenSlider) => void
-  destroyed: (instance: KeenSlider) => void
-  mounted: (instance: KeenSlider) => void
-  move: (instance: KeenSlider) => void
-  slideChanged: (instance: KeenSlider) => void
+  afterChange?: (instance: KeenSlider) => void
+  beforeChange?: (instance: KeenSlider) => void
+  created?: (instance: KeenSlider) => void
+  dragEnd?: (instance: KeenSlider) => void
+  dragStart?: (instance: KeenSlider) => void
+  destroyed?: (instance: KeenSlider) => void
+  mounted?: (instance: KeenSlider) => void
+  move?: (instance: KeenSlider) => void
+  slideChanged?: (instance: KeenSlider) => void
 }
 
 type TOptionsEvent = TOptions & TEvents
