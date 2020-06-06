@@ -7,7 +7,8 @@
   "module": "keen-slider.esm.js",
   "files": [
     "keen-slider.*",
-    "react.*"
+    "react.*",
+    "index.d.ts"
   ],
   "scripts": {
     "build": "npm run build:libs && npm run build:styles",
