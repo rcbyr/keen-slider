@@ -2,14 +2,17 @@
   "name": "keen-slider",
   "version": "4.0.5",
   "description": "The HTML touch slider carousel with the most native feeling you will get.",
-  "main": "dist/keen-slider.min.js",
-  "jsnext:main": "dist/keen-slider.esm.js",
-  "module": "dist/keen-slider.esm.js",
-  "types": "./types/index.d.ts",
+  "main": "keen-slider.min.js",
+  "jsnext:main": "keen-slider.esm.js",
+  "module": "keen-slider.esm.js",
+  "files": [
+    "keen-slider.*",
+    "react.*"
+  ],
   "scripts": {
     "build": "npm run build:libs && npm run build:styles",
     "build:libs": "rollup -c",
-    "build:styles": "sass src/keen-slider.scss:dist/keen-slider.min.css --style compressed && sass src/keen-slider.scss:dist/keen-slider.css"
+    "build:styles": "sass src/keen-slider.scss:keen-slider.min.css --style compressed && sass src/keen-slider.scss:keen-slider.css"
   },
   "repository": {
     "type": "git",
