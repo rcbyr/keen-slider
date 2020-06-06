@@ -167,7 +167,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   }
 
   function eventsRemove() {
-    events.forEach(function (event, idx) {
+    events.forEach(function (event) {
       event[0].removeEventListener(event[1], event[2])
     })
     events.length = 0
