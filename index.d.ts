@@ -57,7 +57,7 @@ type TEvents = {
 
 export type TOptionsEvents = TOptions & TEvents
 
-export default class KeenSlider {
+declare class KeenSlider {
   constructor(container: TContainer, options?: TOptionsEvents)
   controls: (active: boolean) => void
   next: () => void
@@ -67,4 +67,10 @@ export default class KeenSlider {
   moveToSlide: (slide: number, duration?: number) => void
   resize: () => void
   details: () => TDetails
+}
+
+export default KeenSlider
+
+declare module 'keen-slider' {
+  export default KeenSlider
 }
