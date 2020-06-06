@@ -23,7 +23,7 @@ export default [
     input: './src/keen-slider.js',
     output: [
       {
-        format: 'es',
+        format: 'esm',
         name: 'KeenSlider',
         strict: true,
         sourcemap: true,
@@ -35,7 +35,7 @@ export default [
         name: 'KeenSlider',
         strict: true,
         sourcemap: true,
-        file: './keen-slider.min.js',
+        file: './keen-slider.js',
         format: 'umd',
         sourcemap: true,
       },
@@ -47,11 +47,20 @@ export default [
     input: './src/react.js',
     output: [
       {
-        format: 'es',
+        format: 'esm',
+        name: 'KeenSlider',
+        strict: true,
+        sourcemap: true,
+        file: './react.esm.js',
+        sourcemap: true,
+      },
+      {
+        format: 'umd',
         name: 'KeenSlider',
         strict: true,
         sourcemap: true,
         file: './react.js',
+        format: 'umd',
         sourcemap: true,
       },
     ],

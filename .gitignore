@@ -2,5 +2,7 @@ node_modules
 .DS_Store
 .gh-pages
 dist
-/react*
-/keen-slider*
+
+/*.js
+/*.css
+/*.map

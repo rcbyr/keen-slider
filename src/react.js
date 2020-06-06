@@ -1,10 +1,11 @@
-import KeenSlider from 'keen-slider'
+import KeenSlider from './keen-slider'
 import { useEffect, useRef, useState } from 'react'
+
+export default KeenSlider
 
 export function useKeenSlider(options = {}) {
   const ref = useRef()
   const [slider, setSlider] = useState(null)
-
   useDeepEffect(() => {
     setSlider(new KeenSlider(ref.current, options))
     return () => {
