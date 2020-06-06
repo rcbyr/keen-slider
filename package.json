@@ -2,9 +2,10 @@
   "name": "keen-slider",
   "version": "4.1.1",
   "description": "The HTML touch slider carousel with the most native feeling you will get.",
-  "main": "keen-slider.min.js",
+  "main": "keen-slider.js",
   "jsnext:main": "keen-slider.esm.js",
   "module": "keen-slider.esm.js",
+  "types": "index.d.ts",
   "files": [
     "keen-slider.*",
     "react.*",
