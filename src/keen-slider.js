@@ -441,7 +441,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   function slidesSetWidths() {
     if (!slides) return
     slides.forEach(slide => {
-      const key = isVertialSlider() ? 'minHeight' : 'width'
+      const key = isVertialSlider() ? 'height' : 'width'
       slide.style[key] = `calc(${100 / slidesPerView}% - ${
         (spacing / slidesPerView) * (slidesPerView - 1)
       }px)`
@@ -451,7 +451,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   function slidesRemoveStyles() {
     if (!slides) return
     slides.forEach(slide => {
-      slide.style.removeProperty(isVertialSlider() ? 'minHeight' : 'width')
+      slide.style.removeProperty(isVertialSlider() ? 'height' : 'width')
       slide.style.removeProperty('transform')
     })
   }
