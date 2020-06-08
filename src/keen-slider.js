@@ -2,7 +2,6 @@ import './polyfills'
 
 function KeenSlider(initialContainer, initialOptions = {}) {
   const events = []
-
   let container
   let touchControls
   let length
@@ -167,10 +166,9 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   }
 
   function eventsRemove() {
-    events.forEach(function (event) {
+    events.forEach(event => {
       event[0].removeEventListener(event[1], event[2])
     })
-    events.length = 0
   }
 
   function hook(hook) {

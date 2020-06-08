@@ -41,7 +41,12 @@ export default [
       },
     ],
     external: ['react'],
-    plugins: [resolve(), babel(), terser(), banner(bannerText)],
+    plugins: [
+      resolve(),
+      babel(),
+      terser({ output: { comments: false } }),
+      banner(bannerText),
+    ],
   },
   {
     input: './src/react.js',
@@ -65,6 +70,11 @@ export default [
       },
     ],
     external: ['react'],
-    plugins: [resolve(), babel(), terser(), banner(bannerText)],
+    plugins: [
+      resolve(),
+      babel(),
+      terser({ output: { comments: false } }),
+      banner(bannerText),
+    ],
   },
 ]
