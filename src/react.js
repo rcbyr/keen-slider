@@ -5,32 +5,25 @@ export default KeenSlider
 
 export function useKeenSlider(options = {}) {
   const ref = useRef()
-  const [slider, setSlider] = useState(null)
-  useDeepEffect(() => {
-    setSlider(new KeenSlider(ref.current, options))
-    return () => {
-      slider.destroy()
-    }
-  }, [options])
-  return [ref, slider]
-}
+  const savedOptions = useRef()
 
-function useDeepEffect(fn, deps) {
-  const isFirst = useRef(true)
-  const prevDeps = useRef(deps)
+  function checkOptions(options) {
+    if (!isEqual(savedOptions.current, options)) {
+      savedOptions.current = options
+    }
+    return savedOptions.current
+  }
+
+  const [slider, setSlider] = useState(null)
 
   useEffect(() => {
-    const isSame = prevDeps.current.every((obj, index) =>
-      isEqual(obj, deps[index])
-    )
-
-    if (isFirst.current || !isSame) {
-      fn()
+    const new_slider = new KeenSlider(ref.current, savedOptions.current)
+    setSlider(new_slider)
+    return () => {
+      new_slider.destroy()
     }
-
-    isFirst.current = false
-    prevDeps.current = deps
-  }, deps)
+  }, [checkOptions(options)])
+  return [ref, slider]
 }
 
 /*!
