@@ -8,7 +8,7 @@
 **keen-slider** is a free library agnostic touch slider
 with native touch/swipe behavior and great performance. It comes with
 **no dependencies**, **typescript support**, **multitouch support**
-and is compatible to
+and is compatible with
 **all common browsers including IE 10**.
 
 ## Getting Started
