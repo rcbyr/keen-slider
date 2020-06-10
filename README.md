@@ -19,4 +19,4 @@ and is compatible with
 
 ## Contributing
 
-If you find a mistake or have ideas for a better code, I would be grateful for your contribution. Just create an issue or pull request.
+If you find a bug or have ideas for better code, I would be grateful for your contribution. Just create an issue or a pull request.
