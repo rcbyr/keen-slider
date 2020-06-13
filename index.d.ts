@@ -1,11 +1,17 @@
 type THtmlElementGetter = () => NodeListOf<Element>
 type TContainer =
+  | HTMLElement
+  | NodeListOf<Element>
+  | string
+  | THtmlElementGetter
+  | undefined
+type TSlides =
+  | HTMLElement
   | NodeListOf<Element>
   | string
   | THtmlElementGetter
   | number
   | undefined
-type TSlides = NodeListOf<Element> | string | THtmlElementGetter | undefined
 
 type TDetails = {
   direction: 1 | 0 | -1
