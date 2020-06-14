@@ -62,6 +62,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     if (!eventIsSlide(e) && touchJustStarted) {
       return eventDragStop(e)
     }
+    if (touchJustStarted) touchLastX = x
     if (e.cancelable) e.preventDefault()
     touchJustStarted = false
     const touchDistance = touchLastX - x
@@ -76,8 +77,8 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     touchIdentifier = eventGetIdentifier(e)
     eventIsSlide(e)
     moveAnimateAbort()
-    touchLastX = eventGetX(e).x
     touchIndexStart = trackCurrentIdx
+    touchLastX = eventGetX(e).x
     trackAdd(0, e.timeStamp)
     hook('dragStart')
   }
