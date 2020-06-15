@@ -70,6 +70,11 @@ export default class KeenSlider {
   prev: () => void
   destroy: () => void
   refresh: () => void
+  moveToSlideRelative: (
+    slide: number,
+    nearest?: boolean,
+    duration?: number
+  ) => void
   moveToSlide: (slide: number, duration?: number) => void
   resize: () => void
   details: () => TDetails
