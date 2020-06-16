@@ -651,16 +651,16 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     destroy: sliderUnbind,
     refresh: sliderRebind,
     next() {
-      moveToIdx(trackCurrentIdx + 1)
+      moveToIdx(trackCurrentIdx + 1, true)
     },
     prev() {
-      moveToIdx(trackCurrentIdx - 1)
+      moveToIdx(trackCurrentIdx - 1, true)
     },
     moveToSlide(idx, duration) {
-      moveToIdx(idx, false, duration)
+      moveToIdx(idx, true, duration)
     },
     moveToSlideRelative(idx, nearest = false, duration) {
-      moveToIdx(idx, false, duration, true, nearest)
+      moveToIdx(idx, true, duration, true, nearest)
     },
     resize() {
       sliderResize(true)
