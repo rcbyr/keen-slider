@@ -597,8 +597,8 @@ function KeenSlider(initialContainer, initialOptions = {}) {
         portion: portion < 0 || portion > 1 ? 0 : portion,
         distance,
       })
-      trackSlidePositions = slidePositions
     }
+    trackSlidePositions = slidePositions
     slidesSetPositions()
     hook('move')
   }
