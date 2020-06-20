@@ -1,11 +1,11 @@
-type THtmlElementGetter = () => NodeListOf<Element>
-type TContainer =
+export type THtmlElementGetter = () => NodeListOf<Element>
+export type TContainer =
   | HTMLElement
   | NodeListOf<Element>
   | string
   | THtmlElementGetter
   | undefined
-type TSlides =
+export type TSlides =
   | HTMLElement
   | NodeListOf<Element>
   | string
@@ -13,7 +13,7 @@ type TSlides =
   | number
   | undefined
 
-type TDetails = {
+export type TDetails = {
   direction: 1 | 0 | -1
   progressTrack: number
   progressSlides: number
@@ -28,7 +28,7 @@ type TDetails = {
   widthOrHeight: number
 }
 
-type TOptions = {
+export type TOptions = {
   autoHeight?: boolean
   breakpoints?: {
     [key: string]: Omit<TOptionsEvents, 'breakpoints'>
@@ -49,7 +49,7 @@ type TOptions = {
   vertical?: boolean
 }
 
-type TEvents = {
+export type TEvents = {
   afterChange?: (instance: KeenSlider) => void
   beforeChange?: (instance: KeenSlider) => void
   created?: (instance: KeenSlider) => void
@@ -69,7 +69,7 @@ export default class KeenSlider {
   next: () => void
   prev: () => void
   destroy: () => void
-  refresh: () => void
+  refresh: (options?: TOptionsEvents) => void
   moveToSlideRelative: (
     slide: number,
     nearest?: boolean,
