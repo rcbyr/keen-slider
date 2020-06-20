@@ -461,6 +461,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     slides.forEach(slide => {
       slide.style.removeProperty(isVertialSlider() ? 'height' : 'width')
       slide.style.removeProperty('transform')
+      slide.style.removeProperty('-webkit-transform')
     })
   }
 
