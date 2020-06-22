@@ -196,6 +196,10 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     return !!options.vertical
   }
 
+  function isInlineBlockMode() {
+    return !!options.inlineBlockMode;
+  }
+
   function moveAnimate() {
     reqId = window.requestAnimationFrame(moveAnimateUpdate)
   }
@@ -349,6 +353,9 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     container = _container[0]
     sliderResize()
     eventsAdd()
+    if (!isVertialSlider() && isInlineBlockMode()) {
+      container.setAttribute('data-keen-inline-mode', true);
+    }
     hook('mounted')
   }
 
@@ -423,6 +430,13 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   function sliderUnbind() {
     eventsRemove()
     slidesRemoveStyles()
+    let _container = getElements(initialContainer)
+    if (_container.length) {
+      container = _container[0]
+      if (container.hasAttribute('data-keen-inline-mode')) {
+        container.removeAttribute('data-keen-inline-mode');
+      }
+    }
     hook('destroyed')
   }
 
@@ -437,12 +451,25 @@ function KeenSlider(initialContainer, initialOptions = {}) {
 
   function slidesSetPositions() {
     if (!slides) return
+    console.log(trackSlidePositions);
     slides.forEach((slide, idx) => {
-      const absoluteDistance = trackSlidePositions[idx].distance * width
+      let absoluteDistance = trackSlidePositions[idx].distance * width
       const x = isVertialSlider() ? 0 : absoluteDistance
       const y = isVertialSlider() ? absoluteDistance : 0
-      slide.style.transform = `translate3d(${x}px, ${y}px, 0)`
-      slide.style['-webkit-transform'] = `translate3d(${x}px, ${y}px, 0)`
+      if (!isVertialSlider() && isInlineBlockMode()) {
+        const transformString = `translate3d(
+          calc(${x}px - calc(
+            ${idx} * calc(
+                ${(width / slidesPerView) - (spacing / slidesPerView)}px - ${(spacing / slidesPerView) * (slidesPerView - 1)}px
+              )
+            )
+          ), ${y}px, 0)`
+        slide.style.transform = transformString
+        slide.style['-webkit-transform'] = transformString
+      } else {
+        slide.style.transform = `translate3d(${x}px, ${y}px, 0)`
+        slide.style['-webkit-transform'] = `translate3d(${x}px, ${y}px, 0)`
+      }
     })
   }
 
@@ -642,6 +669,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     spacing: 0,
     mode: 'snap',
     rubberband: true,
+    inlineBlockMode: false,
   }
 
   const pubfuncs = {
