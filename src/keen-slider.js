@@ -451,7 +451,6 @@ function KeenSlider(initialContainer, initialOptions = {}) {
 
   function slidesSetPositions() {
     if (!slides) return
-    console.log(trackSlidePositions);
     slides.forEach((slide, idx) => {
       const absoluteDistance = trackSlidePositions[idx].distance * width
       const x = isVertialSlider() ? 0 : absoluteDistance
