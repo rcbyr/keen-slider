@@ -1,5 +1,5 @@
 .keen-slider {
-  display: block;
+  display: flex;
   overflow: hidden;
   position: relative;
   -webkit-user-select: none;
@@ -14,12 +14,15 @@
 }
 
 .keen-slider__slide {
-  position: absolute;
+  position: relative;
   overflow: hidden;
   width: 100%;
   min-height: 100%;
 }
 
-.keen-slider.keen-slider--vertical .keen-slider__slide {
-  min-height: auto;
+.keen-slider.keen-slider--vertical {
+  flex-wrap: wrap;
+  .keen-slider__slide {
+    width: 100%;
+  }
 }

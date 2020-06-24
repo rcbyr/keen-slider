@@ -439,17 +439,24 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     if (!slides) return
     slides.forEach((slide, idx) => {
       const absoluteDistance = trackSlidePositions[idx].distance * width
-      const x = isVertialSlider() ? 0 : absoluteDistance
-      const y = isVertialSlider() ? absoluteDistance : 0
-      slide.style.transform = `translate3d(${x}px, ${y}px, 0)`
-      slide.style['-webkit-transform'] = `translate3d(${x}px, ${y}px, 0)`
+      const pos =
+        absoluteDistance -
+        idx *
+          (width / slidesPerView -
+            spacing / slidesPerView -
+            (spacing / slidesPerView) * (slidesPerView - 1))
+      const transformString = isVertialSlider()
+        ? `translate3d(0, ${pos}px, 0)`
+        : `translate3d(${pos}px, 0px, 0)`
+      slide.style.transform = transformString
+      slide.style['-webkit-transform'] = transformString
     })
   }
 
   function slidesSetWidths() {
     if (!slides) return
     slides.forEach(slide => {
-      const key = isVertialSlider() ? 'height' : 'width'
+      const key = isVertialSlider() ? 'height' : 'min-width'
       slide.style[key] = `calc(${100 / slidesPerView}% - ${
         (spacing / slidesPerView) * (slidesPerView - 1)
       }px)`
@@ -459,7 +466,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   function slidesRemoveStyles() {
     if (!slides) return
     slides.forEach(slide => {
-      slide.style.removeProperty(isVertialSlider() ? 'height' : 'width')
+      slide.style.removeProperty(isVertialSlider() ? 'height' : 'min-width')
       slide.style.removeProperty('transform')
       slide.style.removeProperty('-webkit-transform')
     })
