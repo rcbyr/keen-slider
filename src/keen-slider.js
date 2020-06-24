@@ -343,11 +343,11 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     moveAnimate()
   }
 
-  function sliderBind() {
+  function sliderBind(force_resize) {
     let _container = getElements(initialContainer)
     if (!_container.length) return
     container = _container[0]
-    sliderResize()
+    sliderResize(force_resize)
     eventsAdd()
     hook('mounted')
   }
@@ -375,10 +375,10 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     hook('created')
   }
 
-  function sliderRebind(new_options) {
+  function sliderRebind(new_options, force_resize) {
     if (new_options) initialOptions = new_options
     sliderUnbind()
-    sliderBind()
+    sliderBind(force_resize)
   }
 
   function sliderResize(force) {
@@ -650,7 +650,9 @@ function KeenSlider(initialContainer, initialOptions = {}) {
       touchControls = active
     },
     destroy: sliderUnbind,
-    refresh: sliderRebind,
+    refresh(options) {
+      sliderRebind(options, true)
+    },
     next() {
       moveToIdx(trackCurrentIdx + 1, true)
     },
