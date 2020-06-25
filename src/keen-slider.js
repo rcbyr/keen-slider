@@ -398,7 +398,11 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     touchMultiplicator =
       typeof dragSpeed === 'function' ? dragSpeed : val => val * dragSpeed
     width = isVertialSlider() ? container.offsetHeight : container.offsetWidth
-    slidesPerView = clampValue(options.slidesPerView, 1, length - 1)
+    slidesPerView = clampValue(
+      options.slidesPerView,
+      1,
+      isLoop() ? length - 1 : length
+    )
     spacing = clampValue(options.spacing, 0, width / (slidesPerView - 1) - 1)
     width += spacing
     origin = isCenterMode()
