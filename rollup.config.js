@@ -3,6 +3,7 @@ import resolve from 'rollup-plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
 import banner from 'rollup-plugin-banner'
 import postcss from 'rollup-plugin-postcss'
+import autoprefixer from 'autoprefixer'
 import copy from 'rollup-plugin-copy'
 
 const pkg = require('./package.json')
@@ -91,8 +92,8 @@ export default [
       postcss({
         extract: true,
         sourceMap: true,
+        plugins: [autoprefixer()],
       }),
-      banner(bannerText),
     ],
   },
   {
@@ -101,13 +102,12 @@ export default [
       file: 'keen-slider.min.css',
     },
     plugins: [
-      banner(bannerText),
       postcss({
         extract: true,
         minimize: true,
         sourceMap: true,
+        plugins: [autoprefixer()],
       }),
-      banner(bannerText),
     ],
   },
 ]
