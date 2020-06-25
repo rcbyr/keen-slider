@@ -47,6 +47,7 @@ export type TOptions = {
   slidesPerView?: number
   spacing?: number
   vertical?: boolean
+  inlineBlockMode?: boolean
 }
 
 export type TEvents = {

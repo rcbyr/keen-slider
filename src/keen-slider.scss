@@ -20,3 +20,17 @@
     min-height: auto;
   }
 }
+
+.keen-slider[data-keen-inline-mode] {
+  display: block;
+  overflow: auto;
+  max-width: 100vw;
+  white-space: nowrap;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+.keen-slider[data-keen-inline-mode] > .keen-slider__slide {
+  position: relative;
+  display: inline-block;
+  white-space: normal;
+}
