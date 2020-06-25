@@ -2,6 +2,7 @@ import './polyfills'
 
 function KeenSlider(initialContainer, initialOptions = {}) {
   const events = []
+  const containerVerticalAttribute = 'data-keen-slider-vertical'
   let container
   let touchControls
   let length
@@ -196,10 +197,6 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     return !!options.vertical
   }
 
-  function isInlineBlockMode() {
-    return !!options.inlineBlockMode;
-  }
-
   function moveAnimate() {
     reqId = window.requestAnimationFrame(moveAnimateUpdate)
   }
@@ -353,9 +350,6 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     container = _container[0]
     sliderResize(force_resize)
     eventsAdd()
-    if (!isVertialSlider() && isInlineBlockMode()) {
-      container.setAttribute('data-keen-inline-mode', true);
-    }
     hook('mounted')
   }
 
@@ -422,6 +416,10 @@ function KeenSlider(initialContainer, initialOptions = {}) {
         ? options.initial
         : trackCurrentIdx
     )
+
+    if (isVertialSlider()) {
+      container.setAttribute(containerVerticalAttribute, true)
+    }
     optionsChanged = false
   }
 
@@ -434,13 +432,8 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   function sliderUnbind() {
     eventsRemove()
     slidesRemoveStyles()
-    let _container = getElements(initialContainer)
-    if (_container.length) {
-      container = _container[0]
-      if (container.hasAttribute('data-keen-inline-mode')) {
-        container.removeAttribute('data-keen-inline-mode');
-      }
-    }
+    if (container && container.hasAttribute(containerVerticalAttribute))
+      container.removeAttribute(containerVerticalAttribute)
     hook('destroyed')
   }
 
@@ -457,29 +450,25 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     if (!slides) return
     slides.forEach((slide, idx) => {
       const absoluteDistance = trackSlidePositions[idx].distance * width
-      const x = isVertialSlider() ? 0 : absoluteDistance
-      const y = isVertialSlider() ? absoluteDistance : 0
-      if (!isVertialSlider() && isInlineBlockMode()) {
-        const transformString = `translate3d(
-          calc(${x}px - calc(
-            ${idx} * calc(
-                ${(width / slidesPerView) - (spacing / slidesPerView)}px - ${(spacing / slidesPerView) * (slidesPerView - 1)}px
-              )
-            )
-          ), ${y}px, 0)`
-        slide.style.transform = transformString
-        slide.style['-webkit-transform'] = transformString
-      } else {
-        slide.style.transform = `translate3d(${x}px, ${y}px, 0)`
-        slide.style['-webkit-transform'] = `translate3d(${x}px, ${y}px, 0)`
-      }
+      const pos =
+        absoluteDistance -
+        idx *
+          (width / slidesPerView -
+            spacing / slidesPerView -
+            (spacing / slidesPerView) * (slidesPerView - 1))
+
+      const x = isVertialSlider() ? 0 : pos
+      const y = isVertialSlider() ? pos : 0
+      const transformString = `translate3d(${x}px, ${y}px, 0)`
+      slide.style.transform = transformString
+      slide.style['-webkit-transform'] = transformString
     })
   }
 
   function slidesSetWidths() {
     if (!slides) return
     slides.forEach(slide => {
-      const key = isVertialSlider() ? 'height' : 'width'
+      const key = isVertialSlider() ? 'height' : 'min-width'
       slide.style[key] = `calc(${100 / slidesPerView}% - ${
         (spacing / slidesPerView) * (slidesPerView - 1)
       }px)`
@@ -489,7 +478,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   function slidesRemoveStyles() {
     if (!slides) return
     slides.forEach(slide => {
-      slide.style.removeProperty(isVertialSlider() ? 'height' : 'width')
+      slide.style.removeProperty(isVertialSlider() ? 'height' : 'min-width')
       slide.style.removeProperty('transform')
       slide.style.removeProperty('-webkit-transform')
     })
@@ -673,7 +662,6 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     spacing: 0,
     mode: 'snap',
     rubberband: true,
-    inlineBlockMode: false,
   }
 
   const pubfuncs = {

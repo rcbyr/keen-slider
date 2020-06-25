@@ -1,5 +1,5 @@
 .keen-slider {
-  display: block;
+  display: flex;
   overflow: hidden;
   position: relative;
   user-select: none;
@@ -10,27 +10,17 @@
   -webkit-tap-highlight-color: transparent;
 
   &__slide {
-    position: absolute;
+    position: relative;
     overflow: hidden;
     width: 100%;
     min-height: 100%;
   }
 
-  &--vertical &__slide {
-    min-height: auto;
+  &[data-keen-slider-vertical] {
+    flex-wrap: wrap;
   }
-}
 
-.keen-slider[data-keen-inline-mode] {
-  display: block;
-  overflow: auto;
-  max-width: 100vw;
-  white-space: nowrap;
-  overflow-y: hidden;
-  overflow-x: hidden;
-}
-.keen-slider[data-keen-inline-mode] > .keen-slider__slide {
-  position: relative;
-  display: inline-block;
-  white-space: normal;
+  &[data-keen-slider-vertical] &__slide {
+    width: 100%;
+  }
 }
