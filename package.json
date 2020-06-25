@@ -12,9 +12,7 @@
     "index.d.ts"
   ],
   "scripts": {
-    "build": "npm run build:libs && npm run build:styles",
-    "build:libs": "rollup -c",
-    "build:styles": "sass src/keen-slider.scss:keen-slider.min.css --style compressed && sass src/keen-slider.scss:keen-slider.css"
+    "build": "rollup -c"
   },
   "repository": {
     "type": "git",
@@ -54,5 +52,9 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^5.3.0",
     "sass": "^1.26.3"
+  },
+  "dependencies": {
+    "rollup-plugin-copy": "^3.3.0",
+    "rollup-plugin-postcss": "^3.1.2"
   }
 }

@@ -5,4 +5,5 @@ dist
 
 /*.js
 /*.css
+/*.scss
 /*.map

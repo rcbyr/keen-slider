@@ -2,6 +2,8 @@ import babel from 'rollup-plugin-babel'
 import resolve from 'rollup-plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
 import banner from 'rollup-plugin-banner'
+import postcss from 'rollup-plugin-postcss'
+import copy from 'rollup-plugin-copy'
 
 const pkg = require('./package.json')
 
@@ -74,6 +76,37 @@ export default [
       resolve(),
       babel(),
       terser({ output: { comments: false } }),
+      banner(bannerText),
+    ],
+  },
+  {
+    input: 'src/keen-slider.scss',
+    output: {
+      file: 'keen-slider.css',
+    },
+    plugins: [
+      copy({
+        targets: [{ src: './src/keen-slider.scss', dest: './' }],
+      }),
+      postcss({
+        extract: true,
+        sourceMap: true,
+      }),
+      banner(bannerText),
+    ],
+  },
+  {
+    input: 'src/keen-slider.scss',
+    output: {
+      file: 'keen-slider.min.css',
+    },
+    plugins: [
+      banner(bannerText),
+      postcss({
+        extract: true,
+        minimize: true,
+        sourceMap: true,
+      }),
       banner(bannerText),
     ],
   },
