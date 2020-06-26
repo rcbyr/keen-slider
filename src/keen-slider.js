@@ -410,7 +410,6 @@ function KeenSlider(initialContainer, initialOptions = {}) {
       ? (width / 2 - width / slidesPerView / 2) / width
       : 0
     slidesSetWidths()
-    sliderSetHeight()
     trackSetPositionByIdx(
       !sliderCreated || (optionsChanged && options.resetSlide)
         ? options.initial
@@ -437,15 +436,6 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     hook('destroyed')
   }
 
-  function sliderSetHeight() {
-    if (!slides || !options.autoHeight || isVertialSlider()) return
-    const height = slides.reduce(
-      (acc, slide) => Math.max(acc, slide.offsetHeight),
-      0
-    )
-    container.style.height = height + 'px'
-  }
-
   function slidesSetPositions() {
     if (!slides) return
     slides.forEach((slide, idx) => {
@@ -468,19 +458,28 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   function slidesSetWidths() {
     if (!slides) return
     slides.forEach(slide => {
-      const key = isVertialSlider() ? 'height' : 'min-width'
-      slide.style[key] = `calc(${100 / slidesPerView}% - ${
+      const style = `calc(${100 / slidesPerView}% - ${
         (spacing / slidesPerView) * (slidesPerView - 1)
       }px)`
+      if (isVertialSlider()) {
+        slide.style['height'] = style
+      } else {
+        slide.style['min-width'] = style
+        slide.style['max-width'] = style
+      }
     })
   }
 
   function slidesRemoveStyles() {
     if (!slides) return
+    let styles = ['transform', '-webkit-transform']
+    styles = isVertialSlider
+      ? [...styles, 'height']
+      : [...styles, 'min-width', 'max-width']
     slides.forEach(slide => {
-      slide.style.removeProperty(isVertialSlider() ? 'height' : 'min-width')
-      slide.style.removeProperty('transform')
-      slide.style.removeProperty('-webkit-transform')
+      styles.forEach(style => {
+        slide.style.removeProperty(style)
+      })
     })
   }
 
@@ -646,7 +645,6 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   }
 
   const defaultOptions = {
-    autoHeight: true,
     centered: false,
     breakpoints: null,
     controls: true,
