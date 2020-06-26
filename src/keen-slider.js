@@ -2,7 +2,7 @@ import './polyfills'
 
 function KeenSlider(initialContainer, initialOptions = {}) {
   const events = []
-  const containerVerticalAttribute = 'data-keen-slider-vertical'
+  const attributeVertical = 'data-keen-slider-vertical'
   let container
   let touchControls
   let length
@@ -417,7 +417,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     )
 
     if (isVertialSlider()) {
-      container.setAttribute(containerVerticalAttribute, true)
+      container.setAttribute(attributeVertical, true)
     }
     optionsChanged = false
   }
@@ -431,8 +431,8 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   function sliderUnbind() {
     eventsRemove()
     slidesRemoveStyles()
-    if (container && container.hasAttribute(containerVerticalAttribute))
-      container.removeAttribute(containerVerticalAttribute)
+    if (container && container.hasAttribute(attributeVertical))
+      container.removeAttribute(attributeVertical)
     hook('destroyed')
   }
 
