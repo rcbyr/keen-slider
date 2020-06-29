@@ -374,6 +374,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     if (_options.breakpoints && breakpointCurrent) delete _options.breakpoints
     options = { ...defaultOptions, ...initialOptions, ..._options }
     optionsChanged = true
+    resizeLastWidth = null
     sliderRebind()
   }
 
@@ -410,7 +411,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     slidesPerView = clampValue(
       options.slidesPerView,
       1,
-      isLoop() ? length - 1 : length
+      Math.max(isLoop() ? length - 1 : length, 1)
     )
     spacing = clampValue(options.spacing, 0, width / (slidesPerView - 1) - 1)
     width += spacing
@@ -652,7 +653,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
 
   function trackSetPositionByIdx(idx) {
     hook('beforeChange')
-    trackAdd(trackGetIdxDistance(idx))
+    trackAdd(trackGetIdxDistance(idx), false)
     hook('afterChange')
   }
 
