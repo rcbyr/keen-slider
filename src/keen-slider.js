@@ -420,9 +420,11 @@ function KeenSlider(initialContainer, initialOptions = {}) {
       : 0
     slidesSetWidths()
     trackSetPositionByIdx(
-      !sliderCreated || (optionsChanged && options.resetSlide)
-        ? options.initial
-        : trackCurrentIdx
+      trackClampIndex(
+        !sliderCreated || (optionsChanged && options.resetSlide)
+          ? options.initial
+          : trackCurrentIdx
+      )
     )
 
     if (isVertialSlider()) {
