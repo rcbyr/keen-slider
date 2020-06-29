@@ -2,7 +2,7 @@ import './polyfills'
 
 function KeenSlider(initialContainer, initialOptions = {}) {
   const events = []
-  const attributeVertical = 'data-keen-slider-vertical'
+  const attributeVertical = 'data-keen-slider-v'
   let container
   let touchControls
   let length
@@ -63,7 +63,10 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     if (!eventIsSlide(e) && touchJustStarted) {
       return eventDragStop(e)
     }
-    if (touchJustStarted) touchLastX = x
+    if (touchJustStarted) {
+      trackMeasureReset()
+      touchLastX = x
+    }
     if (e.cancelable) e.preventDefault()
     touchJustStarted = false
     const touchDistance = touchLastX - x
@@ -72,7 +75,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   }
 
   function eventDragStart(e) {
-    if (touchActive || !isTouchable()) return
+    if (touchActive || !isTouchable() || eventIsIgnoreTarget(e.target)) return
     touchActive = true
     touchJustStarted = true
     touchIdentifier = eventGetIdentifier(e)
@@ -124,6 +127,10 @@ function KeenSlider(initialContainer, initialOptions = {}) {
         : touches[0].screenX,
       timestamp: e.timeStamp,
     }
+  }
+
+  function eventIsIgnoreTarget(target) {
+    return target.hasAttribute(options.preventEvent)
   }
 
   function eventIsSlide(e) {
@@ -378,6 +385,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
 
   function sliderRebind(new_options, force_resize) {
     if (new_options) initialOptions = new_options
+    if (force_resize) breakpointCurrent = null
     sliderUnbind()
     sliderBind(force_resize)
   }
@@ -558,7 +566,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     // todo - improve measurement - it could be better for ios
     clearTimeout(trackMeasureTimeout)
     const direction = Math.sign(val)
-    if (direction !== trackDirection) trackMeasurePoints = []
+    if (direction !== trackDirection) trackMeasureReset()
     trackDirection = direction
     trackMeasurePoints.push({
       distance: val,
@@ -578,6 +586,10 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     const end = trackMeasurePoints[trackMeasurePoints.length - 1].time
     const start = trackMeasurePoints[0].time
     trackSpeed = clampValue(distance / (end - start), -10, 10)
+  }
+
+  function trackMeasureReset() {
+    trackMeasurePoints = []
   }
 
   // todo - option for not calculating slides that are not in sight
@@ -653,6 +665,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     loop: false,
     initial: 0,
     duration: 500,
+    preventEvent: 'data-keen-slider-pe',
     slides: '.keen-slider__slide',
     vertical: false,
     resetSlide: false,

@@ -16,11 +16,11 @@
     min-height: 100%;
   }
 
-  &[data-keen-slider-vertical] {
+  &[data-keen-slider-v] {
     flex-wrap: wrap;
   }
 
-  &[data-keen-slider-vertical] &__slide {
+  &[data-keen-slider-v] &__slide {
     width: 100%;
   }
 }
