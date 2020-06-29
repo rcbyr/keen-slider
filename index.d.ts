@@ -30,7 +30,6 @@ export type TDetails = {
 }
 
 export type TOptions = {
-  autoHeight?: boolean
   breakpoints?: {
     [key: string]: Omit<TOptionsEvents, 'breakpoints'>
   }
@@ -42,6 +41,7 @@ export type TOptions = {
   initial?: number
   loop?: boolean
   mode?: 'snap' | 'free' | 'free-snap'
+  preventEvent?: string
   resetSlide?: boolean
   rubberband?: boolean
   slides?: TSlides
