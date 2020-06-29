@@ -156,7 +156,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
 
   function eventsAdd() {
     eventAdd(window, 'orientationchange', sliderResizeFix)
-    eventAdd(window, 'resize', sliderResize)
+    eventAdd(window, 'resize', () => sliderResize())
     eventAdd(container, 'dragstart', function (e) {
       if (!isTouchable()) return
       e.preventDefault()
@@ -419,13 +419,12 @@ function KeenSlider(initialContainer, initialOptions = {}) {
       ? (width / 2 - width / slidesPerView / 2) / width
       : 0
     slidesSetWidths()
-    trackSetPositionByIdx(
-      trackClampIndex(
-        !sliderCreated || (optionsChanged && options.resetSlide)
-          ? options.initial
-          : trackCurrentIdx
-      )
-    )
+
+    const currentIdx =
+      !sliderCreated || (optionsChanged && options.resetSlide)
+        ? options.initial
+        : trackCurrentIdx
+    trackSetPositionByIdx(isLoop() ? currentIdx : trackClampIndex(currentIdx))
 
     if (isVertialSlider()) {
       container.setAttribute(attributeVertical, true)
@@ -473,7 +472,8 @@ function KeenSlider(initialContainer, initialOptions = {}) {
         (spacing / slidesPerView) * (slidesPerView - 1)
       }px)`
       if (isVertialSlider()) {
-        slide.style['height'] = style
+        slide.style['min-height'] = style
+        slide.style['max-height'] = style
       } else {
         slide.style['min-width'] = style
         slide.style['max-width'] = style
@@ -485,7 +485,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     if (!slides) return
     let styles = ['transform', '-webkit-transform']
     styles = isVertialSlider
-      ? [...styles, 'height']
+      ? [...styles, 'min-height', 'max-height']
       : [...styles, 'min-width', 'max-width']
     slides.forEach(slide => {
       styles.forEach(style => {
