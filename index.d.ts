@@ -17,6 +17,7 @@ export type TDetails = {
   direction: 1 | 0 | -1
   progressTrack: number
   progressSlides: number
+  position: number
   positions: {
     distance: number
     portion: number
