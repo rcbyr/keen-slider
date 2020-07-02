@@ -67,10 +67,10 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     if (touchJustStarted) {
       trackMeasureReset()
       touchLastX = x
+      container.setAttribute(attributeMoving, true)
+      touchJustStarted = false
     }
-    container.setAttribute(attributeMoving, true)
     if (e.cancelable) e.preventDefault()
-    touchJustStarted = false
     const touchDistance = touchLastX - x
     trackAdd(touchMultiplicator(touchDistance, pubfuncs), e.timeStamp)
     touchLastX = x
