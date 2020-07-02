@@ -23,4 +23,8 @@
   &[data-keen-slider-v] &__slide {
     width: 100%;
   }
+
+  &[data-keen-slider-moves] * {
+    pointer-events: none;
+  }
 }

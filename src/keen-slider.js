@@ -2,6 +2,7 @@ import './polyfills'
 
 function KeenSlider(initialContainer, initialOptions = {}) {
   const events = []
+  const attributeMoving = 'data-keen-slider-moves'
   const attributeVertical = 'data-keen-slider-v'
   let container
   let touchControls
@@ -67,6 +68,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
       trackMeasureReset()
       touchLastX = x
     }
+    container.setAttribute(attributeMoving, true)
     if (e.cancelable) e.preventDefault()
     touchJustStarted = false
     const touchDistance = touchLastX - x
@@ -94,6 +96,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
       !isTouchable()
     )
       return
+    container.removeAttribute(attributeMoving)
     touchActive = false
     moveWithSpeed()
 
