@@ -1,10 +1,11 @@
 import './polyfills'
 
 function KeenSlider(initialContainer, initialOptions = {}) {
-  const events = []
   const attributeMoving = 'data-keen-slider-moves'
   const attributeVertical = 'data-keen-slider-v'
+  
   let container
+  let events = []
   let touchControls
   let length
   let origin
