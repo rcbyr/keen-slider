@@ -50,7 +50,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
 
   function eventAdd(element, event, handler, options = {}) {
     element.addEventListener(event, handler, options)
-    events.push([element, event, handler])
+    events.push([element, event, handler, options])
   }
 
   function eventDrag(e) {
@@ -179,8 +179,9 @@ function KeenSlider(initialContainer, initialOptions = {}) {
 
   function eventsRemove() {
     events.forEach(event => {
-      event[0].removeEventListener(event[1], event[2])
+      event[0].removeEventListener(event[1], event[2], event[3])
     })
+    events = []
   }
 
   function hook(hook) {
