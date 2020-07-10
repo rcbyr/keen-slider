@@ -3,7 +3,7 @@ import './polyfills'
 function KeenSlider(initialContainer, initialOptions = {}) {
   const attributeMoving = 'data-keen-slider-moves'
   const attributeVertical = 'data-keen-slider-v'
-  
+
   let container
   let events = []
   let touchControls
@@ -383,6 +383,12 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     sliderRebind()
   }
 
+  function sliderGetSlidesPerView(option) {
+    return typeof option === 'function'
+      ? option()
+      : clampValue(option, 1, Math.max(isLoop() ? length - 1 : length, 1))
+  }
+
   function sliderInit() {
     sliderCheckBreakpoint()
     sliderCreated = true
@@ -413,11 +419,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     touchMultiplicator =
       typeof dragSpeed === 'function' ? dragSpeed : val => val * dragSpeed
     width = isVertialSlider() ? container.offsetHeight : container.offsetWidth
-    slidesPerView = clampValue(
-      options.slidesPerView,
-      1,
-      Math.max(isLoop() ? length - 1 : length, 1)
-    )
+    slidesPerView = sliderGetSlidesPerView(options.slidesPerView)
     spacing = clampValue(options.spacing, 0, width / (slidesPerView - 1) - 1)
     width += spacing
     origin = isCenterMode()
