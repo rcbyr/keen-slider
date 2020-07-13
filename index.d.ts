@@ -26,6 +26,7 @@ export type TDetails = {
   relativeSlide: number
   absoluteSlide: number
   size: number
+  slidesPerView: number
   widthOrHeight: number
 }
 
