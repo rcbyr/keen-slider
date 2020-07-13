@@ -541,6 +541,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
       relativeSlide: ((trackCurrentIdx % length) + length) % length,
       absoluteSlide: trackCurrentIdx,
       size: length,
+      slidesPerView: sliderGetSlidesPerView(options.slidesPerView),
       widthOrHeight: width,
     }
   }
