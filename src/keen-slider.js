@@ -169,12 +169,20 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     eventAdd(container, 'mousemove', eventDrag)
     eventAdd(container, 'mouseleave', eventDragStop)
     eventAdd(container, 'mouseup', eventDragStop)
-    eventAdd(container, 'touchstart', eventDragStart)
-    eventAdd(container, 'touchmove', eventDrag)
-    eventAdd(container, 'touchend', eventDragStop)
-    eventAdd(container, 'touchcancel', eventDragStop)
+    eventAdd(container, 'touchstart', eventDragStart, {
+      passive: true,
+    })
+    eventAdd(container, 'touchmove', eventDrag, {
+      passive: false,
+    })
+    eventAdd(container, 'touchend', eventDragStop, {
+      passive: true,
+    })
+    eventAdd(container, 'touchcancel', eventDragStop, {
+      passive: true,
+    })
     eventAdd(window, 'wheel', eventWheel, {
-      passive: !1,
+      passive: false,
     })
   }
 
