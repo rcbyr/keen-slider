@@ -50,8 +50,22 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   let moveCallBack
 
   function eventAdd(element, event, handler, options = {}) {
-    element.addEventListener(event, handler, options)
-    events.push([element, event, handler, options])
+    // Test via a getter in the options object to see if the passive property is accessed
+    let supportsPassive = false;
+    try {
+      let opts = Object.defineProperty({}, 'passive', {
+        get: function() {
+          supportsPassive = true;
+        }
+      });
+      window.addEventListener("testPassive", null, opts);
+      window.removeEventListener("testPassive", null, opts);
+    } catch (e) {}
+
+    const eventListenerOptions = { ...options, ...(supportsPassive ? {passive: true} : {})};
+
+    element.addEventListener(event, handler, eventListenerOptions)
+    events.push([element, event, handler, eventListenerOptions])
   }
 
   function eventDrag(e) {
