@@ -166,28 +166,28 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     eventAdd(container, 'dragstart', function (e) {
       if (!isTouchable()) return
       e.preventDefault()
-    }, {passive: !(!isTouchable())})
+    }, {passive: isEventPassive})
     eventAdd(container, 'mousemove', eventDrag)
     eventAdd(container, 'mousedown', eventDragStart, {
-      passive: true
+      passive: true,
     })
     eventAdd(container, 'touchstart', eventDragStart, {
-      passive: true
+      passive: true,
     })
     eventAdd(container, 'mouseleave', eventDragStop, {
-      passive: true
+      passive: true,
     })
     eventAdd(container, 'mouseup', eventDragStop, {
-      passive: true
+      passive: true,
     })
     eventAdd(container, 'touchend', eventDragStop, {
-      passive: true
+      passive: true,
     })
     eventAdd(container, 'touchcancel', eventDragStop, {
-      passive: true
+      passive: true,
     })
     eventAdd(container, 'touchmove', eventDrag, {
-      passive: isEventPassive
+      passive: isEventPassive,
     })
     eventAdd(window, 'wheel', eventWheel, {
       passive: isEventPassive,
