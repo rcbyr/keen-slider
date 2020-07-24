@@ -159,30 +159,38 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   }
 
   function eventsAdd() {
+    const isEventPassive = !(!isTouchable() || !touchActive)
+
     eventAdd(window, 'orientationchange', sliderResizeFix)
     eventAdd(window, 'resize', () => sliderResize())
     eventAdd(container, 'dragstart', function (e) {
       if (!isTouchable()) return
       e.preventDefault()
-    })
-    eventAdd(container, 'mousedown', eventDragStart)
+    }, {passive: !(!isTouchable())})
     eventAdd(container, 'mousemove', eventDrag)
-    eventAdd(container, 'mouseleave', eventDragStop)
-    eventAdd(container, 'mouseup', eventDragStop)
-    eventAdd(container, 'touchstart', eventDragStart, {
-      passive: true,
+    eventAdd(container, 'mousedown', eventDragStart, {
+      passive: true
     })
-    eventAdd(container, 'touchmove', eventDrag, {
-      passive: false,
+    eventAdd(container, 'touchstart', eventDragStart, {
+      passive: true
+    })
+    eventAdd(container, 'mouseleave', eventDragStop, {
+      passive: true
+    })
+    eventAdd(container, 'mouseup', eventDragStop, {
+      passive: true
     })
     eventAdd(container, 'touchend', eventDragStop, {
-      passive: true,
+      passive: true
     })
     eventAdd(container, 'touchcancel', eventDragStop, {
-      passive: true,
+      passive: true
+    })
+    eventAdd(container, 'touchmove', eventDrag, {
+      passive: isEventPassive
     })
     eventAdd(window, 'wheel', eventWheel, {
-      passive: false,
+      passive: isEventPassive,
     })
   }
 
