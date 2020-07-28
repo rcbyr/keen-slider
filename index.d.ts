@@ -52,6 +52,7 @@ export type TOptions = {
   spacing?: number
   vertical?: boolean
   inlineBlockMode?: boolean
+  deactivateWheelEvent?: boolean
 }
 
 export type TEvents = {

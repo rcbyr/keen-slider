@@ -159,25 +159,15 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   }
 
   function eventsAdd() {
-    const isEventPassive = !(!isTouchable() || !touchActive)
-
     eventAdd(window, 'orientationchange', sliderResizeFix)
     eventAdd(window, 'resize', () => sliderResize())
-    eventAdd(container, 'dragstart', function (e) {
-      if (!isTouchable()) return
-      e.preventDefault()
-    }, {passive: isEventPassive})
     eventAdd(container, 'mousemove', eventDrag)
+    eventAdd(container, 'mouseleave', eventDragStop)
+    eventAdd(container, 'mouseup', eventDragStop)
     eventAdd(container, 'mousedown', eventDragStart, {
       passive: true,
     })
     eventAdd(container, 'touchstart', eventDragStart, {
-      passive: true,
-    })
-    eventAdd(container, 'mouseleave', eventDragStop, {
-      passive: true,
-    })
-    eventAdd(container, 'mouseup', eventDragStop, {
       passive: true,
     })
     eventAdd(container, 'touchend', eventDragStop, {
@@ -187,11 +177,14 @@ function KeenSlider(initialContainer, initialOptions = {}) {
       passive: true,
     })
     eventAdd(container, 'touchmove', eventDrag, {
-      passive: isEventPassive,
+      passive: false,
     })
-    eventAdd(window, 'wheel', eventWheel, {
-      passive: isEventPassive,
-    })
+    
+    if (!!initialOptions.deactivateWheelEvent) {
+      eventAdd(window, 'wheel', eventWheel, {
+        passive: false,
+      })
+    }
   }
 
   function eventsRemove() {
