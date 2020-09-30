@@ -38,7 +38,7 @@ export type TOptions = {
   }
   centered?: boolean
   controls?: boolean
-  dragSpeed?: number
+  dragSpeed?: number | (val: number, instance: KeenSlider) => number
   duration?: number
   friction?: number
   initial?: number
