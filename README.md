@@ -23,7 +23,7 @@ If you find a bug or have ideas for better code, I would be grateful for your co
 
 ## Sponsoring
 
-This project is and remains open source. Currently, I'm working on a new major version, that includes "all" features requested and much more by nearly the same project size (80% completed). After that, I will add much more examples for other use cases and tech stacks.
+This project is and remains open-source. Currently, I'm working on a new major version, that includes "all" features requested and much more by nearly the same project size (80% completed). After that, I will add much many examples for other use cases and tech stacks.
 
 Cause, I'm a family man with a full-time job I can't make any promises when the new version will be released. But I am highly motivated to make my vision of this project come true.
 
