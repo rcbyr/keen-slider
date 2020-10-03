@@ -27,6 +27,6 @@ This project is and remains open-source. Currently, I'm working on a new major v
 
 Cause, I'm a family man with a full-time job I can't make any promises when the new version will be released. But I am highly motivated to make my vision of this project come true.
 
-If you are interested in sponsoring, I would be very grateful. But you don't have to do that, especially not to motivate me to continue working on this project. I have the intention to continue anyway.
+If you are interested in sponsoring, I would be very grateful.
 
 [Sponsoring with Ko-fi](https://ko-fi.com/rcbyr)
