@@ -20,11 +20,3 @@ and is compatible with
 ## Contributing
 
 If you find a bug or have ideas for better code, I would be grateful for your contribution. Just create an issue or a pull request.
-
-## Sponsoring
-
-Currently, I'm working on a new major version, that includes "all" features requested and much more by nearly the same project size (80% completed). After that, I will add many more examples for other use cases and tech stacks.
-
-If you are interested in sponsoring this project, I would be very grateful.
-
-[Sponsoring with Ko-fi](https://ko-fi.com/rcbyr)
