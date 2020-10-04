@@ -23,10 +23,8 @@ If you find a bug or have ideas for better code, I would be grateful for your co
 
 ## Sponsoring
 
-This project is and remains open-source. Currently, I'm working on a new major version, that includes "all" features requested and much more by nearly the same project size (80% completed). After that, I will add much many examples for other use cases and tech stacks.
+Currently, I'm working on a new major version, that includes "all" features requested and much more by nearly the same project size (80% completed). After that, I will add much many examples for other use cases and tech stacks.
 
-Cause, I'm a family man with a full-time job I can't make any promises when the new version will be released. But I am highly motivated to make my vision of this project come true.
-
-If you are interested in sponsoring, I would be very grateful.
+If you are interested in sponsoring this project, I would be very grateful.
 
 [Sponsoring with Ko-fi](https://ko-fi.com/rcbyr)
