@@ -462,6 +462,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   }
 
   function slidesSetPositions() {
+    const RTLTransform = initialOptions.rtl ? -1 : 1;
     if (!slides) return
     slides.forEach((slide, idx) => {
       const absoluteDistance = trackSlidePositions[idx].distance * width
@@ -474,7 +475,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
 
       const x = isVertialSlider() ? 0 : pos
       const y = isVertialSlider() ? pos : 0
-      const transformString = `translate3d(${x}px, ${y}px, 0)`
+      const transformString = `translate3d(${(RTLTransform)*x}px, ${y}px, 0)`
       slide.style.transform = transformString
       slide.style['-webkit-transform'] = transformString
     })
@@ -703,10 +704,10 @@ function KeenSlider(initialContainer, initialOptions = {}) {
       sliderRebind(options, true)
     },
     next() {
-      moveToIdx(trackCurrentIdx + 1, true)
+      initialOptions.rtl ? moveToIdx(trackCurrentIdx - 1, true) : moveToIdx(trackCurrentIdx + 1, true)
     },
     prev() {
-      moveToIdx(trackCurrentIdx - 1, true)
+      initialOptions.rtl ? moveToIdx(trackCurrentIdx + 1, true) : moveToIdx(trackCurrentIdx - 1, true)
     },
     moveToSlide(idx, duration) {
       moveToIdx(idx, true, duration)
