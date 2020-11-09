@@ -209,6 +209,10 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     return options.loop
   }
 
+  function isRtl() {
+    return options.rtl
+  }
+
   function isRubberband() {
     return !options.loop && options.rubberband
   }
@@ -423,7 +427,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
       slides = getElements(optionSlides, container)
       length = slides ? slides.length : 0
     }
-    const dragSpeed = options.dragSpeed
+    const dragSpeed = options.dragSpeed * (!isRtl() ? 1 : -1)
     touchMultiplicator =
       typeof dragSpeed === 'function' ? dragSpeed : val => val * dragSpeed
     width = isVertialSlider() ? container.offsetHeight : container.offsetWidth
@@ -645,7 +649,10 @@ function KeenSlider(initialContainer, initialOptions = {}) {
           : 1
       slidePositions.push({
         portion: portion < 0 || portion > 1 ? 0 : portion,
-        distance,
+        distance: !isRtl()
+        ? distance
+        : distance * -1 + 1 - slideWidth,
+        distance: distance
       })
     }
     trackSlidePositions = slidePositions
@@ -691,6 +698,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     slidesPerView: 1,
     spacing: 0,
     mode: 'snap',
+    rtl: false,
     rubberband: true,
   }
 
