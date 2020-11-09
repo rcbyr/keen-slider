@@ -12,7 +12,8 @@
     "index.d.ts"
   ],
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "dev": "rollup -cw"
   },
   "repository": {
     "type": "git",
