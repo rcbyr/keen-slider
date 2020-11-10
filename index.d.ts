@@ -46,6 +46,7 @@ export type TOptions = {
   mode?: 'snap' | 'free' | 'free-snap'
   preventEvent?: string
   resetSlide?: boolean
+  rtl?: boolean
   rubberband?: boolean
   slides?: TSlides
   slidesPerView?: number | TSlidesPerViewGetter
