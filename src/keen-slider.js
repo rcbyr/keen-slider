@@ -651,8 +651,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
         portion: portion < 0 || portion > 1 ? 0 : portion,
         distance: !isRtl()
         ? distance
-        : distance * -1 + 1 - slideWidth,
-        distance: distance
+        : distance * -1 + 1 - slideWidth
       })
     }
     trackSlidePositions = slidePositions
