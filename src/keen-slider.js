@@ -73,7 +73,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     }
     if (e.cancelable) e.preventDefault()
     const touchDistance = touchLastX - x
-    trackAdd(touchMultiplicator(touchDistance, pubfuncs), e.timeStamp)
+    trackAdd(touchMultiplicator(touchDistance, pubfuncs) * (!isRtl() ? 1 : -1), e.timeStamp)
     touchLastX = x
   }
 
@@ -427,7 +427,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
       slides = getElements(optionSlides, container)
       length = slides ? slides.length : 0
     }
-    const dragSpeed = options.dragSpeed * (!isRtl() ? 1 : -1)
+    const dragSpeed = options.dragSpeed
     touchMultiplicator =
       typeof dragSpeed === 'function' ? dragSpeed : val => val * dragSpeed
     width = isVertialSlider() ? container.offsetHeight : container.offsetWidth
