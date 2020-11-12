@@ -671,10 +671,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   function trackSetCurrentIdx() {
     const new_idx = Math.round(trackPosition / (width / slidesPerView))
     if (new_idx === trackCurrentIdx) return
-    if (!isLoop()) {
-      if (new_idx < 0) return
-      if (new_idx > length - 1) return
-    }
+    if (!isLoop() && (new_idx < 0 || new_idx > length - 1)) return
     trackCurrentIdx = new_idx
     hook('slideChanged')
   }
