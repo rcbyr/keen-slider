@@ -700,7 +700,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     mode: 'snap',
     rtl: false,
     rubberband: true,
-    cancelOnLeave: false
+    cancelOnLeave: true
   }
 
   const pubfuncs = {
