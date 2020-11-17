@@ -166,9 +166,9 @@ function KeenSlider(initialContainer, initialOptions = {}) {
       e.preventDefault()
     })
     eventAdd(container, 'mousedown', eventDragStart)
-    eventAdd(container, 'mousemove', eventDrag)
-    eventAdd(container, 'mouseleave', eventDragStop)
-    eventAdd(container, 'mouseup', eventDragStop)
+    eventAdd(options.cancelOnLeave ? container : window, 'mousemove', eventDrag)
+    if (options.cancelOnLeave) eventAdd(container, 'mouseleave', eventDragStop)
+    eventAdd(window, 'mouseup', eventDragStop)
     eventAdd(container, 'touchstart', eventDragStart, {
       passive: true,
     })
@@ -700,6 +700,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     mode: 'snap',
     rtl: false,
     rubberband: true,
+    cancelOnLeave: false
   }
 
   const pubfuncs = {
