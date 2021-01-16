@@ -84,4 +84,5 @@ export default class KeenSlider {
   moveToSlide: (slide: number, duration?: number) => void
   resize: () => void
   details: () => TDetails
+  options: () => Omit<TOptionsEvents, 'breakpoints'>
 }

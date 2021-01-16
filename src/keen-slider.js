@@ -73,7 +73,10 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     }
     if (e.cancelable) e.preventDefault()
     const touchDistance = touchLastX - x
-    trackAdd(touchMultiplicator(touchDistance, pubfuncs) * (!isRtl() ? 1 : -1), e.timeStamp)
+    trackAdd(
+      touchMultiplicator(touchDistance, pubfuncs) * (!isRtl() ? 1 : -1),
+      e.timeStamp
+    )
     touchLastX = x
   }
 
@@ -122,7 +125,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   function eventGetX(e) {
     const touches = eventGetTargetTouches(e)
     return {
-      x: isVertialSlider()
+      x: isVerticalSlider()
         ? !touches
           ? e.pageY
           : touches[0].screenY
@@ -141,8 +144,8 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     const touches = eventGetTargetTouches(e)
     if (!touches) return true
     const touch = touches[0]
-    const x = isVertialSlider() ? touch.clientY : touch.clientX
-    const y = isVertialSlider() ? touch.clientX : touch.clientY
+    const x = isVerticalSlider() ? touch.clientY : touch.clientX
+    const y = isVerticalSlider() ? touch.clientX : touch.clientY
     const isSlide =
       touchLastClientX !== undefined &&
       touchLastClientY !== undefined &&
@@ -206,7 +209,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   }
 
   function isLoop() {
-    return options.loop
+    return options.loop && length > 1
   }
 
   function isRtl() {
@@ -217,7 +220,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     return !options.loop && options.rubberband
   }
 
-  function isVertialSlider() {
+  function isVerticalSlider() {
     return !!options.vertical
   }
 
@@ -430,7 +433,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     const dragSpeed = options.dragSpeed
     touchMultiplicator =
       typeof dragSpeed === 'function' ? dragSpeed : val => val * dragSpeed
-    width = isVertialSlider() ? container.offsetHeight : container.offsetWidth
+    width = isVerticalSlider() ? container.offsetHeight : container.offsetWidth
     slidesPerView = sliderGetSlidesPerView(options.slidesPerView)
     spacing = clampValue(options.spacing, 0, width / (slidesPerView - 1) - 1)
     width += spacing
@@ -445,7 +448,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
         : trackCurrentIdx
     trackSetPositionByIdx(isLoop() ? currentIdx : trackClampIndex(currentIdx))
 
-    if (isVertialSlider()) {
+    if (isVerticalSlider()) {
       container.setAttribute(attributeVertical, true)
     }
     optionsChanged = false
@@ -476,8 +479,8 @@ function KeenSlider(initialContainer, initialOptions = {}) {
             spacing / slidesPerView -
             (spacing / slidesPerView) * (slidesPerView - 1))
 
-      const x = isVertialSlider() ? 0 : pos
-      const y = isVertialSlider() ? pos : 0
+      const x = isVerticalSlider() ? 0 : pos
+      const y = isVerticalSlider() ? pos : 0
       const transformString = `translate3d(${x}px, ${y}px, 0)`
       slide.style.transform = transformString
       slide.style['-webkit-transform'] = transformString
@@ -490,7 +493,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
       const style = `calc(${100 / slidesPerView}% - ${
         (spacing / slidesPerView) * (slidesPerView - 1)
       }px)`
-      if (isVertialSlider()) {
+      if (isVerticalSlider()) {
         slide.style['min-height'] = style
         slide.style['max-height'] = style
       } else {
@@ -503,7 +506,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   function slidesRemoveStyles() {
     if (!slides) return
     let styles = ['transform', '-webkit-transform']
-    styles = isVertialSlider
+    styles = isVerticalSlider
       ? [...styles, 'min-height', 'max-height']
       : [...styles, 'min-width', 'max-width']
     slides.forEach(slide => {
@@ -649,9 +652,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
           : 1
       slidePositions.push({
         portion: portion < 0 || portion > 1 ? 0 : portion,
-        distance: !isRtl()
-        ? distance
-        : distance * -1 + 1 - slideWidth
+        distance: !isRtl() ? distance : distance * -1 + 1 - slideWidth,
       })
     }
     trackSlidePositions = slidePositions
@@ -700,7 +701,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     mode: 'snap',
     rtl: false,
     rubberband: true,
-    cancelOnLeave: true
+    cancelOnLeave: true,
   }
 
   const pubfuncs = {
@@ -728,6 +729,11 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     },
     details() {
       return trackGetDetails()
+    },
+    options() {
+      const opt = { ...options }
+      delete opt.breakpoints
+      return opt
     },
   }
 
