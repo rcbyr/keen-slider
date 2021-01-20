@@ -17,6 +17,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   let breakpointCurrent = null
   let optionsChanged = false
   let sliderCreated = false
+  let focused = false
 
   let trackCurrentIdx
   let trackPosition = 0
@@ -107,6 +108,31 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     hook('dragEnd')
   }
 
+  function eventFocus() {
+    focused = true
+  }
+
+  function eventBlur() {
+    focused = false
+  }
+
+  // Enable keyboard nav events when slider is focused
+  function eventKeydown(e) {
+    if (!focused) return;
+
+    switch (e.key) {
+      case "Left":
+      case "ArrowLeft":
+        pubfuncs.prev()
+        break;
+
+      case "Right":
+      case "ArrowRight":
+        pubfuncs.next()
+        break;
+    }
+  }
+
   function eventGetChangedTouches(e) {
     return e.changedTouches
   }
@@ -187,6 +213,9 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     eventAdd(window, 'wheel', eventWheel, {
       passive: false,
     })
+    eventAdd(container, 'focus', eventFocus)
+    eventAdd(container, 'blur', eventBlur)
+    eventAdd(container, 'keydown', eventKeydown)
   }
 
   function eventsRemove() {
@@ -375,9 +404,14 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     let _container = getElements(initialContainer)
     if (!_container.length) return
     container = _container[0]
+    sliderSetAttributes();
     sliderResize(force_resize)
     eventsAdd()
     hook('mounted')
+  }
+  
+  function sliderSetAttributes() {
+    container.setAttribute('tabindex', 0)
   }
 
   function sliderCheckBreakpoint() {
