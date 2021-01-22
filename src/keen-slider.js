@@ -77,6 +77,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
       touchMultiplicator(touchDistance, pubfuncs) * (!isRtl() ? 1 : -1),
       e.timeStamp
     )
+
     touchLastX = x
   }
 
@@ -395,6 +396,8 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     options = { ...defaultOptions, ...initialOptions, ..._options }
     optionsChanged = true
     resizeLastWidth = null
+
+    hook('optionsChanged')
     sliderRebind()
   }
 

@@ -64,6 +64,7 @@ export type TEvents = {
   destroyed?: (instance: KeenSlider) => void
   mounted?: (instance: KeenSlider) => void
   move?: (instance: KeenSlider) => void
+  optionsChanged?: (instance: KeenSlider) => void
   slideChanged?: (instance: KeenSlider) => void
 }
 
