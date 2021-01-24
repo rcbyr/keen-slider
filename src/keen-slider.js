@@ -402,12 +402,13 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   }
 
   function sliderGetSlidesPerView(option) {
-    if (option > length) {
+    if (typeof option === 'function')
+      return option()
+      
+    if (option > length)
       length = option
-    }
-    return typeof option === 'function'
-      ? option()
-      : clampValue(option, 1, Math.max(isLoop() ? length - 1 : length, 1))
+      
+    return clampValue(option, 1, Math.max(isLoop() ? length - 1 : length, 1))
   }
 
   function sliderInit() {
