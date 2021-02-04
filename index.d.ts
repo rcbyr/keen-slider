@@ -44,6 +44,7 @@ export type TOptions = {
   initial?: number
   loop?: boolean
   mode?: 'snap' | 'free' | 'free-snap'
+  origin?: number
   preventEvent?: string
   resetSlide?: boolean
   rtl?: boolean

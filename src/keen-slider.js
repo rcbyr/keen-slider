@@ -442,7 +442,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     width += spacing
     origin = isCenterMode()
       ? (width / 2 - width / slidesPerView / 2) / width
-      : 0
+      : options.origin
     slidesSetWidths()
 
     const currentIdx =
@@ -705,6 +705,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     rtl: false,
     rubberband: true,
     cancelOnLeave: true,
+    origin: 0
   }
 
   const pubfuncs = {
