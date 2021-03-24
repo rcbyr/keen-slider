@@ -49,16 +49,22 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   let moveForceFinish
   let moveCallBack
 
+  // scroll helpers
+  let scrollActive
+  let scrollStartPageY
+  let scrollStartPageX
+
   function eventAdd(element, event, handler, options = {}) {
     element.addEventListener(event, handler, options)
     events.push([element, event, handler, options])
   }
 
-  function eventDrag(e) {
+  function eventDrag(e, fromWheel = false) {
     if (
       !touchActive ||
       touchIdentifier !== eventGetIdentifier(e) ||
-      !isTouchable()
+      !isTouchable() ||
+      (scrollActive && !fromWheel)
     )
       return
     const x = eventGetX(e).x
@@ -158,8 +164,37 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   }
 
   function eventWheel(e) {
-    if (!isTouchable()) return
-    if (touchActive) e.preventDefault()
+    if (!options.wheel) {
+      if (!isTouchable()) return
+    }
+    e.preventDefault()
+    if (!touchActive) {
+      scrollStartPageX = e.pageX
+      scrollStartPageY = e.pageY
+      eventDragStart({
+        target: e.target,
+        pageX: scrollStartPageX,
+        pageY: scrollStartPageY,
+      })
+      return
+    }
+    scrollStartPageX -= e.deltaX
+    scrollStartPageY -= e.deltaY
+    eventDrag(
+      {
+        target: e.target,
+        pageX: scrollStartPageX,
+        pageY: scrollStartPageY,
+      },
+      true
+    )
+    window.clearTimeout(scrollActive)
+    scrollActive = setTimeout(function () {
+      eventDragStop({
+        target: e.target,
+      })
+      scrollActive = null
+    }, 50)
   }
 
   function eventsAdd() {
@@ -185,7 +220,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     eventAdd(container, 'touchcancel', eventDragStop, {
       passive: true,
     })
-    eventAdd(window, 'wheel', eventWheel, {
+    eventAdd(container, 'wheel', eventWheel, {
       passive: false,
     })
   }
@@ -693,6 +728,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     dragSpeed: 1,
     friction: 0.0025,
     loop: false,
+    wheel: false,
     initial: 0,
     duration: 500,
     preventEvent: 'data-keen-slider-pe',

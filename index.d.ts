@@ -43,6 +43,7 @@ export type TOptions = {
   friction?: number
   initial?: number
   loop?: boolean
+  wheel?: boolean
   mode?: 'snap' | 'free' | 'free-snap'
   preventEvent?: string
   resetSlide?: boolean
