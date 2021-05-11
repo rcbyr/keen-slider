@@ -1,3 +1,5 @@
+**Note:** I'm currently focused on working on the new main version of this library. I will come back to issues and PR's after the release.
+
 [![npm version](https://badge.fury.io/js/keen-slider.svg)](https://www.npmjs.com/package/keen-slider)
 [![Build Status](https://travis-ci.org/rcbyr/keen-slider.svg?branch=release)](https://travis-ci.org/rcbyr/keen-slider)
 
