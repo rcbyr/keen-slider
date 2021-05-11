@@ -45,8 +45,9 @@
   "devDependencies": {
     "@babel/core": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
-    "autoprefixer": "^9.8.5",
+    "autoprefixer": "^10.2.5",
     "babel-loader": "^8.0.6",
+    "postcss": "^8.2.15",
     "react": "^16.13.1",
     "rollup": "^2.22.1",
     "rollup-plugin-babel": "^4.4.0",
