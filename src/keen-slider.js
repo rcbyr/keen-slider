@@ -444,7 +444,11 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     const dragSpeed = options.dragSpeed
     touchMultiplicator =
       typeof dragSpeed === 'function' ? dragSpeed : val => val * dragSpeed
-    width = isVerticalSlider() ? container.offsetHeight : container.offsetWidth
+
+    const containerBoundingRect = container.getBoundingClientRect()
+
+    console.log('containerBoundingRect', containerBoundingRect)
+    width = isVerticalSlider() ? containerBoundingRect.height : containerBoundingRect.width
     slidesPerView = sliderGetSlidesPerView(options.slidesPerView)
     spacing = clampValue(options.spacing, 0, width / (slidesPerView - 1) - 1)
     width += spacing
