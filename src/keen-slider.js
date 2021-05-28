@@ -447,7 +447,6 @@ function KeenSlider(initialContainer, initialOptions = {}) {
 
     const containerBoundingRect = container.getBoundingClientRect()
 
-    console.log('containerBoundingRect', containerBoundingRect)
     width = isVerticalSlider() ? containerBoundingRect.height : containerBoundingRect.width
     slidesPerView = sliderGetSlidesPerView(options.slidesPerView)
     spacing = clampValue(options.spacing, 0, width / (slidesPerView - 1) - 1)
