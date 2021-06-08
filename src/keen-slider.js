@@ -519,7 +519,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   function slidesRemoveStyles() {
     if (!slides) return
     let styles = ['transform', '-webkit-transform']
-    styles = isVerticalSlider
+    styles = isVerticalSlider()
       ? [...styles, 'min-height', 'max-height']
       : [...styles, 'min-width', 'max-width']
     slides.forEach(slide => {
