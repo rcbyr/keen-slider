@@ -75,7 +75,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     if (e.cancelable) e.preventDefault()
     const touchDistance = touchLastX - x
     touchSumDistance += Math.abs(touchDistance)
-    if (!touchChecked && touchSumDistance > 5) {
+    if (!touchChecked && touchSumDistance > options.moveXThreshold) {
       touchChecked = true
       container.setAttribute(attributeMoving, true)
     }
@@ -713,6 +713,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     slidesPerView: 1,
     spacing: 0,
     mode: 'snap',
+    moveXThreshold: 5,
     rtl: false,
     rubberband: true,
     cancelOnLeave: true,

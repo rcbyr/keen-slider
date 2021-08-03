@@ -45,6 +45,7 @@ export type TOptions = {
   initial?: number
   loop?: boolean
   mode?: 'snap' | 'free' | 'free-snap'
+  moveXThreshold?: number;
   preventEvent?: string
   resetSlide?: boolean
   rtl?: boolean
