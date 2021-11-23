@@ -17,6 +17,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
   let breakpointCurrent = null
   let optionsChanged = false
   let sliderCreated = false
+  let sliderMounted = false
 
   let trackCurrentIdx
   let trackPosition = 0
@@ -386,6 +387,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     container = _container[0]
     sliderResize(force_resize)
     eventsAdd()
+    sliderMounted = true
     hook('mounted')
   }
 
@@ -670,7 +672,7 @@ function KeenSlider(initialContainer, initialOptions = {}) {
     }
     trackSlidePositions = slidePositions
     slidesSetPositions()
-    hook('move')
+    if (sliderMounted) hook('move')
   }
 
   function trackrubberband(add) {
@@ -684,10 +686,12 @@ function KeenSlider(initialContainer, initialOptions = {}) {
 
   function trackSetCurrentIdx() {
     const new_idx = Math.round(trackPosition / (width / slidesPerView))
+
     if (new_idx === trackCurrentIdx) return
     if (!isLoop() && (new_idx < 0 || new_idx > length - 1)) return
     trackCurrentIdx = new_idx
-    hook('slideChanged')
+
+    if (sliderMounted) hook('slideChanged')
   }
 
   function trackSetPositionByIdx(idx) {
