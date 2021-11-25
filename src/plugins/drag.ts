@@ -226,7 +226,8 @@ export default function Drag(
     if (
       !slider.options.drag ||
       slider.options.disabled ||
-      !slider.track.details
+      !slider.track.details ||
+      !slider.track.details.length
     )
       return
     setSpeed()

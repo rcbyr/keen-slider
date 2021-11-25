@@ -238,15 +238,16 @@ export default function Track(
     ])
     slidesCount = slides.length
     if (!slidesCount) return
-    length = slides.reduce((acc, val) => acc + val[0] + val[1], 0)
+    length = round(slides.reduce((acc, val) => acc + val[0] + val[1], 0))
 
     const lastIdx = slidesCount - 1
-    trackLength =
+    trackLength = round(
       length +
-      slides[0][2] -
-      slides[lastIdx][0] -
-      slides[lastIdx][2] -
-      slides[lastIdx][1]
+        slides[0][2] -
+        slides[lastIdx][0] -
+        slides[lastIdx][2] -
+        slides[lastIdx][1]
+    )
     relativePositions = slides.reduce((acc, val) => {
       if (!acc) return [0]
       const prev = slides[acc.length - 1]
