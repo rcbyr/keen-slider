@@ -7,7 +7,7 @@
 with native touch/swipe behavior and great performance. It comes with
 **no dependencies**, **typescript support**, **multitouch support**
 and is compatible with
-**all common browsers including IE 10**. Furthermore it comes with a **react hook** and a **Vue 3 composition function** for easier use.
+**all common browsers including IE 10**. Furthermore it comes with a **React Hook** and a **Vue 3 Composition Function** for easier use.
 
 ## Getting Started
 
