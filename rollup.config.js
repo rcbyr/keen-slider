@@ -1,85 +1,89 @@
-import babel from 'rollup-plugin-babel'
-import resolve from 'rollup-plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
-import banner from 'rollup-plugin-banner'
-import postcss from 'rollup-plugin-postcss'
+import babel from '@rollup/plugin-babel'
 import autoprefixer from 'autoprefixer'
 import copy from 'rollup-plugin-copy'
+import postcss from 'rollup-plugin-postcss'
+import resolve from '@rollup/plugin-node-resolve'
 
-const pkg = require('./package.json')
+const umd = {
+  input: './.build/keen-slider.js',
+  output: [
+    {
+      file: './keen-slider.js',
+      format: 'umd',
+      name: 'KeenSlider',
+      sourcemap: false,
+      strict: true,
+    },
+  ],
+  plugins: [resolve(), babel(), terser({ output: { comments: false } })],
+}
 
-const date = new Date()
-
-const bannerText = `${`
-keen-slider ${pkg.version}
-${pkg.description}
-${pkg.homepage}
-Copyright 2020-${date.getFullYear()} ${pkg.author}
-License: ${pkg.license}
-Released on: ${date.getFullYear()}-${(date.getMonth() + 1)
-  .toString()
-  .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}
-`.trim()}`
-
-export default [
-  {
-    input: './src/keen-slider.js',
-    output: [
-      {
-        format: 'esm',
-        name: 'KeenSlider',
-        strict: true,
-        sourcemap: true,
-        file: './keen-slider.esm.js',
-        sourcemap: true,
-      },
-      {
-        format: 'umd',
-        name: 'KeenSlider',
-        strict: true,
-        sourcemap: true,
-        file: './keen-slider.js',
-        format: 'umd',
-        sourcemap: true,
-      },
-    ],
-    external: ['react'],
-    plugins: [
-      resolve(),
-      babel(),
-      terser({ output: { comments: false } }),
-      banner(bannerText),
-    ],
+const cjs = {
+  input: './.build/keen-slider.js',
+  output: {
+    file: './keen-slider.cjs.js',
+    format: 'cjs',
+    exports: 'named',
   },
-  {
-    input: './src/react.js',
-    output: [
-      {
-        format: 'esm',
-        name: 'KeenSlider',
-        strict: true,
-        sourcemap: true,
-        file: './react.esm.js',
-        sourcemap: true,
-      },
-      {
-        format: 'umd',
-        name: 'KeenSlider',
-        strict: true,
-        sourcemap: true,
-        file: './react.js',
-        format: 'umd',
-        sourcemap: true,
-      },
-    ],
-    external: ['react'],
-    plugins: [
-      resolve(),
-      babel(),
-      terser({ output: { comments: false } }),
-      banner(bannerText),
-    ],
+  plugins: [resolve(), terser({ output: { comments: false } })],
+}
+
+const es = {
+  input: './.build/keen-slider.js',
+  output: {
+    file: './keen-slider.es.js',
+    format: 'es',
+    exports: 'named',
   },
+  plugins: [resolve(), terser({ output: { comments: false } })],
+}
+
+const react = {
+  input: './.build/react.js',
+  output: {
+    file: './react.js',
+    format: 'cjs',
+    exports: 'named',
+  },
+  external: ['react'],
+  plugins: [resolve(), terser({ output: { comments: false } })],
+}
+
+const react_es = {
+  input: './.build/react.js',
+  output: {
+    file: './react.es.js',
+    format: 'es',
+    exports: 'named',
+  },
+  external: ['react'],
+  plugins: [resolve(), terser({ output: { comments: false } })],
+}
+
+const vue = {
+  input: './.build/vue.js',
+  output: {
+    file: './vue.js',
+    format: 'cjs',
+    exports: 'named',
+  },
+  external: ['vue'],
+  plugins: [resolve(), terser({ output: { comments: false } })],
+}
+
+const vue_es = {
+  input: './.build/vue.js',
+  output: {
+    file: './vue.es.js',
+    format: 'es',
+    exports: 'named',
+  },
+  external: ['vue'],
+  plugins: [resolve(), terser({ output: { comments: false } })],
+}
+
+const styles = [
   {
     input: 'src/keen-slider.scss',
     output: {
@@ -87,12 +91,12 @@ export default [
     },
     plugins: [
       copy({
-        targets: [{ src: './src/keen-slider.scss', dest: './' }],
+        targets: [{ dest: './', src: './src/keen-slider.scss' }],
       }),
       postcss({
         extract: true,
-        sourceMap: true,
         plugins: [autoprefixer()],
+        sourceMap: false,
       }),
     ],
   },
@@ -105,9 +109,11 @@ export default [
       postcss({
         extract: true,
         minimize: true,
-        sourceMap: true,
         plugins: [autoprefixer()],
+        sourceMap: false,
       }),
     ],
   },
 ]
+
+export default [umd, cjs, es, react, react_es, vue, vue_es, ...styles]

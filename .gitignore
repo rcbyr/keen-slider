@@ -2,8 +2,18 @@ node_modules
 .DS_Store
 .gh-pages
 dist
+.build
 
 /*.js
 /*.css
 /*.scss
 /*.map
+/*.d.ts
+
+playground/build/*
+types
+yarn-error.log
+
+!babel.config.js
+!jest.config.js
+!.eslintrc.js

@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "isolatedModules": false,
+    "importHelpers": true,
+    "jsx": "react",
+    "esModuleInterop": true,
+    "experimentalDecorators": false,
+    "emitDecoratorMetadata": false,
+    "declaration": true,
+    "declarationDir": ".build",
+    "outDir": ".build",
+    "noLib": false,
+    "preserveConstEnums": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "sourceMap": false,
+    "strict": false,
+    "removeComments": true,
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": false,
+    "downlevelIteration": false
+  },
+  "include": ["tests/**/*.ts", "src/**/*.ts"],
+  "exclude": ["node_modules"]
+}
