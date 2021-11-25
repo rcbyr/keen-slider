@@ -47,7 +47,7 @@ const KeenSlider = function (
 }
 
 export default KeenSlider as unknown as {
-  new <O = {}, P = {}, H extends string = string>(
+  new <O = {}, P = {}, H extends string = KeenSliderHooks>(
     container: HTMLElement,
     options?: KeenSliderOptions<O, P, H>,
     plugins?:

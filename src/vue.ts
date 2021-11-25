@@ -2,6 +2,7 @@ import { isRef, onMounted, onUnmounted, Ref, ref, watch } from 'vue'
 
 import KeenSlider from './keen-slider'
 import {
+  KeenSliderHooks,
   KeenSliderInstance,
   KeenSliderOptions,
   KeenSliderPlugin,
@@ -13,7 +14,7 @@ export function useKeenSlider<
   T extends HTMLElement,
   O = {},
   P = {},
-  H extends string = string
+  H extends string = KeenSliderHooks
 >(
   options: Ref<KeenSliderOptions<O, P, H>> | KeenSliderOptions<O, P, H>,
   plugins?:

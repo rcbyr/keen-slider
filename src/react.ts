@@ -3,6 +3,7 @@ import { MutableRefObject, useCallback, useEffect, useRef } from 'react'
 import { equal } from './core/utils'
 import KeenSlider from './keen-slider'
 import {
+  KeenSliderHooks,
   KeenSliderInstance,
   KeenSliderOptions,
   KeenSliderPlugin,
@@ -21,7 +22,7 @@ export function useKeenSlider<
   T extends HTMLElement,
   O = {},
   P = {},
-  H extends string = string
+  H extends string = KeenSliderHooks
 >(
   options?: KeenSliderOptions<O, P, H>,
   plugins?:
