@@ -385,6 +385,12 @@ Updates the slider when it is called. If the resizing hasn't been triggered or t
 
 - `options`: **object** - Specifies the new options with which the slider should be reinitialized. Default **undefined**.
 
+## Attributes
+
+- `data-keen-slider-clickable` - Set this attribute to each element that should prevent touch/click events on the slider.
+- `data-keen-slider-scrollable` - Set this attribute to each element that should be scrollable in the same direction as the slider (vertical or horizontal). `overflow`
+  must be set to `scroll`.
+
 ## Plugins
 
 To make it easier to integrate, structure, and version custom slider functions, you can create plugins. Keen-Slider itself is also partially based on plugins. These plugins can be overwritten or deactivated when initiating the slider (but this can have side effects). The internal plugin names are `web`, `renderer`, `drag`, `free` and `snap`. Since the plugins are processed sequentially, you can use the name `first` to put a plugin in the first place.
