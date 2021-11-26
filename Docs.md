@@ -2,7 +2,7 @@
 
 Complete documentation of the installation and usage of Keen-Slider.
 
-For the documentation of the old version of Keen-Slider(v5) click [here](https://keen-slider.io/docs/v5).
+For the documentation of the **old version** of Keen-Slider(**Version 5**) click [here](https://keen-slider.io/docs/v5).
 
 ## Getting started
 
