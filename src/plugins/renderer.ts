@@ -16,20 +16,21 @@ export default function Renderer(
     HOOK_DESTROYED | HOOK_OPTIONS_CHANGED | HOOK_UPDATED
   >
 ): void {
-  let elements
   let autoScale = null
+  let elements
+  let verticalOption
 
-  function applyStylesInAnimationFrame(remove?, scale?) {
+  function applyStylesInAnimationFrame(remove?, scale?, vertical?) {
     slider.animator.active
-      ? applyStyles(remove, scale)
-      : requestAnimationFrame(() => applyStyles(remove, scale))
+      ? applyStyles(remove, scale, vertical)
+      : requestAnimationFrame(() => applyStyles(remove, scale, vertical))
   }
 
   function applyStylesHook() {
-    applyStylesInAnimationFrame()
+    applyStylesInAnimationFrame(false, false, verticalOption)
   }
 
-  function applyStyles(remove?, scale?) {
+  function applyStyles(remove?, scale?, vertical?) {
     let sizeSum = 0
     const size = slider.size
     const details = slider.track.details
@@ -37,28 +38,31 @@ export default function Renderer(
     const slides = details.slides
     elements.forEach((element, idx) => {
       if (remove) {
-        if (!autoScale && scale) scaleElement(element, null)
-        positionElement(element, null)
+        if (!autoScale && scale) scaleElement(element, null, vertical)
+        positionElement(element, null, vertical)
       } else {
         if (!slides[idx]) return
         const slideSize = slides[idx].size * size
-        if (!autoScale && scale) scaleElement(element, slideSize)
-        positionElement(element, slides[idx].distance * size - sizeSum)
+        if (!autoScale && scale) scaleElement(element, slideSize, vertical)
+        positionElement(
+          element,
+          slides[idx].distance * size - sizeSum,
+          vertical
+        )
         sizeSum += slideSize
       }
     })
   }
 
-  function scaleElement(element, value) {
-    const type = isVertical() ? 'height' : 'width'
+  function scaleElement(element, value, vertical) {
+    const type = vertical ? 'height' : 'width'
     if (value !== null) value += 'px'
     element.style['min-' + type] = value
     element.style['max-' + type] = value
   }
 
-  function positionElement(element, value) {
+  function positionElement(element, value, vertical) {
     if (value !== null) {
-      const vertical = isVertical()
       if (slider.options.renderMode === 'performance') value = Math.round(value)
       const x = vertical ? 0 : value
       const y = vertical ? value : 0
@@ -68,21 +72,18 @@ export default function Renderer(
     element.style['-webkit-transform'] = value
   }
 
-  function isVertical() {
-    return slider.options.vertical
-  }
-
   function reset() {
-    if (elements) applyStylesInAnimationFrame(true, true)
+    if (elements) applyStylesInAnimationFrame(true, true, verticalOption)
     slider.on('detailsChanged', applyStylesHook, true)
   }
 
   function positionAndScale() {
-    applyStylesInAnimationFrame(false, true)
+    applyStylesInAnimationFrame(false, true, verticalOption)
   }
 
   function update() {
     reset()
+    verticalOption = slider.options.vertical
     if (slider.options.disabled) return
     autoScale = getProp(slider.options.slides, 'perView', null) === 'auto'
     slider.on('detailsChanged', applyStylesHook)
