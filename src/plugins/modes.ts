@@ -20,7 +20,7 @@ export default function Free(
     | HOOK_UPDATED
   >
 ): void {
-  let isFreeSnap
+  let startIdx, moveIdx
   let currentDirection
   let min
   let max
@@ -31,6 +31,10 @@ export default function Free(
     return duration * 2
   }
 
+  function clampIdx(idx) {
+    return clamp(idx, minIdx, maxIdx)
+  }
+
   function t(x) {
     return 1 - Math.pow(-x + 1, 1 / 3)
   }
@@ -39,15 +43,43 @@ export default function Free(
     return 1 - Math.pow(1 - t, 3)
   }
 
-  function end() {
+  function snap() {
+    const track = slider.track
+    const details = slider.track.details
+    const position = details.position
+    let direction = sign(track.velocity())
+    if (position > max || position < min) {
+      direction = 0
+    }
+
+    let idx = startIdx + direction
+    if (details.slides[track.absToRel(idx)].portion === 0) idx -= direction
+
+    if (startIdx !== moveIdx) {
+      idx = moveIdx
+    }
+    if (sign(track.idxToDist(idx, true)) !== direction) idx += direction
+    idx = clampIdx(idx)
+    const dist = track.idxToDist(idx, true)
+    slider.animator.start([
+      {
+        distance: dist,
+        duration: 500,
+        easing: t => 1 + --t * t * t * t * t,
+      },
+    ])
+  }
+
+  function free() {
     stop()
+    const isFreeSnap = slider.options.mode === 'free-snap'
     const track = slider.track
     const speed = track.velocity()
     currentDirection = sign(speed)
     const trackDetails = slider.track.details
     const keyframes = []
     if (!speed && isFreeSnap) {
-      slider.moveToIdx(clamp(trackDetails.abs, minIdx, maxIdx), true, {
+      slider.moveToIdx(clampIdx(trackDetails.abs), true, {
         duration: 500,
         easing: t => 1 + --t * t * t * t * t,
       })
@@ -105,6 +137,12 @@ export default function Free(
     slider.animator.start(keyframes)
   }
 
+  function end() {
+    const mode = slider.options.mode
+    if (mode === 'snap') snap()
+    if (mode === 'free' || mode === 'free-snap') free()
+  }
+
   function speedToDistanceAndDuration(s, m = 1000) {
     s = Math.abs(s)
     const decelerationRate = 0.000000147 + s / m
@@ -115,11 +153,6 @@ export default function Free(
   }
 
   function update() {
-    isFreeSnap = slider.options.mode === 'free-snap'
-    const remove = slider.options.mode !== 'free' && !isFreeSnap
-    slider.on('dragStarted', start, remove)
-    slider.on('dragEnded', end, remove)
-
     const details = slider.track.details
     if (!details) return
     min = details.min
@@ -130,13 +163,21 @@ export default function Free(
 
   function start() {
     stop()
+    startIdx = moveIdx = slider.track.details.abs
   }
 
   function stop() {
     slider.animator.stop()
   }
 
+  function drag() {
+    moveIdx = slider.track.details.abs
+  }
+
   slider.on('updated', update)
   slider.on('optionsChanged', update)
   slider.on('created', update)
+  slider.on('dragStarted', start)
+  slider.on('dragEnded', end)
+  slider.on('dragged', drag)
 }

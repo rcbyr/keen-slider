@@ -1,9 +1,8 @@
 /* eslint-disable sort-keys */
 import Slider from './core/slider'
 import Drag from './plugins/drag'
-import Free from './plugins/free'
+import Modes from './plugins/modes'
 import Renderer from './plugins/renderer'
-import Snap from './plugins/snap'
 import Web from './plugins/web'
 import {
   KeenSliderHooks,
@@ -36,8 +35,7 @@ const KeenSlider = function (
         web: Web<KeenSliderOptions>(container, defOpts),
         renderer: Renderer,
         drag: Drag,
-        snap: Snap,
-        free: Free,
+        modes: Modes,
         ...(plugins || {}),
       }
     )

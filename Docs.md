@@ -1,8 +1,6 @@
 # Documentation
 
-Complete documentation of the installation and usage of Keen-Slider.
-
-For the documentation of the **old version** of Keen-Slider(**Version 5**) click [here](https://keen-slider.io/docs/v5).
+Complete documentation of the installation and usage of Keen-Slider. For the documentation of the **old version** click [here](https://keen-slider.io/docs/v5).
 
 ## Getting started
 
@@ -393,7 +391,7 @@ Updates the slider when it is called. If the resizing hasn't been triggered or t
 
 ## Plugins
 
-To make it easier to integrate, structure, and version custom slider functions, you can create plugins. Keen-Slider itself is also partially based on plugins. These plugins can be overwritten or deactivated when initiating the slider (but this can have side effects). The internal plugin names are `web`, `renderer`, `drag`, `free` and `snap`. Since the plugins are processed sequentially, you can use the name `first` to put a plugin in the first place.
+To make it easier to integrate, structure, and version custom slider functions, you can create plugins. Keen-Slider itself is also partially based on plugins. These plugins can be overwritten or deactivated when initiating the slider (but this can have side effects). The internal plugin names are `web`, `renderer`, `drag` and `modes`. Since the plugins are processed sequentially, you can use the name `first` to put a plugin in the first place.
 
 A plugin is basically a function that receives the slider instance as its only argument and is initiated during slider startup. With the `on` and `emit` function it can take part in the slider lifecycle.
 
