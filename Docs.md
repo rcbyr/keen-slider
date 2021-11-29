@@ -100,7 +100,7 @@ The library comes with a function that uses the composition API of Vue 3. Theref
 ```html
 <script>
   import { ref } from 'vue'
-  import useKeenSlider from 'keen-slider/vue' // import from 'keen-slider/vue.es' to get an ES module
+  import { useKeenSlider } from 'keen-slider/vue' // import from 'keen-slider/vue.es' to get an ES module
 
   export default {
     setup() {
