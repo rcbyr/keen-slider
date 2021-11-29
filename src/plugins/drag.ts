@@ -94,7 +94,8 @@ export default function Drag(
   }
 
   function dragStart(e) {
-    if (dragActive) return
+    if (dragActive || !slider.track.details || !slider.track.details.length)
+      return
     isProperDrag = false
     sumDistance = 0
     dragActive = true
@@ -223,13 +224,7 @@ export default function Drag(
 
   function update() {
     events.purge()
-    if (
-      !slider.options.drag ||
-      slider.options.disabled ||
-      !slider.track.details ||
-      !slider.track.details.length
-    )
-      return
+    if (!slider.options.drag || slider.options.disabled) return
     setSpeed()
     defaultDirection = !slider.options.rtl ? 1 : -1
     setSizes()
