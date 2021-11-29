@@ -131,7 +131,7 @@ export default function Web<O>(
       const config = []
       const perView = getProp<number | 'auto'>(slides, 'perView', 1, true)
       const spacing =
-        (getProp(slides, 'spacing', 0, true) as number) / slider.size
+        (getProp(slides, 'spacing', 0, true) as number) / slider.size || 0
       const spacingPortion =
         perView === 'auto' ? spacing : spacing / (perView as number)
       const originOption = getProp(slides, 'origin', 'auto') as any
