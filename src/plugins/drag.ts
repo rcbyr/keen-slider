@@ -3,13 +3,10 @@ import {
   clamp,
   elems,
   Events,
-  getXY,
-  identifier,
   prevent,
   setAttr,
   sign,
   stop,
-  touches,
 } from '../core/utils'
 import {
   DragOptions,
@@ -57,10 +54,10 @@ export default function Drag(
   let max
 
   function drag(e) {
-    if (!dragActive || dragIdentifier !== identifier(e)) {
+    if (!dragActive || dragIdentifier !== e.id) {
       return
     }
-    const value = getXY(e, isVertical())
+    const value = xy(e)
 
     if (!isSlide(e) && dragJustStarted) {
       return dragStop(e)
@@ -100,25 +97,23 @@ export default function Drag(
     sumDistance = 0
     dragActive = true
     dragJustStarted = true
-    dragIdentifier = identifier(e)
+    dragIdentifier = e.id
     isSlide(e)
-    lastValue = getXY(e, isVertical())
+    lastValue = xy(e)
     slider.emit('dragStarted')
   }
 
   function dragStop(e) {
-    if (!dragActive || dragIdentifier !== identifier(e, true)) return
+    if (!dragActive || dragIdentifier !== e.idChanged) return
     setAttr(container, 'moves', null)
     dragActive = false
     slider.emit('dragEnded')
   }
 
   function isSlide(e) {
-    const touchPoints = touches(e)
-    const touch = touchPoints ? touchPoints[0] : e
     const vertical = isVertical()
-    const x = vertical ? touch.clientY : touch.clientX
-    const y = vertical ? touch.clientX : touch.clientY
+    const x = vertical ? e.y : e.x
+    const y = vertical ? e.x : e.y
     const isSlide =
       lastX !== undefined &&
       lastY !== undefined &&
@@ -128,30 +123,34 @@ export default function Drag(
     return isSlide
   }
 
+  function xy(e) {
+    return isVertical() ? e.y : e.x
+  }
+
   function preventScrolling(element) {
     let start
-    events.add(
+    events.input(
       element,
       'touchstart',
       (e: TouchEvent) => {
-        start = getXY(e, isVertical())
+        start = xy(e)
         scrollLock = true
         scrollTouchActive = true
       },
       { passive: true }
     )
-    events.add(element, 'touchmove', (e: TouchEvent) => {
+    events.input(element, 'touchmove', (e: TouchEvent) => {
       const vertical = isVertical()
       const maxPosition = vertical
         ? element.scrollHeight - element.clientHeight
         : element.scrollWidth - element.clientWidth
-      const direction = start - getXY(e, vertical)
+      const direction = start - xy(e)
       const position = vertical ? element.scrollTop : element.scrollLeft
       const scrollingEnabled =
         (vertical && element.style.overflowY === 'scroll') ||
         (!vertical && element.style.overflowX === 'scroll')
 
-      start = getXY(e, vertical)
+      start = xy(e)
       if (
         ((direction < 0 && position > 0) ||
           (direction > 0 && position < maxPosition)) &&
@@ -165,7 +164,7 @@ export default function Drag(
       scrollLock = false
     })
 
-    events.add(element, 'touchend', () => {
+    events.input(element, 'touchend', () => {
       scrollLock = false
     })
   }
@@ -233,14 +232,17 @@ export default function Drag(
     events.add(container, 'dragstart', e => {
       prevent(e)
     })
-    events.add(container, 'mousedown', dragStart)
-    events.add(container, 'mousemove', drag)
-    events.add(container, 'mouseleave', dragStop)
-    events.add(container, 'mouseup', dragStop)
-    events.add(container, 'touchstart', dragStart, { passive: true })
-    events.add(container, 'touchmove', drag, { passive: false })
-    events.add(container, 'touchend', dragStop)
-    events.add(container, 'touchcancel', dragStop)
+    events.input(container, 'ksDragStart', dragStart)
+    events.input(container, 'ksDrag', drag)
+    events.input(container, 'ksDragEnd', dragStop)
+    events.input(container, 'mousedown', dragStart)
+    events.input(container, 'mousemove', drag)
+    events.input(container, 'mouseleave', dragStop)
+    events.input(container, 'mouseup', dragStop)
+    events.input(container, 'touchstart', dragStart, { passive: true })
+    events.input(container, 'touchmove', drag, { passive: false })
+    events.input(container, 'touchend', dragStop)
+    events.input(container, 'touchcancel', dragStop)
     events.add(window, 'wheel', e => {
       if (dragActive) prevent(e)
     })

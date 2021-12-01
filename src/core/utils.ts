@@ -2,17 +2,6 @@ function toArray(nodeList) {
   return Array.prototype.slice.call(nodeList)
 }
 
-export function getXY(e: TouchEvent | MouseEvent, vertical: boolean): number {
-  const touchPoints = touches(e as TouchEvent)
-  return vertical
-    ? !touchPoints
-      ? (e as MouseEvent).pageY
-      : touchPoints[0].screenY
-    : !touchPoints
-    ? (e as MouseEvent).pageX
-    : touchPoints[0].screenX
-}
-
 export function now(): number {
   return Date.now()
 }
@@ -51,28 +40,69 @@ export function elems(
     : []
 }
 
-export function touches(e: TouchEvent): TouchEvent['targetTouches'] {
-  return e.targetTouches
+export function prevent(e: any): void {
+  if (e.raw) e = e.raw
+  if (e.cancelable && !e.defaultPrevented) e.preventDefault()
 }
 
-export function identifier(
-  e: TouchEvent,
-  changedTouches?: boolean
-): string | number {
-  const touchPoints = changedTouches ? e.changedTouches : touches(e)
-  return !touchPoints ? 'd' : touchPoints[0] ? touchPoints[0].identifier : 'e'
+export function stop(e: any): void {
+  if (e.raw) e = e.raw
+  if (e.stopPropagation) e.stopPropagation()
 }
 
-export function prevent(e: Event): void {
-  if (e.cancelable) e.preventDefault()
-}
-
-export function stop(e: TouchEvent): void {
-  e.stopPropagation()
+function inputHandler(handler) {
+  return e => {
+    const changedTouches = e.changedTouches || []
+    const touchPoints = e.targetTouches || []
+    const detail = e.detail && e.detail.x ? e.detail : null
+    handler({
+      id: detail
+        ? detail.identifier
+          ? detail.identifier
+          : 'i'
+        : !touchPoints[0]
+        ? 'd'
+        : touchPoints[0]
+        ? touchPoints[0].identifier
+        : 'e',
+      idChanged: detail
+        ? detail.identifier
+          ? detail.identifier
+          : 'i'
+        : !changedTouches[0]
+        ? 'd'
+        : changedTouches[0]
+        ? changedTouches[0].identifier
+        : 'e',
+      raw: e,
+      x:
+        detail && detail.x
+          ? detail.x
+          : touchPoints[0]
+          ? touchPoints[0].screenX
+          : detail
+          ? detail.x
+          : e.pageX,
+      y:
+        detail && detail.y
+          ? detail.y
+          : touchPoints[0]
+          ? touchPoints[0].screenY
+          : detail
+          ? detail.y
+          : e.pageY,
+    })
+  }
 }
 
 export function Events(): {
   add: (
+    element: Element | Document | Window | MediaQueryList,
+    event: string,
+    handler: (event: Event) => void,
+    options?: AddEventListenerOptions
+  ) => void
+  input: (
     element: Element | Document | Window | MediaQueryList,
     event: string,
     handler: (event: Event) => void,
@@ -88,6 +118,9 @@ export function Events(): {
         ? (element as MediaQueryList).addListener(handler)
         : element.addEventListener(event, handler, options)
       events.push([element, event, handler, options])
+    },
+    input(element, event, handler, options) {
+      this.add(element, event, inputHandler(handler), options)
     },
     purge() {
       events.forEach(event => {
