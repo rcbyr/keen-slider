@@ -74,6 +74,7 @@ export interface AnimatorInstance {
     }[]
   ) => void
   stop: () => void
+  targetIdx: number | null
 }
 
 export interface TrackInstance {

@@ -10,7 +10,7 @@ function Animator(
 
   function animate(now) {
     if (!started) started = now
-    setActive()
+    setActive(true)
     let time = now - started
     if (time > duration) time = duration
     const keyframe = keyframes[currentKeyframe]
@@ -29,13 +29,18 @@ function Animator(
     const add = distance * easing(progress)
     if (add) slider.track.to(startPosition + add)
     if (time < duration) return nextFrame()
-    slider.emit('animationEnded')
     started = null
-    setActive()
+    setActive(false)
+    setTargetIdx(null)
+    slider.emit('animationEnded')
   }
 
-  function setActive() {
-    instance.active = !!started
+  function setActive(active) {
+    instance.active = active
+  }
+
+  function setTargetIdx(value) {
+    instance.targetIdx = value
   }
 
   function nextFrame() {
@@ -45,6 +50,7 @@ function Animator(
   function start(_keyframes) {
     stop()
     if (!slider.track.details) return
+    let sumDistance = 0
     let endPosition = slider.track.details.position
     currentKeyframe = 0
     duration = 0
@@ -57,6 +63,7 @@ function Animator(
       endPosition += distance
       const startTime = duration
       duration += animationDuration
+      sumDistance += distance
       return [
         startPosition,
         keyframe.distance,
@@ -66,19 +73,20 @@ function Animator(
         easing,
       ]
     })
-
+    setTargetIdx(slider.track.distToIdx(sumDistance))
     nextFrame()
     slider.emit('animationStarted')
   }
 
   function stop() {
     cancelFrame(reqId)
+    setActive(false)
+    setTargetIdx(null)
     if (started) slider.emit('animationStopped')
     started = null
-    setActive()
   }
 
-  instance = { active: false, start, stop }
+  instance = { active: false, start, stop, targetIdx: null }
   return instance
 }
 
