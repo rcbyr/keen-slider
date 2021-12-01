@@ -414,3 +414,7 @@ var slider = new KeenSlider(
 ```
 
 You can find real world examples for the usage of plugins [here](https://keen-slider.io/examples#plugins).
+
+### Extend Drag Controls
+
+If you want to extend the drag controls of the slider, you can emit the custom events `ksDragStart`, `ksDrag` and `ksDragEnd` with coordinates. You can find an example [here](https://keen-slider.io/examples#scroll-wheel-controls).
