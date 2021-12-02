@@ -84,7 +84,7 @@ export default () => {
   )
 
   return (
-    <div ref={refCallback}>
+    <div ref={refCallback} className="keen-slider">
       <div class="keen-slider__slide">1</div>
       <div class="keen-slider__slide">2</div>
       <div class="keen-slider__slide">3</div>
