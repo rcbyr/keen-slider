@@ -75,7 +75,7 @@ export default function Track(
         : viewportPosition)
     let sumLength = 0
 
-    const { abs, rel } = getIndexes(position)
+    let { abs, rel } = getIndexes(position)
     const activeOrigin = slides[rel][2]
     const slideDetails = slides.map((slide, idx) => {
       let distanceViewport = slidesStart + sumLength
@@ -121,7 +121,8 @@ export default function Track(
         size: slide[0],
       }
     })
-
+    abs = clampIdx(abs)
+    rel = absToRel(abs)
     return {
       abs: clampIdx(abs),
       length: trackLength,
