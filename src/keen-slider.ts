@@ -1,5 +1,6 @@
 /* eslint-disable sort-keys */
 import Slider from './core/slider'
+import { Container } from './core/types'
 import Drag from './plugins/drag'
 import Modes from './plugins/modes'
 import Renderer from './plugins/renderer'
@@ -16,7 +17,7 @@ export * from './core/types'
 export * from './plugins/types'
 
 const KeenSlider = function (
-  container: HTMLElement,
+  container: Container,
   options?: KeenSliderOptions,
   plugins?: { [key: string]: KeenSliderPlugin | false }
 ): KeenSliderInstance {
@@ -46,7 +47,7 @@ const KeenSlider = function (
 
 export default KeenSlider as unknown as {
   new <O = {}, P = {}, H extends string = KeenSliderHooks>(
-    container: HTMLElement,
+    container: Container,
     options?: KeenSliderOptions<O, P, H>,
     plugins?:
       | { [key: string]: null | KeenSliderPlugin | false }

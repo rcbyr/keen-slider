@@ -1,4 +1,4 @@
-import { SliderInstance, SliderPlugin } from '../core/types'
+import { Container, SliderInstance, SliderPlugin } from '../core/types'
 import { elem, elems, Events, getProp, rect, setAttr } from '../core/utils'
 import {
   HOOK_DESTROYED,
@@ -9,7 +9,7 @@ import {
 } from './types'
 
 export default function Web<O>(
-  container: HTMLElement,
+  container: Container,
   defaultOptions: O
 ): SliderPlugin<{}, {}, HOOK_OPTIONS_CHANGED | HOOK_UPDATED | HOOK_DESTROYED> {
   return (

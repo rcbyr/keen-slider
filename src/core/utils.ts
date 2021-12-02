@@ -13,7 +13,16 @@ export function setAttr(elem: HTMLElement, name: string, value: string): void {
   elem.setAttribute(name, value || '')
 }
 
-export function elem(element: HTMLElement, wrapper?: HTMLElement): HTMLElement {
+export function elem(
+  element:
+    | string
+    | HTMLElement
+    | NodeList
+    | ((
+        wrapper: HTMLElement | Document
+      ) => HTMLElement[] | Element[] | NodeList | HTMLCollection | null),
+  wrapper?: HTMLElement
+): HTMLElement {
   const elements = elems(element, wrapper || document)
   return elements.length ? elements[0] : null
 }
