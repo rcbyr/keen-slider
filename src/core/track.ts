@@ -123,7 +123,7 @@ export default function Track(
     })
 
     return {
-      abs,
+      abs: clampIdx(abs),
       length: trackLength,
       max,
       maxIdx,
@@ -288,7 +288,7 @@ export default function Track(
   function to(value) {
     measure(value - position)
     position = Math.round(value * 1000000) / 1000000
-    const idx = clampIdx(trackUpdate()['abs'])
+    const idx = trackUpdate()['abs']
     if (idx !== currentIdx) {
       const emitEvent = currentIdx === null ? false : true
       currentIdx = idx
