@@ -190,7 +190,7 @@ export default function Drag(
     const overflow = (position < min ? position - min : position - max) / length
     const trackSize = size * length
     const overflowedSize = Math.abs(overflow * trackSize)
-    const p = 1 - (overflowedSize / windowSize) * breakFactorValue
+    const p = Math.max(0, 1 - (overflowedSize / windowSize) * breakFactorValue)
     return p * p * distance
   }
 

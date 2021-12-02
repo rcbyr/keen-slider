@@ -203,7 +203,7 @@ export default function Track(
     ) {
       distance = otherDistance
     }
-    return distance
+    return round(distance)
   }
 
   function absoluteIdxToDist(idx, fromPosition?) {

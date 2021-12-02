@@ -70,6 +70,7 @@ export interface AnimatorInstance {
     keyframes: {
       distance: number
       duration: number
+      earlyExit?: number
       easing: (t: number) => number
     }[]
   ) => void
