@@ -280,9 +280,11 @@ The animator is the module that is responsible for the motion animation of the t
 
   - `distance`: **number** - Distance moved in the animation.
   - `duration`: **number** - Duration of the animation in milliseconds.
+  - `earlyExit`: **number** - Optionally sets an earlier termination of the keyframe.
   - `easing`: **function** - Easing of the animation as (`time`: **number**) => **number**.
 
 - `stop`: **function** - Stops the currently active animation, if there is one.
+- `targetIdx`: **number | null** - Contains the index that will be active at the end of the animation.
 
 ### `container`: **HTMLElement**
 
