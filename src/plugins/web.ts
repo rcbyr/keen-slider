@@ -89,21 +89,22 @@ export default function Web<O>(
       checkBreakpoint()
     }
 
-    function initTrack() {
+    function initTrack(idx?) {
       slider.animator.stop()
       const details = slider.track.details
-      slider.track.init(details ? details.abs : 0)
+
+      slider.track.init(idx ?? (details ? details.abs : 0))
     }
 
-    function optionsChanged() {
-      initTrack()
+    function optionsChanged(idx?) {
+      initTrack(idx)
       slider.emit('optionsChanged')
     }
 
-    function update(options?) {
+    function update(options?, idx?) {
       if (options) {
         init(options)
-        optionsChanged()
+        optionsChanged(idx)
         return
       }
       updateSize()
@@ -111,9 +112,9 @@ export default function Web<O>(
       const slidesCount = getSlidesConfigLength()
       renewTrackConfig()
       if (getSlidesConfigLength() !== slidesCount) {
-        optionsChanged()
+        optionsChanged(idx)
       } else {
-        initTrack()
+        initTrack(idx)
       }
       slider.emit('updated')
     }

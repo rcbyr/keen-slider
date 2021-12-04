@@ -31,7 +31,7 @@ export interface WebInstance<O> {
   prev: () => void
   slides: HTMLElement[]
   size: number
-  update: (options?: O) => void
+  update: (options?: O, idx?: number) => void
 }
 
 export interface DragOptions {

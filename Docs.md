@@ -378,12 +378,14 @@ The slides as an array of HTML elements.
 ### `update`: **function**
 
 ```typescript
-slider.update(options)
+slider.update(options, idx)
 ```
 
 Updates the slider when it is called. If the resizing hasn't been triggered or the options need to be changed.
 
 - `options`: **object** - Specifies the new options with which the slider should be reinitialized. Default **undefined**.
+
+- `idx`: **number** - Sets the current active slide to the given index. Default **undefined**.
 
 ## Attributes
 
