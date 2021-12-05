@@ -20,7 +20,7 @@ export function elem(
     | NodeList
     | ((
         wrapper: HTMLElement | Document
-      ) => HTMLElement[] | Element[] | NodeList | HTMLCollection | null),
+      ) => HTMLElement[] | NodeList | HTMLCollection | null),
   wrapper?: HTMLElement
 ): HTMLElement {
   const elements = elems(element, wrapper || document)
@@ -31,21 +31,32 @@ export function elems(
   elements:
     | string
     | HTMLElement
+    | HTMLElement[]
     | NodeList
+    | HTMLCollection
+    | null
     | ((
         wrapper: HTMLElement | Document
-      ) => HTMLElement[] | Element[] | NodeList | HTMLCollection | null),
+      ) =>
+        | string
+        | HTMLElement
+        | HTMLElement[]
+        | NodeList
+        | HTMLCollection
+        | null),
   wrapper: HTMLElement | Document
 ): HTMLElement[] {
   wrapper = wrapper || document
-  return typeof elements === 'function'
-    ? toArray(elements(wrapper))
+  if (typeof elements === 'function') elements = elements(wrapper)
+
+  return Array.isArray(elements)
+    ? elements
     : typeof elements === 'string'
     ? toArray(wrapper.querySelectorAll(elements))
-    : elements instanceof HTMLElement !== false
+    : elements instanceof HTMLElement
     ? [elements]
-    : elements instanceof NodeList !== false
-    ? elements
+    : elements instanceof NodeList
+    ? toArray(elements)
     : []
 }
 

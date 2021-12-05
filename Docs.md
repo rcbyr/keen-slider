@@ -44,7 +44,7 @@ or, since it also comes as an UMD bundle, you can insert it directly into your H
 </html>
 ```
 
-Once you imported the library, you can initiate it. `KeenSlider` needs a `container` as first argument, which could be a **css selector string**, a **HTMLElement** or a **function** that returns a HTML element. Optionally, you can pass [`Options`](https://keen-slider.io/docs#options) and [`Event hooks`](https://keen-slider.io/docs#event-hooks) as second argument. [`Plugins`](https://keen-slider.io/docs#plugins) can be passed as third argument.`KeenSlider` returns some [`Properties`](https://keen-slider.io/docs#properties) for further actions.
+Once you imported the library, you can initiate it. `KeenSlider` needs a `container` as first argument, which could be a **css selector string**, a **HTMLElement** or a **function** that returns a HTML element or css selector string. Optionally, you can pass [`Options`](https://keen-slider.io/docs#options) and [`Event hooks`](https://keen-slider.io/docs#event-hooks) as second argument. [`Plugins`](https://keen-slider.io/docs#plugins) can be passed as third argument.`KeenSlider` returns some [`Properties`](https://keen-slider.io/docs#properties) for further actions.
 
 ```javascript
 var slider = new KeenSlider(
@@ -200,9 +200,9 @@ Changes the direction in which the slides are positioned, from left-to-right to 
 
 Enables or disables the rubberband behavior for dragging and animation after a drag. Default is **true**.
 
-### `selector`: **string | function | null**
+### `selector`: **string | HTMLElement[] | Nodelist | function | null**
 
-Specifies how the slides from the DOM are received. This could be a **css selector string**, an **array of HTMLElement** or a **function** that gets the container and returns an **array** of **HTMLElement** or **Element[]**, a **NodeList**, a **HTMLCollection** or **null**. If you don't want the slider to position or scale the slides, set this option to **null**. Default is **'.keen-slider\_\_slide'**.
+Specifies how the slides from the DOM are received. This could be a **css selector string**, an **array of HTMLElement** or a **function** that gets the container and returns an **array** of **HTMLElement**, a **NodeList**, a **HTMLCollection**, a **string** or **null**. If you don't want the slider to position or scale the slides, set this option to **null**. Default is **'.keen-slider\_\_slide'**.
 
 ### `slides`: **object | number | function | null**
 

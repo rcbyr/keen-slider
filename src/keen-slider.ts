@@ -1,9 +1,9 @@
 /* eslint-disable sort-keys */
 import Slider from './core/slider'
-import { Container } from './core/types'
 import Drag from './plugins/drag'
 import Modes from './plugins/modes'
 import Renderer from './plugins/renderer'
+import { Container } from './plugins/types'
 import Web from './plugins/web'
 import {
   KeenSliderHooks,

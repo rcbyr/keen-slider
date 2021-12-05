@@ -1,6 +1,7 @@
-import { Container, SliderInstance, SliderPlugin } from '../core/types'
+import { SliderInstance, SliderPlugin } from '../core/types'
 import { elem, elems, Events, getProp, rect, setAttr } from '../core/utils'
 import {
+  Container,
   HOOK_DESTROYED,
   HOOK_OPTIONS_CHANGED,
   HOOK_UPDATED,

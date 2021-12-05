@@ -6,7 +6,7 @@ export interface WebOptions<O> {
     | string
     | ((
         container: HTMLElement
-      ) => HTMLElement[] | Element[] | NodeList | HTMLCollection | null)
+      ) => HTMLElement[] | NodeList | HTMLCollection | null)
     | null
   slides?:
     | ((size: number, slides: HTMLElement[]) => TrackSlidesConfigOption)
@@ -48,6 +48,14 @@ export interface DragAnimationOptions<M> {
   mode?: M
   rubberband?: boolean
 }
+
+export type Container =
+  | string
+  | HTMLElement
+  | NodeList
+  | ((
+      wrapper: HTMLElement | Document
+    ) => HTMLElement[] | NodeList | HTMLCollection | null)
 
 export type RENDER_MODE_PRECISION = 'precision'
 export type RENDER_MODE_PERFORMANCE = 'performance'

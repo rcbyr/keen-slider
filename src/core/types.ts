@@ -89,14 +89,6 @@ export interface TrackInstance {
   velocity: () => number
 }
 
-export type Container =
-  | string
-  | HTMLElement
-  | NodeList
-  | ((
-      wrapper: HTMLElement | Document
-    ) => HTMLElement[] | Element[] | NodeList | HTMLCollection | null)
-
 export type HOOK_ANIMATION_ENDED = 'animationEnded'
 export type HOOK_ANIMATION_STARTED = 'animationStarted'
 export type HOOK_ANIMATION_STOPPED = 'animationStopped'
