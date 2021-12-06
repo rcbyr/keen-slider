@@ -35,7 +35,7 @@ export function useKeenSlider<
   const optionsCheckedFirst = useRef(false)
   const currentOptions = useRef(options)
 
-  const onRefChange = useCallback((node: T) => {
+  const onRefChange = useCallback((node: T | null) => {
     if (node) {
       currentOptions.current = options
       sliderRef.current = new KeenSlider<O, P, H>(node, options, plugins)
