@@ -30,7 +30,7 @@ export function useKeenSlider<
         [key: string]: KeenSliderPlugin | false
       }
     | KeenSliderPlugin[]
-): [(node: T) => void, MutableRefObject<KeenSliderInstance<O, P, H> | null>] {
+): [(node: T | null) => void, MutableRefObject<KeenSliderInstance<O, P, H> | null>] {
   const sliderRef = useRef<KeenSliderInstance<O, P, H> | null>(null)
   const optionsCheckedFirst = useRef(false)
   const currentOptions = useRef(options)
