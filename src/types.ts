@@ -44,8 +44,29 @@ export type KeenSliderOptions<
       | DRAG_ANIMATION_MODE_FREE_SNAP
     >
 > & {
-  [key in KeenSliderHooks | H]?: (slider: KeenSliderInstance<O, P, H>) => void
-} & O
+  [key in Exclude<
+    H | KeenSliderHooks,
+    keyof SliderOptions<WebOptions<{}>> &
+      DragOptions &
+      RendererOptions &
+      DragAnimationOptions<
+        | DRAG_ANIMATION_MODE_SNAP
+        | DRAG_ANIMATION_MODE_FREE
+        | DRAG_ANIMATION_MODE_FREE_SNAP
+      > &
+      O
+  >]?: (slider: KeenSliderInstance<O, P, H>) => void
+} & Omit<
+    O,
+    keyof SliderOptions<WebOptions<{}>> &
+      DragOptions &
+      RendererOptions &
+      DragAnimationOptions<
+        | DRAG_ANIMATION_MODE_SNAP
+        | DRAG_ANIMATION_MODE_FREE
+        | DRAG_ANIMATION_MODE_FREE_SNAP
+      >
+  >
 
 export type KeenSliderInstance<
   O = {},
