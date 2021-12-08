@@ -50,7 +50,7 @@ export default KeenSlider as unknown as {
     container: Container,
     options?: KeenSliderOptions<O, P, H>,
     plugins?:
-      | { [key: string]: null | KeenSliderPlugin | false }
-      | KeenSliderPlugin[]
+      | { [key: string]: null | KeenSliderPlugin<O, P, H> | false }
+      | KeenSliderPlugin<O, P, H>[]
   ): KeenSliderInstance<O, P, H>
 }

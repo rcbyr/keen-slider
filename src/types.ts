@@ -53,8 +53,7 @@ export type KeenSliderOptions<
         | DRAG_ANIMATION_MODE_SNAP
         | DRAG_ANIMATION_MODE_FREE
         | DRAG_ANIMATION_MODE_FREE_SNAP
-      > &
-      O
+      >
   >]?: (slider: KeenSliderInstance<O, P, H>) => void
 } & Omit<
     O,

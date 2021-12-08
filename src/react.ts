@@ -27,9 +27,9 @@ export function useKeenSlider<
   options?: KeenSliderOptions<O, P, H>,
   plugins?:
     | {
-        [key: string]: KeenSliderPlugin | false
+        [key: string]: KeenSliderPlugin<O, P, H> | false
       }
-    | KeenSliderPlugin[]
+    | KeenSliderPlugin<O, P, H>[]
 ): [
   (node: T | null) => void,
   MutableRefObject<KeenSliderInstance<O, P, H> | null>
