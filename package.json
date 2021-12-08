@@ -30,7 +30,8 @@
     "webcomponents",
     "gallery",
     "plugin",
-    "ios"
+    "ios",
+    "headless"
   ],
   "author": "Eric Beyer <contact@ericbeyer.de>",
   "license": "MIT",
