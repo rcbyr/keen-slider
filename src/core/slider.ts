@@ -27,7 +27,7 @@ function Slider<O, C, H extends string>(
   function moveToIdx(idx, absolute, animation) {
     const distance = instance.track.idxToDist(idx, absolute)
     if (!distance) return
-    const defaultAnimation = options.defaultAnimation
+    const defaultAnimation = instance.options.defaultAnimation
     instance.animator.start([
       {
         distance,
