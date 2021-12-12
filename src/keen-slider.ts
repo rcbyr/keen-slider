@@ -19,7 +19,7 @@ export * from './plugins/types'
 const KeenSlider = function (
   container: Container,
   options?: KeenSliderOptions,
-  plugins?: { [key: string]: KeenSliderPlugin | false }
+  plugins?: KeenSliderPlugin[]
 ): KeenSliderInstance {
   try {
     const defOpts = {
@@ -31,14 +31,13 @@ const KeenSlider = function (
     } as KeenSliderOptions
     return Slider<KeenSliderOptions, KeenSliderInstance, KeenSliderHooks>(
       options,
-      {
-        first: null,
-        web: Web<KeenSliderOptions>(container, defOpts),
-        renderer: Renderer,
-        drag: Drag,
-        modes: Modes,
-        ...(plugins || {}),
-      }
+      [
+        Web<KeenSliderOptions>(container, defOpts),
+        Renderer,
+        Drag,
+        Modes,
+        ...(plugins || []),
+      ]
     )
   } catch (e) {
     console.error(e)
@@ -49,8 +48,6 @@ export default KeenSlider as unknown as {
   new <O = {}, P = {}, H extends string = KeenSliderHooks>(
     container: Container,
     options?: KeenSliderOptions<O, P, H>,
-    plugins?:
-      | { [key: string]: null | KeenSliderPlugin<O, P, H> | false }
-      | KeenSliderPlugin<O, P, H>[]
+    plugins?: KeenSliderPlugin<O, P, H>[]
   ): KeenSliderInstance<O, P, H>
 }

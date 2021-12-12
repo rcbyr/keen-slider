@@ -17,9 +17,7 @@ export function useKeenSlider<
   H extends string = KeenSliderHooks
 >(
   options: Ref<KeenSliderOptions<O, P, H>> | KeenSliderOptions<O, P, H>,
-  plugins?:
-    | { [key: string]: null | KeenSliderPlugin | false }
-    | KeenSliderPlugin[]
+  plugins?: KeenSliderPlugin<O, P, H>[]
 ): [Ref<T | undefined>, Ref<KeenSliderInstance<O, P, H> | undefined>] {
   const container = ref<T>()
   const slider = ref<KeenSliderInstance<O, P, H>>()

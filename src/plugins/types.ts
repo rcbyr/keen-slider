@@ -41,7 +41,10 @@ export interface DragOptions {
 }
 
 export interface RendererOptions {
-  renderMode?: RENDER_MODE_PRECISION | RENDER_MODE_PERFORMANCE
+  renderMode?:
+    | RENDER_MODE_PRECISION
+    | RENDER_MODE_PERFORMANCE
+    | RENDER_MODE_CUSTOM
 }
 
 export interface DragAnimationOptions<M> {
@@ -59,6 +62,7 @@ export type Container =
 
 export type RENDER_MODE_PRECISION = 'precision'
 export type RENDER_MODE_PERFORMANCE = 'performance'
+export type RENDER_MODE_CUSTOM = 'custom'
 
 export type DRAG_ANIMATION_MODE_SNAP = 'snap'
 export type DRAG_ANIMATION_MODE_FREE_SNAP = 'free-snap'

@@ -188,9 +188,9 @@ Regardless of the slide number, you can define the range of accessible slides.
 - `max`: **number** - sets maximum accessible index
 - `align`: **boolean** - aligns the maximum position to the end of the last slide
 
-### `renderMode`: **'precision' | 'performance'**
+### `renderMode`: **'precision' | 'performance' | 'custom'**
 
-It is possible that the render performance of the browser slows down, if you have slides with some complexity in markup and CSS. To counteract this problem, you can set this option to **'performance'**. Default is **'precision'**.
+It is possible that the render performance of the browser slows down, if you have slides with some complexity in markup and CSS. To counteract this problem, you can set this option to **'performance'**. If you want to create your own renderer, you can set this options to **'custom'**. Default is **'precision'**.
 
 ### `rtl`: **boolean**
 
@@ -395,7 +395,7 @@ Updates the slider when it is called. If the resizing hasn't been triggered or t
 
 ## Plugins
 
-To make it easier to integrate, structure, and version custom slider functions, you can create plugins. Keen-Slider itself is also partially based on plugins. These plugins can be overwritten or deactivated when initiating the slider (but this can have side effects). The internal plugin names are `web`, `renderer`, `drag` and `modes`. Since the plugins are processed sequentially, you can use the name `first` to put a plugin in the first place.
+To make it easier to integrate, structure, and version custom slider functions, you can create plugins. Keen-Slider itself is also partially based on plugins.
 
 A plugin is basically a function that receives the slider instance as its only argument and is initiated during slider startup. With the `on` and `emit` function it can take part in the slider lifecycle.
 
@@ -407,17 +407,15 @@ var slider = new KeenSlider(
   {
     loop: true,
   },
-  {
-    myPlugin: slider => {
+  [
+    slider => {
       slider.on('created', () => {
         alert('Hello World')
       })
     },
-  }
+  ]
 )
 ```
-
-You can find real world examples for the usage of plugins [here](https://keen-slider.io/examples#plugins).
 
 ### Extend Drag Controls
 

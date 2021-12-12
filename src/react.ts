@@ -25,11 +25,7 @@ export function useKeenSlider<
   H extends string = KeenSliderHooks
 >(
   options?: KeenSliderOptions<O, P, H>,
-  plugins?:
-    | {
-        [key: string]: KeenSliderPlugin<O, P, H> | false
-      }
-    | KeenSliderPlugin<O, P, H>[]
+  plugins?: KeenSliderPlugin<O, P, H>[]
 ): [
   (node: T | null) => void,
   MutableRefObject<KeenSliderInstance<O, P, H> | null>

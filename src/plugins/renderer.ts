@@ -84,7 +84,8 @@ export default function Renderer(
   function update() {
     reset()
     verticalOption = slider.options.vertical
-    if (slider.options.disabled) return
+    if (slider.options.disabled || slider.options.renderMode === 'custom')
+      return
     autoScale = getProp(slider.options.slides, 'perView', null) === 'auto'
     slider.on('detailsChanged', applyStylesHook)
     elements = slider.slides

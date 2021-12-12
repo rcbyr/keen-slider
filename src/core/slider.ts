@@ -5,7 +5,7 @@ import { getProp } from './utils'
 
 function Slider<O, C, H extends string>(
   options: SliderOptions<O>,
-  plugins?: { [key: string]: SliderPlugin | null }
+  plugins?: SliderPlugin[]
 ): SliderInstance<O, C, H> {
   const subs = {}
   // eslint-disable-next-line prefer-const
