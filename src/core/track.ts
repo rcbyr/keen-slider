@@ -306,9 +306,8 @@ export default function Track(
 
   function init(index) {
     initSlides()
-    setRange()
-
     if (!slidesCount) return trackUpdate(true)
+    setRange()
     if (isNumber(index)) {
       add(absoluteIdxToDist(clampIdx(index)))
     } else {
