@@ -11,18 +11,22 @@ and is compatible with
 
 <p align="left">
   <a href="https://keen-slider.io/examples#default"
-    ><img width="285" src="https://keen-slider.io/images/default.webp"
+    ><img alt="this is webp"
+ width="285" src="https://keen-slider.io/images/default.webp"
   /></a>
   <a href="https://keen-slider.io/examples#datetimepicker"
-    ><img width="285" src="https://keen-slider.io/images/datepicker.webp"
+    ><img alt="this is webp"
+ width="285" src="https://keen-slider.io/images/datepicker.webp"
   /></a>
 </p>
 <p align="left">
   <a href="https://keen-slider.io/examples#draggable-card"
-    ><img width="285" src="https://keen-slider.io/images/card.webp"
+    ><img alt="this is webp"
+ width="285" src="https://keen-slider.io/images/card.webp"
   /></a>
   <a href="https://keen-slider.io/examples#background-rotation"
     ><img
+      alt="this is webp"
       valign="top"
       width="285"
       src="https://keen-slider.io/images/rotation.webp"
