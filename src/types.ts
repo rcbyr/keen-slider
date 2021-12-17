@@ -86,3 +86,60 @@ export type KeenSliderPlugin<
   KeenSliderInstance<O, P, H>,
   KeenSliderHooks | H
 >
+
+export type KeenSliderNativeHooks =
+  | SliderHooks
+  | HOOK_UPDATED
+  | HOOK_DRAGGED
+  | HOOK_DRAG_ENDED
+  | HOOK_DRAG_STARTED
+
+export type KeenSliderNativeOptions<
+  O = {},
+  P = {},
+  H extends string = KeenSliderNativeHooks
+> = SliderOptions<
+  DragAnimationOptions<
+    | DRAG_ANIMATION_MODE_SNAP
+    | DRAG_ANIMATION_MODE_FREE
+    | DRAG_ANIMATION_MODE_FREE_SNAP
+  >
+> & {
+  [key in Exclude<
+    H | KeenSliderNativeHooks,
+    keyof SliderOptions<{}> &
+      DragAnimationOptions<
+        | DRAG_ANIMATION_MODE_SNAP
+        | DRAG_ANIMATION_MODE_FREE
+        | DRAG_ANIMATION_MODE_FREE_SNAP
+      >
+  >]?: (slider: KeenSliderNativeInstance<O, P, H>) => void
+} & Omit<
+    O,
+    keyof SliderOptions<{}> &
+      DragAnimationOptions<
+        | DRAG_ANIMATION_MODE_SNAP
+        | DRAG_ANIMATION_MODE_FREE
+        | DRAG_ANIMATION_MODE_FREE_SNAP
+      >
+  >
+
+export type KeenSliderNativeInstance<
+  O = {},
+  P = {},
+  H extends string = KeenSliderNativeHooks
+> = SliderInstance<
+  KeenSliderNativeOptions<O, P, H>,
+  {},
+  KeenSliderNativeHooks | H
+>
+
+export type KeenSliderNativePlugin<
+  O = {},
+  P = {},
+  H extends string = KeenSliderNativeHooks
+> = SliderPlugin<
+  KeenSliderNativeOptions<O, P, H>,
+  KeenSliderNativeInstance<O, P, H>,
+  KeenSliderNativeHooks | H
+>

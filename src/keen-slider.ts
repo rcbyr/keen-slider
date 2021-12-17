@@ -12,9 +12,14 @@ import {
   KeenSliderPlugin,
 } from './types'
 
-export * from './types'
-export * from './core/types'
 export * from './plugins/types'
+export * from './core/types'
+export {
+  KeenSliderHooks,
+  KeenSliderInstance,
+  KeenSliderOptions,
+  KeenSliderPlugin,
+}
 
 const KeenSlider = function (
   container: Container,

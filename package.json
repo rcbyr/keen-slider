@@ -74,6 +74,7 @@
     "postcss": "^8.3.6",
     "prettier": "^2.3.2",
     "react": "^17.0.2",
+    "react-native": "^0.66.4",
     "rollup": "^2.6.1",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-postcss": "^4.0.1",
