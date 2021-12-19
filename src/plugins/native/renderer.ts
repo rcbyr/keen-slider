@@ -10,8 +10,11 @@ export default function Renderer(
     slider.track.details.slides.forEach((slide, idx) => {
       const width = slider.options.vertical ? '100%' : `${slide.size * 100}%`
       const height = !slider.options.vertical ? '100%' : `${slide.size * 100}%`
-      const left = slider.options.vertical ? 0 : slide.distance * 100 + '%'
-      const top = !slider.options.vertical ? 0 : slide.distance * 100 + '%'
+      const xy = slider.size
+        ? slide.distance * slider.size
+        : slide.distance * 100 + '%'
+      const left = slider.options.vertical ? 0 : xy
+      const top = !slider.options.vertical ? 0 : xy
       const position = 'absolute'
       slider.slidesProps[idx].style = { height, left, position, top, width }
       const ref = slider.slidesProps[idx].ref.current

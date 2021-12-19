@@ -1,5 +1,7 @@
+import { PanResponder } from 'react-native'
+
 import { SliderInstance } from '../../core/types'
-import { clamp, sign } from '../../core/utils'
+import { clamp, inputHandler, sign } from '../../core/utils'
 import {
   HOOK_DRAG_ENDED,
   HOOK_DRAG_STARTED,
@@ -40,16 +42,15 @@ export default function Drag(
       !slider.options.drag
     )
       return
-
     dragActive = true
     dragJustStarted = true
-    dragIdentifier = 0
+    dragIdentifier = e.id
     isSlide(e)
     lastValue = xy(e)
     return true
   }
   function drag(e) {
-    if (!dragActive || dragIdentifier !== 0) {
+    if (!dragActive || dragIdentifier !== e.id) {
       return
     }
 
@@ -75,15 +76,15 @@ export default function Drag(
       typeof speed === 'function' ? speed : val => val * (speed as number)
   }
   function dragStop(e) {
-    if (!dragActive || dragIdentifier !== 0) return
+    if (!dragActive || dragIdentifier !== e.id) return
     dragActive = false
     slider.emit('dragEnded')
   }
 
   function isSlide(e) {
     const vertical = slider.options.vertical
-    const x = vertical ? e.nativeEvent.pageY : e.nativeEvent.pageX
-    const y = vertical ? e.nativeEvent.pageX : e.nativeEvent.pageY
+    const x = vertical ? e.y : e.x
+    const y = vertical ? e.x : e.y
     const isSlide =
       lastX !== undefined &&
       lastY !== undefined &&
@@ -129,7 +130,7 @@ export default function Drag(
   }
 
   function xy(e) {
-    return slider.options.vertical ? e.nativeEvent.pageY : e.nativeEvent.pageX
+    return slider.options.vertical ? e.y : e.x
   }
 
   function update() {
@@ -142,8 +143,11 @@ export default function Drag(
   slider.on('layoutChanged', update)
   slider.on('created', update)
 
-  slider.containerProps.onStartShouldSetResponder = dragStart
-  slider.containerProps.onResponderMove = drag
-  slider.containerProps.onResponderRelease = dragStop
-  slider.containerProps.onResponderTerminate = dragStop
+  const pan = PanResponder.create({
+    onPanResponderMove: inputHandler(drag),
+    onPanResponderRelease: inputHandler(dragStop),
+    onPanResponderTerminate: inputHandler(dragStop),
+    onStartShouldSetPanResponder: inputHandler(dragStart),
+  })
+  Object.assign(slider.containerProps, pan.panHandlers)
 }
