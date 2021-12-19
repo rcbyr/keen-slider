@@ -59,13 +59,13 @@ export default function Drag(
     }
     const value = xy(e)
 
-    if (!isSlide(e) && dragJustStarted) {
-      return dragStop(e)
-    }
     if (dragJustStarted) {
+      if (!isSlide(e)) return (dragActive = false)
       lastValue = value
       dragJustStarted = false
+      slider.emit('dragStarted')
     }
+
     if (scrollLock) return (lastValue = value)
     prevent(e)
     const distance = rubberband(
@@ -100,7 +100,6 @@ export default function Drag(
     dragIdentifier = e.id
     isSlide(e)
     lastValue = xy(e)
-    slider.emit('dragStarted')
   }
 
   function dragStop(e) {
