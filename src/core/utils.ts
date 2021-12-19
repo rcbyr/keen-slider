@@ -70,8 +70,9 @@ export function stop(e: any): void {
   if (e.stopPropagation) e.stopPropagation()
 }
 
-function inputHandler(handler) {
+export function inputHandler(handler) {
   return e => {
+    if (e.nativeEvent) e = e.nativeEvent
     const changedTouches = e.changedTouches || []
     const touchPoints = e.targetTouches || []
     const detail = e.detail && e.detail.x ? e.detail : null
@@ -221,4 +222,11 @@ export function equal(v1: any, v2: any): boolean {
     return false
   }
   return true
+}
+
+export function checkOptions(currentOptions, newOptions) {
+  if (!equal(currentOptions.current, newOptions)) {
+    currentOptions.current = newOptions
+  }
+  return currentOptions.current
 }

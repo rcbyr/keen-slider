@@ -1,22 +1,14 @@
 import { MutableRefObject, useCallback, useEffect, useRef } from 'react'
 
-import { equal } from './core/utils'
-import KeenSlider from './keen-slider'
-import {
+import { checkOptions } from './core/utils'
+import KeenSlider, {
   KeenSliderHooks,
   KeenSliderInstance,
   KeenSliderOptions,
   KeenSliderPlugin,
-} from './types'
+} from './keen-slider'
 
 export * from './keen-slider'
-
-function checkOptions(currentOptions, newOptions) {
-  if (!equal(currentOptions.current, newOptions)) {
-    currentOptions.current = newOptions
-  }
-  return currentOptions.current
-}
 
 export function useKeenSlider<
   T extends HTMLElement,

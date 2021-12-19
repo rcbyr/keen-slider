@@ -44,13 +44,13 @@ export default function Drag(
       return
     dragActive = true
     dragJustStarted = true
-    dragIdentifier = e.id
+    dragIdentifier = e.idChanged
     isSlide(e)
     lastValue = xy(e)
     return true
   }
   function drag(e) {
-    if (!dragActive || dragIdentifier !== e.id) {
+    if (!dragActive || dragIdentifier !== e.idChanged) {
       return
     }
 
@@ -76,7 +76,7 @@ export default function Drag(
       typeof speed === 'function' ? speed : val => val * (speed as number)
   }
   function dragStop(e) {
-    if (!dragActive || dragIdentifier !== e.id) return
+    if (!dragActive || dragIdentifier !== e.idChanged) return
     dragActive = false
     slider.emit('dragEnded')
   }

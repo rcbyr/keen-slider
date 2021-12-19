@@ -1,23 +1,68 @@
 import { useEffect, useRef, useState } from 'react'
 
 import Slider from './core/slider'
-import { equal } from './core/utils'
+import {
+  SliderHooks,
+  SliderInstance,
+  SliderOptions,
+  SliderPlugin,
+} from './core/types'
+import { checkOptions } from './core/utils'
 import Modes from './plugins/modes'
 import Native from './plugins/native/native'
-import { SlideProps } from './plugins/native/types'
 import {
-  KeenSliderNativeHooks,
-  KeenSliderNativeInstance,
-  KeenSliderNativeOptions,
-  KeenSliderNativePlugin,
-} from './types'
+  NativeInstance,
+  NativeOptions,
+  SlideProps,
+} from './plugins/native/types'
+import {
+  HOOK_DRAG_ENDED,
+  HOOK_DRAG_STARTED,
+  HOOK_DRAGGED,
+  HOOK_UPDATED,
+} from './plugins/types'
 
-function checkOptions(currentOptions, newOptions) {
-  if (!equal(currentOptions.current, newOptions)) {
-    currentOptions.current = newOptions
-  }
-  return currentOptions.current
-}
+export type KeenSliderNativeHooks =
+  | SliderHooks
+  | HOOK_UPDATED
+  | HOOK_DRAGGED
+  | HOOK_DRAG_ENDED
+  | HOOK_DRAG_STARTED
+
+export type KeenSliderNativeOptions<
+  O = {},
+  P = {},
+  H extends string = KeenSliderNativeHooks
+> = SliderOptions<NativeOptions> & {
+  [key in Exclude<
+    H | KeenSliderNativeHooks,
+    keyof SliderOptions<NativeOptions>
+  >]?: (slider: KeenSliderNativeInstance<O, P, H>) => void
+} & Omit<O, keyof SliderOptions<NativeOptions>>
+
+export type KeenSliderNativeInstance<
+  O = {},
+  P = {},
+  H extends string = KeenSliderNativeHooks
+> = SliderInstance<
+  KeenSliderNativeOptions<O, P, H>,
+  NativeInstance<KeenSliderNativeOptions<O, P, H>> & P,
+  KeenSliderNativeHooks | H
+>
+
+export type KeenSliderNativePlugin<
+  O = {},
+  P = {},
+  H extends string = KeenSliderNativeHooks
+> = SliderPlugin<
+  KeenSliderNativeOptions<O, P, H>,
+  KeenSliderNativeInstance<O, P, H>,
+  KeenSliderNativeHooks | H
+>
+
+export * from './plugins/types'
+export * from './plugins/native/types'
+export * from './core/types'
 
 const KeenSliderNative = function (
   options?: KeenSliderNativeOptions,

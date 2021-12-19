@@ -1,12 +1,11 @@
 import { isRef, onMounted, onUnmounted, Ref, ref, watch } from 'vue'
 
-import KeenSlider from './keen-slider'
-import {
+import KeenSlider, {
   KeenSliderHooks,
   KeenSliderInstance,
   KeenSliderOptions,
   KeenSliderPlugin,
-} from './types'
+} from './keen-slider'
 
 export * from './keen-slider'
 
