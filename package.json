@@ -9,6 +9,7 @@
   "files": [
     "keen-slider.*",
     "react.*",
+    "react-native.*",
     "vue.*"
   ],
   "repository": {
@@ -45,9 +46,10 @@
     "test": "jest",
     "lint": "eslint . --ext .ts",
     "build:types": "yarn extract && yarn fix:types",
-    "extract": "yarn extract:default && yarn extract:react && yarn extract:vue",
+    "extract": "yarn extract:default && yarn extract:react && yarn extract:vue && yarn extract:react-native",
     "extract:default": "npx api-extractor run -c ./api-extractor.json && cp -f ./keen-slider.d.ts ./keen-slider.es.d.ts",
     "extract:react": "npx api-extractor run -c ./api-extractor.react.json && cp -f ./react.d.ts ./react.es.d.ts",
+    "extract:react-native": "npx api-extractor run -c ./api-extractor.react-native.json",
     "extract:vue": "npx api-extractor run -c ./api-extractor.vue.json && cp -f ./vue.d.ts ./vue.es.d.ts",
     "fix:types": "eslint . --ext .d.ts --fix"
   },

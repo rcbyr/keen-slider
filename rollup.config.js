@@ -83,6 +83,17 @@ const vue_es = {
   plugins: [resolve(), terser({ output: { comments: false } })],
 }
 
+const react_native = {
+  input: './.build/react-native.js',
+  output: {
+    file: './react-native.js',
+    format: 'es',
+    exports: 'named',
+  },
+  external: ['react', 'react-native'],
+  plugins: [resolve(), terser({ output: { comments: false } })],
+}
+
 const styles = [
   {
     input: 'src/keen-slider.scss',
@@ -116,4 +127,14 @@ const styles = [
   },
 ]
 
-export default [umd, cjs, es, react, react_es, vue, vue_es, ...styles]
+export default [
+  umd,
+  cjs,
+  es,
+  react,
+  react_es,
+  vue,
+  vue_es,
+  react_native,
+  ...styles,
+]
