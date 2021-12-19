@@ -1,9 +1,8 @@
-import { SliderInstance } from '../core/types'
-import { getProp } from '../core/utils'
+import { SliderInstance } from '../../core/types'
+import { getProp } from '../../core/utils'
+import { HOOK_OPTIONS_CHANGED, HOOK_UPDATED } from '../types'
 import {
   HOOK_DESTROYED,
-  HOOK_OPTIONS_CHANGED,
-  HOOK_UPDATED,
   RendererOptions,
   WebInstance,
   WebOptions,
