@@ -30,23 +30,24 @@ export default function NativeDrag(
   let dragIdentifier
   let dragJustStarted
   let lastValue
-  let sumDistance
-  let isProperDrag
   let lastX
   let lastY
   let min
   let max
   function dragStart(e) {
-    if (dragActive || !slider.track.details || !slider.track.details.length)
+    if (
+      dragActive ||
+      !slider.track.details ||
+      !slider.track.details.length ||
+      !slider.options.drag
+    )
       return
-    isProperDrag = false
-    sumDistance = 0
+
     dragActive = true
     dragJustStarted = true
     dragIdentifier = 0
     isSlide(e)
     lastValue = xy(e)
-    slider.emit('dragStarted')
     return true
   }
   function drag(e) {
@@ -55,12 +56,9 @@ export default function NativeDrag(
     }
 
     const value = xy(e)
-
-    if (!isSlide(e) && dragJustStarted) {
-      return dragStop(e)
-    }
     if (dragJustStarted) {
-      lastValue = value
+      if (!isSlide(e)) return (dragActive = false)
+      slider.emit('dragStarted')
       dragJustStarted = false
     }
 
@@ -146,19 +144,8 @@ export default function NativeDrag(
   slider.on('layoutChanged', update)
   slider.on('created', update)
 
-  // slider.containerProps.onStartShouldSetResponder = dragStart
-  // slider.containerProps.onResponderMove = drag
-  // slider.containerProps.onResponderRelease = dragStop
-  // slider.containerProps.onResponderTerminate = dragStop
-  // slider.containerProps.onResponderTerminationRequest = () => false
-  // slider.containerProps.onStartShouldSetResponderCapture = dragStart
-
-  const pan = PanResponder.create({
-    onPanResponderMove: drag,
-    onPanResponderRelease: dragStop,
-    onPanResponderTerminate: dragStop,
-    onPanResponderTerminationRequest: () => false,
-    onStartShouldSetPanResponderCapture: dragStart,
-  })
-  Object.assign(slider.containerProps, pan.panHandlers)
+  slider.containerProps.onStartShouldSetResponder = dragStart
+  slider.containerProps.onResponderMove = drag
+  slider.containerProps.onResponderRelease = dragStop
+  slider.containerProps.onResponderTerminate = dragStop
 }

@@ -129,6 +129,5 @@ export default function Native<O>(
 
     NativeRenderer(slider)
     NativeDrag(slider)
-    console.log(slider)
   }
 }

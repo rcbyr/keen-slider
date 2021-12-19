@@ -1,11 +1,24 @@
 import { MutableRefObject } from 'react'
-import { LayoutChangeEvent, NativeMethods } from 'react-native'
+import {
+  GestureResponderEvent,
+  LayoutChangeEvent,
+  NativeMethods,
+} from 'react-native'
 
 import { TrackSlidesConfigOption } from '../../core/types'
+import {
+  DRAG_ANIMATION_MODE_FREE,
+  DRAG_ANIMATION_MODE_FREE_SNAP,
+  DRAG_ANIMATION_MODE_SNAP,
+} from '../types'
 
 export interface NativeOptions {
   drag?: boolean
   dragSpeed?: number | ((val: number) => number)
+  mode?:
+    | DRAG_ANIMATION_MODE_SNAP
+    | DRAG_ANIMATION_MODE_FREE_SNAP
+    | DRAG_ANIMATION_MODE_FREE
   rubberband?: boolean
   slides?:
     | ((size: number) => TrackSlidesConfigOption)
@@ -33,6 +46,10 @@ export type SlideProps = {
 
 export interface NativeInstance<O> {
   containerProps: {
+    onStartShouldSetResponder?: (event: GestureResponderEvent) => void
+    onResponderMove?: (event: GestureResponderEvent) => void
+    onResponderRelease?: (event: GestureResponderEvent) => void
+    onResponderTerminate?: (event: GestureResponderEvent) => void
     onLayout?: (event: LayoutChangeEvent) => void
   }
   slidesProps: SlideProps[]
