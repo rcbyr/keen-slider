@@ -1,4 +1,4 @@
-import { SliderInstance } from '../core/types'
+import { SliderInstance } from '../../core/types'
 import {
   clamp,
   elems,
@@ -7,18 +7,15 @@ import {
   setAttr,
   sign,
   stop,
-} from '../core/utils'
+} from '../../core/utils'
 import {
-  DragOptions,
-  HOOK_DESTROYED,
   HOOK_DRAG_ENDED,
   HOOK_DRAG_STARTED,
   HOOK_DRAGGED,
   HOOK_OPTIONS_CHANGED,
   HOOK_UPDATED,
-  WebInstance,
-  WebOptions,
-} from './types'
+} from '../types'
+import { DragOptions, HOOK_DESTROYED, WebInstance, WebOptions } from './types'
 
 export default function Drag(
   slider: SliderInstance<
