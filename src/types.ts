@@ -9,17 +9,19 @@ import {
   DRAG_ANIMATION_MODE_FREE_SNAP,
   DRAG_ANIMATION_MODE_SNAP,
   DragAnimationOptions,
-  DragOptions,
-  HOOK_DESTROYED,
   HOOK_DRAG_ENDED,
   HOOK_DRAG_STARTED,
   HOOK_DRAGGED,
   HOOK_OPTIONS_CHANGED,
   HOOK_UPDATED,
+} from './plugins/types'
+import {
+  DragOptions,
+  HOOK_DESTROYED,
   RendererOptions,
   WebInstance,
   WebOptions,
-} from './plugins/types'
+} from './plugins/web/types'
 
 export type KeenSliderHooks =
   | SliderHooks

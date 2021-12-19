@@ -1,5 +1,3 @@
-import { PanResponder } from 'react-native'
-
 import { SliderInstance } from '../../core/types'
 import { clamp, sign } from '../../core/utils'
 import {
@@ -10,7 +8,7 @@ import {
 } from '../types'
 import { HOOK_LAYOUT_CHANGED, NativeInstance, NativeOptions } from './types'
 
-export default function NativeDrag(
+export default function Drag(
   slider: SliderInstance<
     NativeOptions,
     NativeInstance<{}>,

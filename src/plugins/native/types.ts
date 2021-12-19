@@ -10,15 +10,12 @@ import {
   DRAG_ANIMATION_MODE_FREE,
   DRAG_ANIMATION_MODE_FREE_SNAP,
   DRAG_ANIMATION_MODE_SNAP,
+  DragAnimationOptions,
 } from '../types'
 
-export interface NativeOptions {
+export type NativeOptions = {
   drag?: boolean
   dragSpeed?: number | ((val: number) => number)
-  mode?:
-    | DRAG_ANIMATION_MODE_SNAP
-    | DRAG_ANIMATION_MODE_FREE_SNAP
-    | DRAG_ANIMATION_MODE_FREE
   rubberband?: boolean
   slides?:
     | ((size: number) => TrackSlidesConfigOption)
@@ -31,7 +28,11 @@ export interface NativeOptions {
       }
 
   vertical?: boolean
-}
+} & DragAnimationOptions<
+  | DRAG_ANIMATION_MODE_SNAP
+  | DRAG_ANIMATION_MODE_FREE_SNAP
+  | DRAG_ANIMATION_MODE_FREE
+>
 
 export type SlideProps = {
   ref?: MutableRefObject<NativeMethods | null>

@@ -8,8 +8,8 @@ import {
   HOOK_DRAGGED,
   HOOK_UPDATED,
 } from '../types'
-import NativeDrag from './drag'
-import NativeRenderer from './renderer'
+import Drag from './drag'
+import Renderer from './renderer'
 import { HOOK_LAYOUT_CHANGED, NativeInstance, NativeOptions } from './types'
 
 export default function Native<O>(
@@ -127,7 +127,7 @@ export default function Native<O>(
 
     init()
 
-    NativeRenderer(slider)
-    NativeDrag(slider)
+    Renderer(slider)
+    Drag(slider)
   }
 }
