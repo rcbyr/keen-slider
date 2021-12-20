@@ -10,11 +10,7 @@ import {
 import { checkOptions } from './core/utils'
 import Modes from './plugins/modes'
 import Native from './plugins/native/native'
-import {
-  NativeInstance,
-  NativeOptions,
-  SlideProps,
-} from './plugins/native/types'
+import { NativeInstance, NativeOptions } from './plugins/native/types'
 import {
   HOOK_DRAG_ENDED,
   HOOK_DRAG_STARTED,
