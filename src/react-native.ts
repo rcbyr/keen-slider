@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 
 import Slider from './core/slider'
 import {
@@ -102,22 +102,21 @@ export function useKeenSliderNative<
 >(
   options?: KeenSliderNativeOptions<O, P, H>,
   plugins?: KeenSliderNativePlugin<O, P, H>[]
-): [KeenSliderNativeInstance<O, P, H>, SlideProps[]] {
+): KeenSliderNativeInstance<O, P, H> {
   const optionsCheckedFirst = useRef(false)
   const currentOptions = useRef(options)
-  const sliderRef = useRef(KeenSliderNative(options, plugins))
-  const [slidesProps, setSlidesProps] = useState(sliderRef.current.slidesProps)
+  const slider = useMemo<KeenSliderNativeInstance<O, P, H>>(
+    () => KeenSliderNative(options, plugins),
+    []
+  )
   useEffect(() => {
     if (!optionsCheckedFirst.current) {
-      sliderRef.current.on('update', () => {
-        if (slidesProps.length !== sliderRef.current.slides.length)
-          setSlidesProps(sliderRef.current.slides)
-      })
       optionsCheckedFirst.current = true
       return
     }
-    if (sliderRef.current) sliderRef.current.update(currentOptions.current)
+
+    if (slider) slider.update(currentOptions.current)
   }, [checkOptions(currentOptions, options)])
 
-  return [sliderRef.current, slidesProps]
+  return slider
 }

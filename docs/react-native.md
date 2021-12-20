@@ -16,7 +16,7 @@ npm install keen-slider
 
 ### Usage
 
-The library comes with a hook for react-native. Like any react hook, `useKeenSliderNative` has to be called at the top level of your component. Optionally, you can pass [`Options`](https://keen-slider.io/docs/react-native#options) and [`Event hooks`](https://keen-slider.io/docs/react-native#event-hooks) as first argument. [`Plugins`](https://keen-slider.io/docs/react-native#plugins) can be passed as second argument. The hook returns an array with two items. The first item contains the [`slider instance`](https://keen-slider.io/docs/react-native#properties). The second item contains the reactive slide properties.
+The library comes with a hook for react-native. Like any react hook, `useKeenSliderNative` has to be called at the top level of your component. Optionally, you can pass [`Options`](https://keen-slider.io/docs/react-native#options) and [`Event hooks`](https://keen-slider.io/docs/react-native#event-hooks) as first argument. [`Plugins`](https://keen-slider.io/docs/react-native#plugins) can be passed as second argument. The hook returns the [`slider instance`](https://keen-slider.io/docs/react-native#properties).
 
 ```javascript
 import { useKeenSliderNative } from 'keen-slider/react-native'
