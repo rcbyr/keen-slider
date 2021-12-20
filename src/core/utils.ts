@@ -70,13 +70,13 @@ export function stop(e: any): void {
   if (e.stopPropagation) e.stopPropagation()
 }
 
-export function inputHandler(handler) {
+export function inputHandler(handler: any): any {
   return e => {
     if (e.nativeEvent) e = e.nativeEvent
     const changedTouches = e.changedTouches || []
     const touchPoints = e.targetTouches || []
     const detail = e.detail && e.detail.x ? e.detail : null
-    handler({
+    return handler({
       id: detail
         ? detail.identifier
           ? detail.identifier
