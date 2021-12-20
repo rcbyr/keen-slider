@@ -103,7 +103,8 @@ export default function Native<O>(
       if (!mounted) {
         mounted = true
       }
-
+      updateTrackConfig()
+      initTrack()
       slider.emit('layoutChanged')
     }
 
