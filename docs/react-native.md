@@ -22,24 +22,16 @@ The library comes with a hook for react-native. Like any react hook, `useKeenSli
 import { useKeenSliderNative } from 'keen-slider/react-native'
 
 export default () => {
-  const [slider, slidesProps] = useKeenSliderNative(
-    {
-      slides: 4,
-      rtl: true,
-      slideChanged() {
-        console.log('slide changed')
-      },
-    },
-    [
-      // add plugins here
-    ]
-  )
+  const slides = 4
+  const slider = useKeenSliderNative({
+    slides,
+  })
 
   return (
     <View {...slider.containerProps}>
-      {slidesProps.map((slideProps, idx) => {
+      {[...Array(slides).keys()].map(idx => {
         return (
-          <View key={idx} {...slideProps}>
+          <View key={idx} {...slider.slidesProps[idx]}>
             <Text>Slide {idx}</Text>
           </View>
         )
@@ -292,7 +284,7 @@ A plugin is basically a function that receives the slider instance as its only a
 Example:
 
 ```typescript
-const [slider, slidesProps] = useKeenSliderNative(
+const slider = useKeenSliderNative(
   {
     slides: 4,
   },
