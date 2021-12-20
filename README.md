@@ -7,7 +7,7 @@
 with native touch/swipe behavior and great performance. It comes with
 **no dependencies**, **typescript support**, **multitouch support**
 and is compatible with
-**all common browsers including IE 10**. Furthermore it comes with a **React Hook** and a **Vue 3 Composition Function** for easier use.
+**all common browsers including IE 10**. Furthermore it comes with a **React Hook**, a **React Native Hook** and a **Vue 3 Composition Function** for easier use.
 
 <p align="left">
   <a href="https://keen-slider.io/examples#default"
