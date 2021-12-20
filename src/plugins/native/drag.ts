@@ -3,6 +3,7 @@ import { PanResponder } from 'react-native'
 import { SliderInstance } from '../../core/types'
 import { clamp, inputHandler, sign } from '../../core/utils'
 import {
+  HOOK_DRAG_CHECKED,
   HOOK_DRAG_ENDED,
   HOOK_DRAG_STARTED,
   HOOK_DRAGGED,
@@ -19,6 +20,7 @@ export default function Drag(
     | HOOK_DRAGGED
     | HOOK_UPDATED
     | HOOK_LAYOUT_CHANGED
+    | HOOK_DRAG_CHECKED
   >
 ): void {
   const breakFactorValue = 2
@@ -47,6 +49,7 @@ export default function Drag(
     dragIdentifier = e.idChanged
     isSlide(e)
     lastValue = xy(e)
+    slider.emit('dragStarted')
     return true
   }
   function drag(e) {
@@ -56,8 +59,8 @@ export default function Drag(
 
     const value = xy(e)
     if (dragJustStarted) {
-      if (!isSlide(e)) return (dragActive = false)
-      slider.emit('dragStarted')
+      if (!isSlide(e)) return dragStop(e)
+      slider.emit('dragChecked')
       dragJustStarted = false
     }
 

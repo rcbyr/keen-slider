@@ -137,6 +137,8 @@ Below are the event hooks and when they are triggered:
 
 `dragStarted` - Drag has started.
 
+`dragChecked` - Direction of dragging was checked and is valid.
+
 `dragEnded` - Drag has ended.
 
 `slideChanged` - Active or most visible slide has changed.

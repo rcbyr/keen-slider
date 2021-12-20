@@ -12,6 +12,7 @@ import Modes from './plugins/modes'
 import Native from './plugins/native/native'
 import { NativeInstance, NativeOptions } from './plugins/native/types'
 import {
+  HOOK_DRAG_CHECKED,
   HOOK_DRAG_ENDED,
   HOOK_DRAG_STARTED,
   HOOK_DRAGGED,
@@ -24,6 +25,7 @@ export type KeenSliderNativeHooks =
   | HOOK_DRAGGED
   | HOOK_DRAG_ENDED
   | HOOK_DRAG_STARTED
+  | HOOK_DRAG_CHECKED
 
 export type KeenSliderNativeOptions<
   O = {},

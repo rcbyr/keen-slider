@@ -3,6 +3,7 @@ import { createRef } from 'react'
 import { SliderInstance, SliderPlugin } from '../../core/types'
 import { getProp } from '../../core/utils'
 import {
+  HOOK_DRAG_CHECKED,
   HOOK_DRAG_ENDED,
   HOOK_DRAG_STARTED,
   HOOK_DRAGGED,
@@ -24,6 +25,7 @@ export default function Native<O>(
       | HOOK_DRAG_ENDED
       | HOOK_DRAG_STARTED
       | HOOK_DRAGGED
+      | HOOK_DRAG_CHECKED
     >
   ): void => {
     let mounted = false

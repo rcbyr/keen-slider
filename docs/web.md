@@ -257,6 +257,8 @@ Below are the event hooks and when they are triggered:
 
 `dragStarted` - Drag has started.
 
+`dragChecked` - Direction of dragging was checked and is valid.
+
 `dragEnded` - Drag has ended.
 
 `optionsChanged` - Options have changed, e.g. due to an update, resizing(when the number of slides changes) or a change of the breakpoint.

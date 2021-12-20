@@ -2,6 +2,7 @@ import { SliderInstance } from '../core/types'
 import { clamp, sign } from '../core/utils'
 import {
   DragAnimationOptions,
+  HOOK_DRAG_CHECKED,
   HOOK_DRAG_ENDED,
   HOOK_DRAG_STARTED,
   HOOK_DRAGGED,
@@ -18,6 +19,7 @@ export default function Free(
     | HOOK_DRAG_ENDED
     | HOOK_DRAGGED
     | HOOK_UPDATED
+    | HOOK_DRAG_CHECKED
   >
 ): void {
   let startIdx, moveIdx

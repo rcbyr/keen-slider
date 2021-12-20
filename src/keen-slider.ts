@@ -11,6 +11,7 @@ import {
   DRAG_ANIMATION_MODE_FREE_SNAP,
   DRAG_ANIMATION_MODE_SNAP,
   DragAnimationOptions,
+  HOOK_DRAG_CHECKED,
   HOOK_DRAG_ENDED,
   HOOK_DRAG_STARTED,
   HOOK_DRAGGED,
@@ -36,6 +37,7 @@ export type KeenSliderHooks =
   | HOOK_DRAGGED
   | HOOK_DRAG_ENDED
   | HOOK_DRAG_STARTED
+  | HOOK_DRAG_CHECKED
   | HOOK_DESTROYED
 
 export type KeenSliderOptions<

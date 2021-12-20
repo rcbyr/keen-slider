@@ -9,6 +9,7 @@ import {
   stop,
 } from '../../core/utils'
 import {
+  HOOK_DRAG_CHECKED,
   HOOK_DRAG_ENDED,
   HOOK_DRAG_STARTED,
   HOOK_DRAGGED,
@@ -27,6 +28,7 @@ export default function Drag(
     | HOOK_DRAG_STARTED
     | HOOK_DRAGGED
     | HOOK_UPDATED
+    | HOOK_DRAG_CHECKED
   >
 ): void {
   const events = Events()
@@ -57,10 +59,10 @@ export default function Drag(
     const value = xy(e)
 
     if (dragJustStarted) {
-      if (!isSlide(e)) return (dragActive = false)
+      if (!isSlide(e)) return dragStop(e)
       lastValue = value
       dragJustStarted = false
-      slider.emit('dragStarted')
+      slider.emit('dragChecked')
     }
 
     if (scrollLock) return (lastValue = value)
@@ -97,6 +99,7 @@ export default function Drag(
     dragIdentifier = e.id
     isSlide(e)
     lastValue = xy(e)
+    slider.emit('dragStarted')
   }
 
   function dragStop(e) {
