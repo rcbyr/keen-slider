@@ -6,6 +6,10 @@ export function now(): number {
   return Date.now()
 }
 
+export function dir(element): string {
+  return window.getComputedStyle(element, null).getPropertyValue('direction')
+}
+
 export function setAttr(elem: HTMLElement, name: string, value: string): void {
   const prefix = 'data-keen-slider-'
   name = prefix + name

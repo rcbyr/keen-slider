@@ -3,6 +3,7 @@ node_modules
 .gh-pages
 dist
 .build
+.yarn-lock
 
 /*.js
 /*.css

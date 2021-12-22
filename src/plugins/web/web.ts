@@ -1,5 +1,13 @@
 import { SliderInstance, SliderPlugin } from '../../core/types'
-import { elem, elems, Events, getProp, rect, setAttr } from '../../core/utils'
+import {
+  dir,
+  elem,
+  elems,
+  Events,
+  getProp,
+  rect,
+  setAttr,
+} from '../../core/utils'
 import { HOOK_OPTIONS_CHANGED, HOOK_UPDATED } from '../types'
 import { Container, HOOK_DESTROYED, WebInstance, WebOptions } from './types'
 
@@ -19,6 +27,11 @@ export default function Web<O>(
     let currentMatch, compareSize, options, mediaQueryLists
 
     function applyAttributes(remove?) {
+      setAttr(
+        slider.container,
+        'reverse',
+        dir(slider.container) === 'rtl' && !remove ? '' : null
+      )
       setAttr(
         slider.container,
         'v',

@@ -18,6 +18,10 @@
     min-height: 100%;
   }
 
+  &[data-keen-slider-reverse] {
+    flex-direction: row-reverse;
+  }
+
   &[data-keen-slider-v] {
     flex-wrap: wrap;
   }
