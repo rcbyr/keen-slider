@@ -71,7 +71,8 @@ export default function Web<O>(
     function getElementSize(elem) {
       const sizes = rect(elem)
       return (
-        (slider.options.vertical ? sizes.height : sizes.width) / slider.size
+        (slider.options.vertical ? sizes.height : sizes.width) / slider.size ||
+        1
       )
     }
 
@@ -193,7 +194,7 @@ export default function Web<O>(
 
     function updateSize() {
       const size = rect(slider.container)
-      slider.size = slider.options.vertical ? size.height : size.width
+      slider.size = (slider.options.vertical ? size.height : size.width) || 1
     }
 
     function updateSlides() {
