@@ -1,7 +1,8 @@
 # Keen-Slider
 
 [![npm version](https://badge.fury.io/js/keen-slider.svg)](https://www.npmjs.com/package/keen-slider)
-[![Build Status](https://travis-ci.org/rcbyr/keen-slider.svg?branch=release)](https://travis-ci.org/rcbyr/keen-slider)
+![build](https://img.shields.io/github/workflow/status/rcbyr/keen-slider/CI)
+[![npm downloads](https://img.shields.io/npm/dm/keen-slider)](https://www.npmjs.com/package/keen-slider)
 
 **Keen-Slider** is a free library agnostic touch slider
 with native touch/swipe behavior and great performance. It comes with
