@@ -144,7 +144,7 @@ export default function Track(
 
   function getIndexes(pos) {
     let factor = Math.floor(Math.abs(pos / length))
-    const positionRelative = ((pos % length) + length) % length
+    const positionRelative = round(((pos % length) + length) % length)
     const positionSign = sign(pos)
     const origin = relativePositions.indexOf(
       [...relativePositions].reduce((a, b) =>
@@ -256,7 +256,7 @@ export default function Track(
 
       distance -= val[2]
       if (acc[acc.length - 1] > distance) distance = acc[acc.length - 1]
-      acc.push(distance)
+      acc.push(round(distance))
       return acc
     }, null)
     relativePositions.push(length)
