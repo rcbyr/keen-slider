@@ -55,9 +55,12 @@ export default function Renderer(
 
   function scaleElement(element, value, vertical) {
     const type = vertical ? 'height' : 'width'
-    if (value !== null) value += 'px'
-    element.style['min-' + type] = value
-    element.style['max-' + type] = value
+    if (value !== null) {
+      if (slider.options.renderMode === 'performance') value = Math.round(value)
+      value += 'px'
+      element.style['min-' + type] = value
+      element.style['max-' + type] = value
+    }
   }
 
   function positionElement(element, value, vertical) {
