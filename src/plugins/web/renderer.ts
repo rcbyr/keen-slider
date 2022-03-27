@@ -53,19 +53,24 @@ export default function Renderer(
     })
   }
 
+  function roundValue(value) {
+    return slider.options.renderMode === 'performance'
+      ? Math.round(value)
+      : value
+  }
+
   function scaleElement(element, value, vertical) {
     const type = vertical ? 'height' : 'width'
     if (value !== null) {
-      if (slider.options.renderMode === 'performance') value = Math.round(value)
-      value += 'px'
-      element.style['min-' + type] = value
-      element.style['max-' + type] = value
+      value = roundValue(value) + 'px'
     }
+    element.style['min-' + type] = value
+    element.style['max-' + type] = value
   }
 
   function positionElement(element, value, vertical) {
     if (value !== null) {
-      if (slider.options.renderMode === 'performance') value = Math.round(value)
+      value = roundValue(value)
       const x = vertical ? 0 : value
       const y = vertical ? value : 0
       value = `translate3d(${x}px, ${y}px, 0)`
