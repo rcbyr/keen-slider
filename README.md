@@ -11,26 +11,33 @@ and is compatible with
 
 <p align="left">
   <a href="https://keen-slider.io/examples#default"
-    ><img alt="this is webp"
- width="285" src="https://keen-slider.io/images/default.webp"
-  /></a>
+    >
+    <picture>
+      <source srcset="https://keen-slider.io/images/default.webp" type="image/webp">
+      <source srcset="https://keen-slider.io/images/default.gif" type="image/jpeg"> 
+      <img src="https://keen-slider.io/images/default.gif">
+    </picture>
+   </a>
   <a href="https://keen-slider.io/examples#datetimepicker"
-    ><img alt="this is webp"
- width="285" src="https://keen-slider.io/images/datepicker.webp"
-  /></a>
+    > <picture>
+      <source srcset="https://keen-slider.io/images/datepicker.webp" type="image/webp">
+      <source srcset="https://keen-slider.io/images/datepicker.gif" type="image/jpeg"> 
+      <img src="https://keen-slider.io/images/datepicker.gif">
+    </picture></a>
 </p>
 <p align="left">
   <a href="https://keen-slider.io/examples#draggable-card"
-    ><img alt="this is webp"
- width="285" src="https://keen-slider.io/images/card.webp"
-  /></a>
+    ><picture>
+      <source srcset="https://keen-slider.io/images/card.webp" type="image/webp">
+      <source srcset="https://keen-slider.io/images/card.gif" type="image/jpeg"> 
+      <img src="https://keen-slider.io/images/card.gif">
+    </picture></a>
   <a href="https://keen-slider.io/examples#background-rotation"
-    ><img
-      alt="this is webp"
-      valign="top"
-      width="285"
-      src="https://keen-slider.io/images/rotation.webp"
-  /></a>
+    ><picture>
+      <source srcset="https://keen-slider.io/images/rotation.webp" type="image/webp">
+      <source srcset="https://keen-slider.io/images/rotation.gif" type="image/jpeg"> 
+      <img src="https://keen-slider.io/images/rotation.gif">
+    </picture></a>
 </p>
 
 ## Getting Started
