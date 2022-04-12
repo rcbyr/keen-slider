@@ -2,6 +2,7 @@ import { SliderInstance } from '../../core/types'
 import { getProp } from '../../core/utils'
 import { HOOK_OPTIONS_CHANGED, HOOK_UPDATED } from '../types'
 import {
+  HOOK_BEFORE_OPTIONS_CHANGED,
   HOOK_DESTROYED,
   RendererOptions,
   WebInstance,
@@ -12,7 +13,10 @@ export default function Renderer(
   slider: SliderInstance<
     WebOptions<{}> & RendererOptions,
     WebInstance<{}>,
-    HOOK_DESTROYED | HOOK_OPTIONS_CHANGED | HOOK_UPDATED
+    | HOOK_DESTROYED
+    | HOOK_BEFORE_OPTIONS_CHANGED
+    | HOOK_OPTIONS_CHANGED
+    | HOOK_UPDATED
   >
 ): void {
   let autoScale = null
@@ -80,12 +84,19 @@ export default function Renderer(
   }
 
   function reset() {
-    if (elements) applyStylesInAnimationFrame(true, true, verticalOption)
+    if (elements) {
+      applyStyles(true, true, verticalOption)
+      elements = null
+    }
     slider.on('detailsChanged', applyStylesHook, true)
   }
 
   function positionAndScale() {
     applyStylesInAnimationFrame(false, true, verticalOption)
+  }
+
+  function updateBefore() {
+    reset()
   }
 
   function update() {
@@ -102,6 +113,7 @@ export default function Renderer(
 
   slider.on('created', update)
   slider.on('optionsChanged', update)
+  slider.on('beforeOptionsChanged', updateBefore)
   slider.on('updated', positionAndScale)
   slider.on('destroyed', reset)
 }

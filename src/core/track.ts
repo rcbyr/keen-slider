@@ -22,6 +22,7 @@ export default function Track(
   let slides
   let slidesCount
   let relativePositions
+  let maxRelativeIdx
 
   let position = 0
 
@@ -35,7 +36,7 @@ export default function Track(
     const rangeOption = slider.options.range
     const loop = slider.options.loop
     loopMin = minIdx = loop ? getProp(loop, 'min', -infinity) : 0
-    loopMax = maxIdx = loop ? getProp(loop, 'max', infinity) : slides.length - 1
+    loopMax = maxIdx = loop ? getProp(loop, 'max', infinity) : maxRelativeIdx
     const dragMin = getProp(rangeOption, 'min', null)
     const dragMax = getProp(rangeOption, 'max', null)
     if (dragMin) minIdx = dragMin
@@ -249,6 +250,7 @@ export default function Track(
         slides[lastIdx][2] -
         slides[lastIdx][1]
     )
+    let lastDistance
     relativePositions = slides.reduce((acc, val) => {
       if (!acc) return [0]
       const prev = slides[acc.length - 1]
@@ -257,6 +259,9 @@ export default function Track(
       distance -= val[2]
       if (acc[acc.length - 1] > distance) distance = acc[acc.length - 1]
       acc.push(round(distance))
+      if (!lastDistance || lastDistance < distance)
+        maxRelativeIdx = acc.length - 1
+      lastDistance = distance
       return acc
     }, null)
     relativePositions.push(length)

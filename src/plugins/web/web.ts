@@ -9,17 +9,33 @@ import {
   setAttr,
 } from '../../core/utils'
 import { HOOK_OPTIONS_CHANGED, HOOK_UPDATED } from '../types'
-import { Container, HOOK_DESTROYED, WebInstance, WebOptions } from './types'
+import {
+  Container,
+  HOOK_BEFORE_OPTIONS_CHANGED,
+  HOOK_DESTROYED,
+  WebInstance,
+  WebOptions,
+} from './types'
 
 export default function Web<O>(
   container: Container,
   defaultOptions: O
-): SliderPlugin<{}, {}, HOOK_OPTIONS_CHANGED | HOOK_UPDATED | HOOK_DESTROYED> {
+): SliderPlugin<
+  {},
+  {},
+  | HOOK_OPTIONS_CHANGED
+  | HOOK_UPDATED
+  | HOOK_DESTROYED
+  | HOOK_BEFORE_OPTIONS_CHANGED
+> {
   return (
     slider: SliderInstance<
       WebOptions<{}>,
       WebInstance<{}>,
-      HOOK_OPTIONS_CHANGED | HOOK_UPDATED | HOOK_DESTROYED
+      | HOOK_OPTIONS_CHANGED
+      | HOOK_UPDATED
+      | HOOK_DESTROYED
+      | HOOK_BEFORE_OPTIONS_CHANGED
     >
   ): void => {
     const events = Events()
@@ -55,6 +71,7 @@ export default function Web<O>(
         if (mediaQueryList.matches) match = mediaQueryList.__media
       })
       if (match === currentMatch) return false
+      if (!currentMatch) slider.emit('beforeOptionsChanged')
       currentMatch = match
       const _options = match ? options.breakpoints[match] : options
       slider.options = {

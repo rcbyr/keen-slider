@@ -260,6 +260,8 @@ Below are the event hooks and when they are triggered:
 
 `dragEnded` - Drag has ended.
 
+`beforeOptionsChanged` - Options are going to be changed.
+
 `optionsChanged` - Options have changed, e.g. due to an update, resizing(when the number of slides changes) or a change of the breakpoint.
 
 `slideChanged` - Active or most visible slide has changed.
@@ -361,10 +363,10 @@ The slides as an array of HTML elements.
 
   - `abs`: **number** - Absolute index of the currently active slide.
   - `length`: **number** - Length of the track in relation to the size of the viewport.
-  - `min`: **number** - minimum position according to range or loop
-  - `max`: **number** - maximum position according to range or loop
-  - `minIdx`: **number** - minimum index according to range or loop
-  - `maxIdx`: **number** - maximum position according to range or loop
+  - `min`: **number** - minimum position according to the reachable slide
+  - `max`: **number** - maximum position according to the reachable slide
+  - `minIdx`: **number** - minimum index according to the reachable slide
+  - `maxIdx`: **number** - maximum index according to the reachable slide
   - `position`: **number** - Current position of the track in relation to the size of the viewport.
   - `progress`: **number** - Relative position of track in relation to the length.
   - `rel`: **number** - Relative index of the currently active slide.

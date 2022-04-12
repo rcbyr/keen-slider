@@ -60,3 +60,4 @@ export type RENDER_MODE_PERFORMANCE = 'performance'
 export type RENDER_MODE_CUSTOM = 'custom'
 
 export type HOOK_DESTROYED = 'destroyed'
+export type HOOK_BEFORE_OPTIONS_CHANGED = 'beforeOptionsChanged'

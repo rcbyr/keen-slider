@@ -23,6 +23,7 @@ import Renderer from './plugins/web/renderer'
 import { Container } from './plugins/web/types'
 import {
   DragOptions,
+  HOOK_BEFORE_OPTIONS_CHANGED,
   HOOK_DESTROYED,
   RendererOptions,
   WebInstance,
@@ -39,6 +40,7 @@ export type KeenSliderHooks =
   | HOOK_DRAG_STARTED
   | HOOK_DRAG_CHECKED
   | HOOK_DESTROYED
+  | HOOK_BEFORE_OPTIONS_CHANGED
 
 export type KeenSliderOptions<
   O = {},
