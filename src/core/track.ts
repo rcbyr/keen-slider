@@ -258,7 +258,8 @@ export default function Track(
 
       distance -= val[2]
       if (acc[acc.length - 1] > distance) distance = acc[acc.length - 1]
-      acc.push(round(distance))
+      distance = round(distance)
+      acc.push(distance)
       if (!lastDistance || lastDistance < distance)
         maxRelativeIdx = acc.length - 1
       lastDistance = distance
