@@ -58,7 +58,7 @@ function Slider<O, C, H extends string>(
         cb(instance)
       })
     }
-    const optionCallBack = instance.options[name]
+    const optionCallBack = instance.options && instance.options[name]
     if (optionCallBack) optionCallBack(instance)
   }
 
