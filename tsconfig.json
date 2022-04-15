@@ -19,7 +19,7 @@
     "strict": false,
     "removeComments": true,
     "lib": ["es2017", "dom"],
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "downlevelIteration": false
   },
   "include": ["tests/**/*.ts", "src/**/*.ts"],

@@ -62,10 +62,14 @@ export * from './plugins/types'
 export * from './plugins/native/types'
 export * from './core/types'
 
-const KeenSliderNative = function (
-  options?: KeenSliderNativeOptions,
+const KeenSliderNative = function <
+  O,
+  P,
+  H extends string = KeenSliderNativeHooks
+>(
+  options?: KeenSliderNativeOptions<O, P, H>,
   plugins?: KeenSliderNativePlugin[]
-): KeenSliderNativeInstance {
+): KeenSliderNativeInstance<O, P, H> {
   try {
     const defOpts = {
       drag: true,
@@ -73,8 +77,8 @@ const KeenSliderNative = function (
       rubberband: true,
     } as KeenSliderNativeOptions
     return Slider<
-      KeenSliderNativeOptions,
-      KeenSliderNativeInstance,
+      KeenSliderNativeOptions<O, P, H>,
+      KeenSliderNativeInstance<O, P, H>,
       KeenSliderNativeHooks
     >(options, [
       Native<KeenSliderNativeOptions>(defOpts),
