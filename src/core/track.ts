@@ -87,7 +87,7 @@ export default function Track(
       }
 
       const idxDistance = idx - rel
-      const signIdxDistance = Math.sign(idxDistance)
+      const signIdxDistance = sign(idxDistance)
       let absoluteIndex = idxDistance + abs
       if (loop) {
         if (signIdxDistance === -1 && distanceViewport > activeOrigin)
@@ -196,7 +196,7 @@ export default function Track(
     const nextIdx = abs + idxDistance
     distance = absoluteIdxToDist(nextIdx)
     const otherDistance = absoluteIdxToDist(
-      nextIdx - slidesCount * Math.sign(idxDistance)
+      nextIdx - slidesCount * sign(idxDistance)
     )
     if (
       (otherDistance !== null &&
