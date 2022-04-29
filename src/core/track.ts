@@ -265,6 +265,7 @@ export default function Track(
       lastDistance = distance
       return acc
     }, null)
+    if (trackLength === 0) maxRelativeIdx = 0
     relativePositions.push(length)
   }
 
