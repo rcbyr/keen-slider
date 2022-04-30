@@ -2,11 +2,10 @@
 <a href="https://www.npmjs.com/package/keen-slider"><img src="https://badge.fury.io/js/keen-slider.svg" /></a>
 <a href="https://www.npmjs.com/package/keen-slider"><img src="https://img.shields.io/npm/dm/keen-slider" /></a>
 </p>
+<p align="center">
+<a href="https://www.npmjs.com/package/keen-slider"><img width="340" src="https://keen-slider.io/images/logo-github.svg" /></a>
+</p>
  
- 
-  <strong>
-    <h1 align="center">Keen-Slider</h1>
-  </strong>
 <p align="center">
 <a href="https://keen-slider.io/examples#draggable-card"><img src="https://keen-slider.io/images/card.gif" /></a>
 <a href="https://keen-slider.io/examples#datetimepicker"><img src="https://keen-slider.io/images/demo2.gif" /></a>
