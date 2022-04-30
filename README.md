@@ -1,9 +1,16 @@
-[![npm version](https://badge.fury.io/js/keen-slider.svg)](https://www.npmjs.com/package/keen-slider)
-[![npm downloads](https://img.shields.io/npm/dm/keen-slider)](https://www.npmjs.com/package/keen-slider)
-
-# Keen-Slider
-
-[![Card](https://keen-slider.io/images/card.gif)](https://keen-slider.io/examples#draggable-card) [![DatePicker](https://keen-slider.io/images/demo2.gif)](https://keen-slider.io/examples#datetimepicker)
+<p align="center">
+<a href="https://www.npmjs.com/package/keen-slider"><img src="https://badge.fury.io/js/keen-slider.svg" /></a>
+<a href="https://www.npmjs.com/package/keen-slider"><img src="https://img.shields.io/npm/dm/keen-slider" /></a>
+</p>
+ 
+ 
+  <strong>
+    <h1 align="center">Keen-Slider</h1>
+  </strong>
+<p align="center">
+<a href="https://keen-slider.io/examples#draggable-card"><img src="https://keen-slider.io/images/card.gif" /></a>
+<a href="https://keen-slider.io/examples#datetimepicker"><img src="https://keen-slider.io/images/demo2.gif" /></a>
+</p>
 
 **Keen-Slider** is a free library agnostic touch slider
 with native touch/swipe behavior and great performance. It comes with

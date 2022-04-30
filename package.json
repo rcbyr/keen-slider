@@ -16,6 +16,7 @@
     "type": "git",
     "url": "git+https://github.com/rcbyr/keen-slider.git"
   },
+  "sideEffects": false,
   "keywords": [
     "slider",
     "carousel",
