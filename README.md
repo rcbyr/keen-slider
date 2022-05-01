@@ -5,9 +5,11 @@
 <a href="https://www.jsdelivr.com/package/npm/keen-slider"><img src="https://data.jsdelivr.com/v1/package/npm/keen-slider/badge" /></a>
 
 </p>
-<p align="center">
-<a href="https://keen-slider.io" title="Keen-Slider"><img width="340" src="https://keen-slider.io/images/logo-github.svg" /></a>
-</p>
+
+<h1 align="center">
+<a href="https://keen-slider.io" title="Keen-Slider"><img width="340" alt="Keen-Slider" src="https://keen-slider.io/images/logo-github.svg" /></a>
+</h1>
+
 <p align="center">
   Easily create sliders, carousels and <a href="https://keen-slider.io/examples">much more.</a>
 </p>
