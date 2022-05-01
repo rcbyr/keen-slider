@@ -15,9 +15,8 @@ function Slider<O, C, H extends string>(
     instance.track = Track(instance)
     instance.animator = Animator(instance)
     if (plugins) {
-      for (const pluginName in plugins) {
-        const plugin = plugins[pluginName]
-        if (plugin) plugin(instance)
+      for (const plugin of plugins) {
+        plugin(instance)
       }
     }
     instance.track.init(instance.options.initial || 0)
