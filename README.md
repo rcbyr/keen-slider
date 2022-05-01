@@ -2,13 +2,14 @@
 <a href="https://www.npmjs.com/package/keen-slider"><img src="https://badge.fury.io/js/keen-slider.svg" /></a>
 <a href="https://www.npmjs.com/package/keen-slider"><img src="https://img.shields.io/npm/l/keen-slider?color=success" /></a>
 <a href="https://www.npmjs.com/package/keen-slider"><img src="https://img.shields.io/npm/dm/keen-slider" /></a>
+<a href="https://www.jsdelivr.com/package/npm/keen-slider"><img src="https://data.jsdelivr.com/v1/package/npm/keen-slider/badge" /></a>
 
 </p>
 <p align="center">
 <a href="https://keen-slider.io" title="Keen-Slider"><img width="340" src="https://keen-slider.io/images/logo-github.svg" /></a>
 </p>
 <p align="center">
-  The touch slider library that lets you easily create sliders, carousels and <a href="https://keen-slider.io/examples">much more.</a>
+  Easily create sliders, carousels and <a href="https://keen-slider.io/examples">much more.</a>
 </p>
 <br/>
 
@@ -21,7 +22,7 @@
 
 - **Library Agnostic:** Works well in JavaScript, TypeScript, React, Vue, Angular, React Native etc.
 - **Lightweight:** No dependencies, only ~5.5KB gzipped
-- **Mobile First:**: Supports multi touch and is fully responsive
+- **Mobile First:** Supports multi touch and is fully responsive
 - **Great Performance:** Native touch/swipe behavior
 - **Compatible:** Works in all common browsers, including >= IE 10 and React Native
 - **Open Source:** Freely available under the MIT license
