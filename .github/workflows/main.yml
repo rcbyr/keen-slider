@@ -1,9 +1,8 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - '*'
+  release:
+    types: [created]
 
 jobs:
   publish:
