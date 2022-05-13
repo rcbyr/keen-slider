@@ -232,7 +232,7 @@ Specifies the configuration of the slides. Every time there is an update, resize
 
 ### `vertical`: **boolean**
 
-Changes the direction of the slider from horizontal to vertical. Default is **false**.
+Changes the direction of the slider from horizontal to vertical. (Note: The height of the `container` must be defined if vertical is true) Default is **false**.
 
 ## Event Hooks
 
