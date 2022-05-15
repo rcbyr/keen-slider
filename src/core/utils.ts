@@ -2,6 +2,12 @@ function toArray(nodeList) {
   return Array.prototype.slice.call(nodeList)
 }
 
+function getFloatOrInt(float, int) {
+  const floatFloor = Math.floor(float)
+  if (floatFloor === int || floatFloor + 1 === int) return float
+  return int
+}
+
 export function now(): number {
   return Date.now()
 }
@@ -174,8 +180,13 @@ export function cancelFrame(id: number): void {
   return window.cancelAnimationFrame(id)
 }
 
-export function rect(elem: HTMLElement): DOMRect {
-  return elem.getBoundingClientRect()
+export function rect(elem: HTMLElement): { height: number; width: number } {
+  const boundingRect = elem.getBoundingClientRect()
+
+  return {
+    height: getFloatOrInt(boundingRect.height, elem.offsetHeight),
+    width: getFloatOrInt(boundingRect.width, elem.offsetWidth),
+  }
 }
 
 export function isNumber(n: unknown): boolean {
