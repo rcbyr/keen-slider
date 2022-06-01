@@ -213,7 +213,7 @@ export function style(
 }
 
 export function round(value: number): number {
-  return Math.round(value * 1000000) / 1000000
+  return Math.round(value * 100000000) / 100000000
 }
 
 export function equal(v1: any, v2: any): boolean {
