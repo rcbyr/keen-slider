@@ -315,7 +315,9 @@ export default function Track(
     initSlides()
     if (!slidesCount) return trackUpdate(true)
     setRange()
+
     if (isNumber(index)) {
+      maxIdx = maxIdx || slider.track.details.maxIdx;
       add(absoluteIdxToDist(clampIdx(index)))
     } else {
       trackUpdate()
