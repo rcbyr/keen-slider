@@ -9,6 +9,7 @@ export type TrackDetails = {
   rel: number
   progress: number
   slides: { abs: number; distance: number; portion: number; size: number }[]
+  slidesLength: number
 }
 
 export type TrackSlidesConfigEntry = {

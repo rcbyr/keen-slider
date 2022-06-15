@@ -135,6 +135,7 @@ export default function Track(
       progress: loop ? positionRelative / length : position / trackLength,
       rel,
       slides: slideDetails,
+      slidesLength: length,
     }
   }
 
