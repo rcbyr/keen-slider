@@ -296,7 +296,7 @@ export default function Track(
 
   function to(value) {
     measure(value - position)
-    position = Math.round(value * 1000000) / 1000000
+    position = round(value)
     const idx = trackUpdate()['abs']
     if (idx !== currentIdx) {
       const emitEvent = currentIdx === null ? false : true
