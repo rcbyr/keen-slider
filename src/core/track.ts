@@ -145,8 +145,11 @@ export default function Track(
   }
 
   function getIndexes(pos) {
-    let factor = Math.floor(Math.abs(pos / length))
-    const positionRelative = round(((pos % length) + length) % length)
+    let factor = Math.floor(Math.abs(round(pos / length)))
+    let positionRelative = round(((pos % length) + length) % length)
+    if (positionRelative === length) {
+      positionRelative = 0
+    }
     const positionSign = sign(pos)
     const origin = relativePositions.indexOf(
       [...relativePositions].reduce((a, b) =>
@@ -154,7 +157,7 @@ export default function Track(
       )
     )
     let idx = origin
-    if (positionSign < 0 && positionRelative !== 0) factor++
+    if (positionSign < 0) factor++
     if (origin === slidesCount) {
       idx = 0
       factor += positionSign > 0 ? 1 : -1
@@ -267,7 +270,7 @@ export default function Track(
       return acc
     }, null)
     if (trackLength === 0) maxRelativeIdx = 0
-    relativePositions.push(length)
+    relativePositions.push(round(length))
   }
 
   function clampIdx(idx) {
