@@ -53,7 +53,7 @@ export default function Track(
       slides[absToRel(maxIdx)][2] === 0
     ) {
       max = max - (1 - slides[absToRel(maxIdx)][0])
-      maxIdx = distToIdx(max)
+      maxIdx = distToIdx(max - position)
     }
     min = round(min)
     max = round(max)
