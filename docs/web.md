@@ -375,6 +375,7 @@ The slides as an array of HTML elements.
     - `distance`: **number** - Distance of the slide to the beginning of the viewport.
     - `portion`: **number** - Indicates how much of the slide is visible in the viewport.
     - `size`: **number** - Size of the slide in relation to the size of the viewport.
+  - `slidesLength`: **number** - Length of the slides and the spacing between them.
 
 - `distToIdx`: **function** - Transforms the passed distance into the corresponding index.
 - `idxToDist`: **function** - Returns the distance to the passed index. The second argument is optional and a boolean that specifies whether the passed index is absolute. The third argument is optional and specifies a reference position.

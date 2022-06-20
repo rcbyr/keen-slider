@@ -53,7 +53,7 @@ export default function Track(
       slides[absToRel(maxIdx)][2] === 0
     ) {
       max = max - (1 - slides[absToRel(maxIdx)][0])
-      maxIdx = distToIdx(max)
+      maxIdx = distToIdx(max - position)
     }
     min = round(min)
     max = round(max)
@@ -135,6 +135,7 @@ export default function Track(
       progress: loop ? positionRelative / length : position / trackLength,
       rel,
       slides: slideDetails,
+      slidesLength: length,
     }
   }
 
@@ -144,8 +145,11 @@ export default function Track(
   }
 
   function getIndexes(pos) {
-    let factor = Math.floor(Math.abs(pos / length))
-    const positionRelative = round(((pos % length) + length) % length)
+    let factor = Math.floor(Math.abs(round(pos / length)))
+    let positionRelative = round(((pos % length) + length) % length)
+    if (positionRelative === length) {
+      positionRelative = 0
+    }
     const positionSign = sign(pos)
     const origin = relativePositions.indexOf(
       [...relativePositions].reduce((a, b) =>
@@ -153,7 +157,7 @@ export default function Track(
       )
     )
     let idx = origin
-    if (positionSign < 0 && positionRelative !== 0) factor++
+    if (positionSign < 0) factor++
     if (origin === slidesCount) {
       idx = 0
       factor += positionSign > 0 ? 1 : -1
@@ -266,7 +270,7 @@ export default function Track(
       return acc
     }, null)
     if (trackLength === 0) maxRelativeIdx = 0
-    relativePositions.push(length)
+    relativePositions.push(round(length))
   }
 
   function clampIdx(idx) {
@@ -295,7 +299,7 @@ export default function Track(
 
   function to(value) {
     measure(value - position)
-    position = Math.round(value * 1000000) / 1000000
+    position = round(value)
     const idx = trackUpdate()['abs']
     if (idx !== currentIdx) {
       const emitEvent = currentIdx === null ? false : true
