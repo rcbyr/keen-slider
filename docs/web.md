@@ -349,7 +349,7 @@ Changes the currently active slide to the previous one when called. If exists.
 
 ### `size`: **number**
 
-The size of the container/viewport, width or height, depending on the verical option.
+The size of the container/viewport, width or height, depending on the vertical option.
 
 ### `slides`: **HTMLElement[]**
 
