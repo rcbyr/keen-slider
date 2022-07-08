@@ -71,7 +71,7 @@ import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react' // import from 'keen-slider/react.es' for to get an ES module
 
 export default () => {
-  const [sliderRef, sliderInstance] = useKeenSlider(
+  const [sliderRef, instanceRef] = useKeenSlider(
     {
       slideChanged() {
         console.log('slide changed')
