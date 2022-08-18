@@ -73,7 +73,10 @@ export default function Web<O>(
       if (match === currentMatch) return false
       if (!currentMatch) slider.emit('beforeOptionsChanged')
       currentMatch = match
-      const _options = match ? options.breakpoints[match] : options
+      const _options =
+        match && options.breakpoints && options.breakpoints[match]
+          ? options.breakpoints[match]
+          : options
       slider.options = {
         ...options,
         ..._options,
