@@ -82,7 +82,6 @@ export default function Drag(
     sumDistance += distance
     if (!isProperDrag && Math.abs(sumDistance * size) > 5) {
       isProperDrag = true
-      setAttr(container, 'moves', '')
     }
     slider.track.add(distance)
     lastValue = value
@@ -92,7 +91,6 @@ export default function Drag(
   function dragStart(e) {
     if (dragActive || !slider.track.details || !slider.track.details.length)
       return
-    isProperDrag = false
     sumDistance = 0
     dragActive = true
     dragJustStarted = true
@@ -104,7 +102,7 @@ export default function Drag(
 
   function dragStop(e) {
     if (!dragActive || dragIdentifier !== e.idChanged) return
-    setAttr(container, 'moves', null)
+    isProperDrag = false
     dragActive = false
     slider.emit('dragEnded')
   }
@@ -220,6 +218,10 @@ export default function Drag(
     max = details.max
   }
 
+  function preventClick(e) {
+    if (isProperDrag) stop(e)
+  }
+
   function update() {
     events.purge()
     if (!slider.options.drag || slider.options.disabled) return
@@ -231,6 +233,7 @@ export default function Drag(
     events.add(container, 'dragstart', e => {
       prevent(e)
     })
+    events.add(container, 'click', preventClick, { capture: true })
     events.input(container, 'ksDragStart', dragStart)
     events.input(container, 'ksDrag', drag)
     events.input(container, 'ksDragEnd', dragStop)
