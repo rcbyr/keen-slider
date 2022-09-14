@@ -18,3 +18,6 @@ yarn-error.log
 !babel.config.js
 !jest.config.js
 !.eslintrc.js
+
+package-lock.json
+.npmrc
