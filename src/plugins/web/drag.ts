@@ -89,7 +89,13 @@ export default function Drag(
   }
 
   function dragStart(e) {
-    if (dragActive || !slider.track.details || !slider.track.details.length)
+    const touches = e.raw.touches || []
+    if (
+      dragActive ||
+      !slider.track.details ||
+      !slider.track.details.length ||
+      touches.length > 1
+    )
       return
     sumDistance = 0
     dragActive = true

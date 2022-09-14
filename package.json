@@ -1,7 +1,7 @@
 {
-  "name": "keen-slider",
-  "version": "6.8.0",
-  "description": "Fork version The HTML touch slider carousel with the most native feeling you will get.",
+  "name": "@patipan-off/keen-slider",
+  "version": "1.0.0",
+  "description": "The HTML touch slider carousel with the most native feeling you will get.",
   "main": "keen-slider.cjs.js",
   "jsnext:main": "keen-slider.es.js",
   "module": "keen-slider.es.js",
@@ -14,7 +14,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rcbyr/keen-slider.git"
+    "url": "git+https://github.com/patipan-off/keen-slider.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "keywords": [
     "slider",
