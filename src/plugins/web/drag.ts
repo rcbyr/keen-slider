@@ -130,6 +130,7 @@ export default function Drag(
       element,
       'touchstart',
       (e: TouchEvent) => {
+        if (e.touches.length > 1) return
         start = xy(e)
         scrollLock = true
         scrollTouchActive = true
@@ -137,6 +138,7 @@ export default function Drag(
       { passive: true }
     )
     events.input(element, 'touchmove', (e: TouchEvent) => {
+      if (e.touches.length > 1) return
       const vertical = isVertical()
       const maxPosition = vertical
         ? element.scrollHeight - element.clientHeight
