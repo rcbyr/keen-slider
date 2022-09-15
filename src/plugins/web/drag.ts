@@ -93,6 +93,7 @@ export default function Drag(
       return
     sumDistance = 0
     dragActive = true
+    isProperDrag = false
     dragJustStarted = true
     dragIdentifier = e.id
     isSlide(e)
@@ -102,7 +103,6 @@ export default function Drag(
 
   function dragStop(e) {
     if (!dragActive || dragIdentifier !== e.idChanged) return
-    isProperDrag = false
     dragActive = false
     slider.emit('dragEnded')
   }
@@ -219,7 +219,10 @@ export default function Drag(
   }
 
   function preventClick(e) {
-    if (isProperDrag) stop(e)
+    if (isProperDrag) {
+      stop(e)
+      prevent(e)
+    }
   }
 
   function update() {
