@@ -1,6 +1,6 @@
 import { MutableRefObject, useCallback, useEffect, useRef } from 'react'
 
-import { checkOptions } from './core/utils'
+import { equal } from './core/utils'
 import KeenSlider, {
   KeenSliderHooks,
   KeenSliderInstance,
@@ -38,14 +38,11 @@ export function useKeenSlider<
       sliderRef.current = null
     }
   }, [])
-
   useEffect(() => {
-    if (!optionsCheckedFirst.current) {
-      optionsCheckedFirst.current = true
-      return
-    }
+    if (equal(currentOptions.current, options)) return
+    currentOptions.current = options
     if (sliderRef.current) sliderRef.current.update(currentOptions.current)
-  }, [checkOptions(currentOptions, options)])
+  }, [options])
 
   return [onRefChange, sliderRef]
 }
