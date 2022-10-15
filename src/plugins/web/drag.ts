@@ -1,13 +1,5 @@
 import { SliderInstance } from '../../core/types'
-import {
-  clamp,
-  elems,
-  Events,
-  prevent,
-  setAttr,
-  sign,
-  stop,
-} from '../../core/utils'
+import { clamp, elems, Events, prevent, sign, stop } from '../../core/utils'
 import {
   HOOK_DRAG_CHECKED,
   HOOK_DRAG_ENDED,
