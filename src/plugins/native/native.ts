@@ -128,6 +128,14 @@ export default function Native<O>(
     slider.slidesProps = []
     slider.update = update
 
+    slider.prev = () => {
+      slider.moveToIdx(slider.track.details.abs - 1, true)
+    }
+
+    slider.next = () => {
+      slider.moveToIdx(slider.track.details.abs + 1, true)
+    }
+
     init()
 
     Renderer(slider)
