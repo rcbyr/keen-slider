@@ -196,6 +196,7 @@ export default function Drag(
   function preventClicks() {
     const attr = `data-keen-slider-clickable`
     elems(`[${attr}]:not([${attr}=false])`, container).map(clickable => {
+      events.add(clickable, 'dragstart', stop)
       events.add(clickable, 'mousedown', stop)
       events.add(clickable, 'touchstart', stop)
     })
