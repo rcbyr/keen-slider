@@ -55,7 +55,7 @@ function Animator(
     currentKeyframe = 0
     duration = 0
     keyframes = _keyframes.map(keyframe => {
-      const startPosition = 0 + endPosition
+      const startPosition = Number(endPosition)
       const animationDuration = keyframe.earlyExit ?? keyframe.duration
       const easing = keyframe.easing
       const distance =
