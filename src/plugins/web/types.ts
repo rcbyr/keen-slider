@@ -31,6 +31,7 @@ export interface WebInstance<O> {
   prev: () => void
   slides: HTMLElement[]
   size: number
+  crossSize: number
   update: (options?: O, idx?: number) => void
 }
 

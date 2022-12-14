@@ -40,7 +40,7 @@ export default function Web<O>(
   ): void => {
     const events = Events()
 
-    let currentMatch, compareSize, options, mediaQueryLists
+    let currentMatch, compareSize, compareCrossSize, options, mediaQueryLists
 
     function applyAttributes(remove?) {
       setAttr(
@@ -102,6 +102,7 @@ export default function Web<O>(
       options = { ...defaultOptions, ..._options }
       events.purge()
       compareSize = slider.size
+      compareCrossSize = slider.crossSize
       mediaQueryLists = []
       for (const value in options.breakpoints || []) {
         const mediaQueryList: MediaQueryList & { __media?: string } =
@@ -198,8 +199,10 @@ export default function Web<O>(
     function resize() {
       updateSize()
       const newSize = slider.size
-      if (slider.options.disabled || newSize === compareSize) return
+      const newCrossSize = slider.crossSize
+      if (slider.options.disabled || (newSize === compareSize && newCrossSize === compareCrossSize)) return
       compareSize = newSize
+      compareCrossSize = newCrossSize
       update()
     }
 
@@ -212,6 +215,7 @@ export default function Web<O>(
     function updateSize() {
       const size = rect(slider.container)
       slider.size = (slider.options.vertical ? size.height : size.width) || 1
+      slider.crossSize = (slider.options.vertical ? size.width : size.height) || 1
     }
 
     function updateSlides() {
