@@ -52,6 +52,11 @@ export default function Drag(
 
     if (dragJustStarted) {
       if (!isSlide(e)) return dragStop(e)
+      if (
+        e.raw instanceof TouchEvent &&
+        e.raw.touches.length >= 2
+      )
+        return dragStop(e)
       lastValue = value
       dragJustStarted = false
       slider.emit('dragChecked')
