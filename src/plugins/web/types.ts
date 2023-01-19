@@ -5,7 +5,7 @@ export interface WebOptions<O> {
   selector?:
     | string
     | HTMLElement[]
-    | Nodelist
+    | NodeList
     | HTMLCollection
     | ((
         container: HTMLElement
