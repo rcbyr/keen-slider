@@ -71,7 +71,7 @@ import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react' // import from 'keen-slider/react.es' for to get an ES module
 
 export default () => {
-  const [refCallback, slider, sliderNode] = useKeenSlider(
+  const [sliderRef, instanceRef] = useKeenSlider(
     {
       slideChanged() {
         console.log('slide changed')
@@ -83,7 +83,7 @@ export default () => {
   )
 
   return (
-    <div ref={refCallback} className="keen-slider">
+    <div ref={sliderRef} className="keen-slider">
       <div className="keen-slider__slide">1</div>
       <div className="keen-slider__slide">2</div>
       <div className="keen-slider__slide">3</div>
@@ -112,13 +112,13 @@ The library comes with a function that uses the composition API of Vue 3. Theref
 </script>
 
 <template>
-  <div ref="container" className="keen-slider">
-    <div className="keen-slider__slide number-slide1">1</div>
-    <div className="keen-slider__slide number-slide2">2</div>
-    <div className="keen-slider__slide number-slide3">3</div>
-    <div className="keen-slider__slide number-slide4">4</div>
-    <div className="keen-slider__slide number-slide5">5</div>
-    <div className="keen-slider__slide number-slide6">6</div>
+  <div ref="container" class="keen-slider">
+    <div class="keen-slider__slide number-slide1">1</div>
+    <div class="keen-slider__slide number-slide2">2</div>
+    <div class="keen-slider__slide number-slide3">3</div>
+    <div class="keen-slider__slide number-slide4">4</div>
+    <div class="keen-slider__slide number-slide5">5</div>
+    <div class="keen-slider__slide number-slide6">6</div>
   </div>
 </template>
 
@@ -349,7 +349,7 @@ Changes the currently active slide to the previous one when called. If exists.
 
 ### `size`: **number**
 
-The size of the container/viewport, width or height, depending on the verical option.
+The size of the container/viewport, width or height, depending on the vertical option.
 
 ### `slides`: **HTMLElement[]**
 

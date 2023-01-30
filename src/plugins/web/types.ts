@@ -4,6 +4,9 @@ export interface WebOptions<O> {
   disabled?: boolean
   selector?:
     | string
+    | HTMLElement[]
+    | Nodelist
+    | HTMLCollection
     | ((
         container: HTMLElement
       ) => HTMLElement[] | NodeList | HTMLCollection | null)

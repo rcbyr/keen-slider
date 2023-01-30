@@ -1,13 +1,5 @@
 import { SliderInstance } from '../../core/types'
-import {
-  clamp,
-  elems,
-  Events,
-  prevent,
-  setAttr,
-  sign,
-  stop,
-} from '../../core/utils'
+import { clamp, elems, Events, prevent, sign, stop } from '../../core/utils'
 import {
   HOOK_DRAG_CHECKED,
   HOOK_DRAG_ENDED,
@@ -82,7 +74,6 @@ export default function Drag(
     sumDistance += distance
     if (!isProperDrag && Math.abs(sumDistance * size) > 5) {
       isProperDrag = true
-      setAttr(container, 'moves', '')
     }
     slider.track.add(distance)
     lastValue = value
@@ -92,9 +83,9 @@ export default function Drag(
   function dragStart(e) {
     if (dragActive || !slider.track.details || !slider.track.details.length)
       return
-    isProperDrag = false
     sumDistance = 0
     dragActive = true
+    isProperDrag = false
     dragJustStarted = true
     dragIdentifier = e.id
     isSlide(e)
@@ -104,7 +95,6 @@ export default function Drag(
 
   function dragStop(e) {
     if (!dragActive || dragIdentifier !== e.idChanged) return
-    setAttr(container, 'moves', null)
     dragActive = false
     slider.emit('dragEnded')
   }
@@ -206,6 +196,7 @@ export default function Drag(
   function preventClicks() {
     const attr = `data-keen-slider-clickable`
     elems(`[${attr}]:not([${attr}=false])`, container).map(clickable => {
+      events.add(clickable, 'dragstart', stop)
       events.add(clickable, 'mousedown', stop)
       events.add(clickable, 'touchstart', stop)
     })
@@ -220,6 +211,13 @@ export default function Drag(
     max = details.max
   }
 
+  function preventClick(e) {
+    if (isProperDrag) {
+      stop(e)
+      prevent(e)
+    }
+  }
+
   function update() {
     events.purge()
     if (!slider.options.drag || slider.options.disabled) return
@@ -231,6 +229,7 @@ export default function Drag(
     events.add(container, 'dragstart', e => {
       prevent(e)
     })
+    events.add(container, 'click', preventClick, { capture: true })
     events.input(container, 'ksDragStart', dragStart)
     events.input(container, 'ksDrag', drag)
     events.input(container, 'ksDragEnd', dragStop)

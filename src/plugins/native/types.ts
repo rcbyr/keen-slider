@@ -55,6 +55,8 @@ export interface NativeInstance<O> {
   }
   slidesProps: SlideProps[]
   size: number
+  next: () => void
+  prev: () => void
   update: (options?: O, idx?: number) => void
 }
 
