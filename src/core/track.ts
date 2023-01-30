@@ -218,9 +218,13 @@ export default function Track(
     idx = Math.round(idx)
     const { abs, rel, origin } = getIndexes(fromPosition)
     const idxRelative = absToRel(idx)
-    const positionRelative = ((fromPosition % length) + length) % length
+    let positionRelative = round(((fromPosition % length) + length) % length)
+    if (positionRelative === length) {
+      positionRelative = 0
+    }
     const distanceToStart = relativePositions[origin]
     const distance = Math.floor((idx - (abs - rel)) / slidesCount) * length
+
     return round(
       distanceToStart -
         positionRelative -
@@ -321,7 +325,7 @@ export default function Track(
     setRange()
 
     if (isNumber(index)) {
-      maxIdx = maxIdx || slider.track.details.maxIdx;
+      maxIdx = maxIdx || slider.track.details.maxIdx
       add(absoluteIdxToDist(clampIdx(index)))
     } else {
       trackUpdate()
