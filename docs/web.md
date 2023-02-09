@@ -133,7 +133,7 @@ For documentation of how to use it in **React Native** click [here](https://keen
 
 ## Options
 
-To customize keen-slider to your needs there are a lot of options which are listed below. Also the [`Event hooks`](https://keen-slider.io/docs#event-hooks) are part of these options. If you want to change the options after initialization, you can do that with the update function. See [`Properties`](https://keen-slider.io/docs#properties).
+To customize keen-slider to your needs there are a lot of options which are listed below. Also, the [`Event hooks`](https://keen-slider.io/docs#event-hooks) are part of these options. If you want to change the options after initialization, you can do that with the update function. See [`Properties`](https://keen-slider.io/docs#properties).
 
 ### `breakpoints`: **object**
 
@@ -236,7 +236,7 @@ Changes the direction of the slider from horizontal to vertical. (Note: The heig
 
 ## Event Hooks
 
-Event hooks are function that the slider calls during its lifecycle. The functions getting the [`Properties`](https://keen-slider.io/docs#properties) as the only argument. Event hooks are part of the [`Options`](https://keen-slider.io/docs#options) and can be specified in the same way.
+Event hooks are functions that the slider calls during its lifecycle. The functions getting the [`Properties`](https://keen-slider.io/docs#properties) as the only argument. Event hooks are part of the [`Options`](https://keen-slider.io/docs#options) and can be specified in the same way.
 
 Below are the event hooks and when they are triggered:
 
