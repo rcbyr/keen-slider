@@ -106,7 +106,7 @@ Specifies the configuration of the slides. Every time there is an update, resize
 - **function** - Specifies the slides configuration with a function that returns an array of slide configurations. A slide configuration has the following optional properties:
 
   - `origin`: **number** - Determines where the origin of a slide is within the viewport. Default is **0**.
-  - `size`: **number** - Determines the relativ size of the slide in relation to the viewport. Default is **1**.
+  - `size`: **number** - Determines the relative size of the slide in relation to the viewport. Default is **1**.
   - `spacing`: **number** - Defines the space to the next slide in relation to the viewport. Default is **0**.
 
   The function receives as first argument the container size.
@@ -228,7 +228,7 @@ Changes the currently active slide to the previous one when called. If exists.
 
 ### `size`: **number**
 
-The size of the container/viewport, width or height, depending on the verical option.
+The size of the container/viewport, width or height, depending on the vertical option.
 
 ### `slidesProps`: **object[]**
 
