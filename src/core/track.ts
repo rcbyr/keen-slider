@@ -39,8 +39,8 @@ export default function Track(
     loopMax = maxIdx = loop ? getProp(loop, 'max', infinity) : maxRelativeIdx
     const dragMin = getProp(rangeOption, 'min', null)
     const dragMax = getProp(rangeOption, 'max', null)
-    if (dragMin) minIdx = dragMin
-    if (dragMax) maxIdx = dragMax
+    if (dragMin !== null) minIdx = dragMin
+    if (dragMax !== null) maxIdx = dragMax
     min =
       minIdx === -infinity
         ? minIdx
