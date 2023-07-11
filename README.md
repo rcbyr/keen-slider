@@ -38,7 +38,6 @@
 ## Used by
 
 <p align="middle" dir="auto">
-  <a href="https://nextjs.org/commerce" rel="nofollow"><img width="285" src="https://keen-slider.io/images/next.png" style="max-width: 100%;"></a>
   <a href="https://tinder.com/" rel="nofollow"><img width="285" src="https://keen-slider.io/images/tinder.png" style="max-width: 100%;">
 </p>
 
