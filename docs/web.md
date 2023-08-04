@@ -4,7 +4,7 @@ Complete documentation of the installation and usage of Keen-Slider. For the doc
 
 ## Getting started
 
-The usage of this library is really simple and is explained in many [code examples](https://keen-slider.io/examples). You can add it to any JavaScript or Typescript project you are working on in several way.
+The usage of this library is really simple and is explained in many [code examples](https://keen-slider.io/examples). You can add it to any JavaScript or Typescript project you are working on in several ways.
 
 ### Installation
 
