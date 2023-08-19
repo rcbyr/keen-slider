@@ -43,7 +43,7 @@ export default () => {
 
 ## Options
 
-To customize keen-slider to your needs there are a lot of options which are listed below. Also the [`Event hooks`](https://keen-slider.io/docs/react-native#event-hooks) are part of these options. If you want to change the options after initialization, you can do that with the update function. See [`Properties`](https://keen-slider.io/docs/react-native#properties).
+To customize keen-slider to your needs there are a lot of options which are listed below. Also, the [`Event hooks`](https://keen-slider.io/docs/react-native#event-hooks) are part of these options. If you want to change the options after initialization, you can do that with the update function. See [`Properties`](https://keen-slider.io/docs/react-native#properties).
 
 ### `defaultAnimation`: **object**
 
@@ -106,7 +106,7 @@ Specifies the configuration of the slides. Every time there is an update, resize
 - **function** - Specifies the slides configuration with a function that returns an array of slide configurations. A slide configuration has the following optional properties:
 
   - `origin`: **number** - Determines where the origin of a slide is within the viewport. Default is **0**.
-  - `size`: **number** - Determines the relativ size of the slide in relation to the viewport. Default is **1**.
+  - `size`: **number** - Determines the relative size of the slide in relation to the viewport. Default is **1**.
   - `spacing`: **number** - Defines the space to the next slide in relation to the viewport. Default is **0**.
 
   The function receives as first argument the container size.
@@ -117,7 +117,7 @@ Changes the direction of the slider from horizontal to vertical. Default is **fa
 
 ## Event Hooks
 
-Event hooks are function that the slider calls during its lifecycle. The functions getting the [`Properties`](https://keen-slider.io/docs/react-native#properties) as the only argument. Event hooks are part of the [`Options`](https://keen-slider.io/docs/react-native#options) and can be specified in the same way.
+Event hooks are functions that the slider calls during its lifecycle. The functions getting the [`Properties`](https://keen-slider.io/docs/react-native#properties) as the only argument. Event hooks are part of the [`Options`](https://keen-slider.io/docs/react-native#options) and can be specified in the same way.
 
 Below are the event hooks and when they are triggered:
 
@@ -228,7 +228,7 @@ Changes the currently active slide to the previous one when called. If exists.
 
 ### `size`: **number**
 
-The size of the container/viewport, width or height, depending on the verical option.
+The size of the container/viewport, width or height, depending on the vertical option.
 
 ### `slidesProps`: **object[]**
 

@@ -133,7 +133,7 @@ For documentation of how to use it in **React Native** click [here](https://keen
 
 ## Options
 
-To customize keen-slider to your needs there are a lot of options which are listed below. Also the [`Event hooks`](https://keen-slider.io/docs#event-hooks) are part of these options. If you want to change the options after initialization, you can do that with the update function. See [`Properties`](https://keen-slider.io/docs#properties).
+To customize keen-slider to your needs there are a lot of options which are listed below. Also, the [`Event hooks`](https://keen-slider.io/docs#event-hooks) are part of these options. If you want to change the options after initialization, you can do that with the update function. See [`Properties`](https://keen-slider.io/docs#properties).
 
 ### `breakpoints`: **object**
 
@@ -203,7 +203,7 @@ Changes the direction in which the slides are positioned, from left-to-right to 
 
 Enables or disables the rubberband behavior for dragging and animation after a drag. Default is **true**.
 
-### `selector`: **string | HTMLElement[] | Nodelist | function | null**
+### `selector`: **string | HTMLElement[] | NodeList | function | null**
 
 Specifies how the slides from the DOM are received. This could be a **css selector string**, an **array of HTMLElement** or a **function** that gets the container and returns an **array** of **HTMLElement**, a **NodeList**, a **HTMLCollection**, a **string** or **null**. If you don't want the slider to position or scale the slides, set this option to **null**. Default is **'.keen-slider\_\_slide'**.
 
@@ -223,7 +223,7 @@ Specifies the configuration of the slides. Every time there is an update, resize
 - **function** - Specifies the slides configuration with a function that returns an array of slide configurations. A slide configuration has the following optional properties:
 
   - `origin`: **number** - Determines where the origin of a slide is within the viewport. Default is **0**.
-  - `size`: **number** - Determines the relativ size of the slide in relation to the viewport. Default is **1**.
+  - `size`: **number** - Determines the relative size of the slide in relation to the viewport. Default is **1**.
   - `spacing`: **number** - Defines the space to the next slide in relation to the viewport. Default is **0**.
 
   The function receives as first argument the container size and the slides as an array of HTML elements as the second argument.
@@ -236,7 +236,7 @@ Changes the direction of the slider from horizontal to vertical. (Note: The heig
 
 ## Event Hooks
 
-Event hooks are function that the slider calls during its lifecycle. The functions getting the [`Properties`](https://keen-slider.io/docs#properties) as the only argument. Event hooks are part of the [`Options`](https://keen-slider.io/docs#options) and can be specified in the same way.
+Event hooks are functions that the slider calls during its lifecycle. The functions getting the [`Properties`](https://keen-slider.io/docs#properties) as the only argument. Event hooks are part of the [`Options`](https://keen-slider.io/docs#options) and can be specified in the same way.
 
 Below are the event hooks and when they are triggered:
 
