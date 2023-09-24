@@ -9,8 +9,6 @@
     "esModuleInterop": true,
     "experimentalDecorators": false,
     "emitDecoratorMetadata": false,
-    "declaration": true,
-    "declarationDir": ".build",
     "outDir": ".build",
     "noLib": false,
     "preserveConstEnums": true,
