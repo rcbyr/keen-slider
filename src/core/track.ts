@@ -101,7 +101,7 @@ export default function Track(
       }
 
       const end = distanceViewport + slide[0] + slide[1]
-      const viewPortPortion = Math.max(
+      let viewPortPortion = Math.max(
         distanceViewport >= 0 && end <= 1
           ? 1
           : end < 0 || distanceViewport > 1
@@ -113,6 +113,11 @@ export default function Track(
       )
       sumLength += slide[0] + slide[1]
 
+      if (slidesCount === 1 / slide[0]) {
+        distanceViewport =
+          distanceViewport < 0 ? distanceViewport + 1 : distanceViewport
+        viewPortPortion = 1
+      }
       return {
         abs: absoluteIndex,
         distance: !isRtl()
