@@ -42,6 +42,9 @@ export type KeenSliderHooks =
   | HOOK_DESTROYED
   | HOOK_BEFORE_OPTIONS_CHANGED
 
+/**
+ * A set of options that will be used to customize the slider
+ */
 export type KeenSliderOptions<
   O = {},
   P = {},
@@ -79,6 +82,9 @@ export type KeenSliderOptions<
       >
   >
 
+/**
+ * Represents a KeenSlider instance.
+ */
 export type KeenSliderInstance<
   O = {},
   P = {},
@@ -103,6 +109,13 @@ export * from './plugins/types'
 export * from './plugins/web/types'
 export * from './core/types'
 
+/**
+ * Creates a new KeenSlider instance
+ * @param container It could be a css selector string, a HTMLElement or a function that returns a HTML element or css selector string
+ * @param options A set of options that will be used to customize the slider
+ * @param plugins Multiple plugins that will be used to extend the slider
+ * @returns 
+ */
 const KeenSlider = function (
   container: Container,
   options?: KeenSliderOptions,
