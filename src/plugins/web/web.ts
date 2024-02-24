@@ -46,7 +46,7 @@ export default function Web<O>(
       setAttr(
         slider.container,
         'reverse',
-        dir(slider.container) === 'rtl' && !remove ? '' : null
+        !remove && dir(slider.container) === 'rtl' ? '' : null
       )
       setAttr(
         slider.container,
