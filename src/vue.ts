@@ -1,4 +1,4 @@
-import { isRef, onMounted, onUnmounted, Ref, ref, watch } from 'vue'
+import { isRef, onActivated, onMounted, onUnmounted, Ref, ref, watch } from 'vue'
 
 import KeenSlider, {
   KeenSliderHooks,
@@ -34,6 +34,10 @@ export function useKeenSlider<
         isRef(options) ? options.value : options,
         plugins
       )
+  })
+
+  onActivated(() => {
+    if (slider.value) slider.value.update();
   })
 
   onUnmounted(() => {
