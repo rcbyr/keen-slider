@@ -37,7 +37,7 @@ export function useKeenSlider<
   })
 
   onActivated(() => {
-    if (slider.value) slider.value.update();
+    if (slider.value) slider.value.update()
   })
 
   onUnmounted(() => {
