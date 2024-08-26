@@ -65,7 +65,11 @@ export function elems(
     ? toArray(wrapper.querySelectorAll(elements))
     : elements instanceof HTMLElement
     ? [elements]
+    : elements instanceof elements.ownerDocument.defaultView.HTMLElement
+    ? [elements]
     : elements instanceof NodeList
+    ? toArray(elements)
+    : elements instanceof elements.ownerDocument.defaultView.NodeList
     ? toArray(elements)
     : []
 }
