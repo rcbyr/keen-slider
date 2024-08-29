@@ -63,15 +63,13 @@ export function elems(
     ? elements
     : typeof elements === 'string'
     ? toArray(wrapper.querySelectorAll(elements))
-    : elements instanceof HTMLElement
-    ? [elements]
-    : elements instanceof elements.ownerDocument.defaultView.HTMLElement
-    ? [elements]
-    : elements instanceof NodeList
-    ? toArray(elements)
-    : elements instanceof elements.ownerDocument.defaultView.NodeList
-    ? toArray(elements)
-    : []
+    : elements instanceof HTMLElement ||
+        elements instanceof elements.ownerDocument.defaultView.HTMLElement
+      ? [elements]
+      : elements instanceof NodeList ||
+          elements instanceof elements.ownerDocument.defaultView.NodeList
+        ? toArray(elements)
+      : []
 }
 
 export function prevent(e: any): void {
