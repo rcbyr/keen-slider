@@ -145,7 +145,9 @@ export default function Track(
   }
 
   function getIndexes(pos) {
-    let factor = Math.floor(Math.abs(round(pos / length)))
+    let factor = pos < 0
+      ? Math.ceil(Math.abs(round(pos / length))) - 1
+      : Math.floor(Math.abs(round(pos / length)))
     let positionRelative = round(((pos % length) + length) % length)
     if (positionRelative === length) {
       positionRelative = 0
