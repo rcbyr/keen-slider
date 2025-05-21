@@ -1,5 +1,5 @@
 {
-  "name": "keen-slider",
+  "name": "@nexlify-sdk/keen-slider",
   "version": "6.8.6",
   "description": "The HTML touch slider carousel with the most native feeling you will get.",
   "main": "keen-slider.cjs.js",
@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rcbyr/keen-slider.git"
+    "url": "git+https://github.com/Nexlify-Hub/keen-slider"
   },
   "keywords": [
     "slider",
