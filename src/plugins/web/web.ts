@@ -157,20 +157,41 @@ export default function Web<O>(
           : getProp(slides, 'number', elemsCount, true)
       const config = []
       const perView = getProp<number | 'auto'>(slides, 'perView', 1, true)
+      const numberOfFullWidthShow =
+        typeof perView === 'number'
+          ? getProp<number>(slides, 'numberOfFullWidthShow', undefined, true)
+          : perView
+
       const spacing =
         (getProp(slides, 'spacing', 0, true) as number) / slider.size || 0
       const spacingPortion =
         perView === 'auto' ? spacing : spacing / (perView as number)
+      let totalSpacing = 0
+      let totalSpacingForFloorPerView = 0
+      if (typeof numberOfFullWidthShow === 'number') {
+        totalSpacing =
+          spacing *
+          (numberOfFullWidthShow % 1 === 0
+            ? numberOfFullWidthShow - 1
+            : Math.ceil(numberOfFullWidthShow))
+        totalSpacingForFloorPerView =
+          spacing * (Math.floor(numberOfFullWidthShow) - 1)
+      }
       const originOption = getProp(slides, 'origin', 'auto') as any
       let length = 0
       for (let i = 0; i < slidesCount; i++) {
         const size =
           perView === 'auto'
-            ? getElementSize(elems[i])
+            ? getElementSize(elems[i]) - spacing + spacingPortion
             : 1 / (perView as number) - spacing + spacingPortion
+
         const origin =
           originOption === 'center'
-            ? 0.5 - size / 2
+            ? typeof numberOfFullWidthShow === 'number'
+              ? 0.5 -
+                totalSpacingForFloorPerView / 2 -
+                (Math.floor(numberOfFullWidthShow) * size) / 2
+              : 0.5 - size / 2
             : originOption === 'auto'
             ? 0
             : originOption
@@ -192,6 +213,7 @@ export default function Web<O>(
           return entry
         })
       }
+
       slider.options.trackConfig = config
     }
 

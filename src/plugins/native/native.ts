@@ -11,7 +11,12 @@ import {
 } from '../types'
 import Drag from './drag'
 import Renderer from './renderer'
-import { HOOK_LAYOUT_CHANGED, NativeInstance, NativeOptions } from './types'
+import {
+  HOOK_LAYOUT_CHANGED,
+  NativeInstance,
+  NativeOptions,
+  SlideProps,
+} from './types'
 
 export default function Native<O>(
   defaultOptions: O
@@ -44,7 +49,7 @@ export default function Native<O>(
         slider.slidesProps.push(
           ...Array(diff)
             .fill(null)
-            .map(() => ({ ref: createRef() }))
+            .map(() => ({ ref: createRef() }) as SlideProps)
         )
       } else {
         slider.slidesProps.splice(diff)
