@@ -23,8 +23,18 @@ function Slider<O, C, H extends string>(
     instance.emit('created')
   }
 
-  function moveToIdx(idx, absolute, animation) {
-    const distance = instance.track.idxToDist(idx, absolute)
+  function moveToIdx(idx, absolute, animation, origin?: 'auto' | 'center') {
+    let distance: number
+
+    if (!origin || origin === 'auto') {
+      distance = instance.track.idxToDist(idx, absolute)
+    } else {
+      const { distance: prevDistance, size } =
+        instance.track.details.slides[idx]
+      const elementCenter = prevDistance + size / 2
+      distance = Math.abs(0.5 - elementCenter)
+    }
+
     if (!distance) return
     const defaultAnimation = instance.options.defaultAnimation
     instance.animator.start([
