@@ -166,8 +166,8 @@ export default function Web<O>(
       for (let i = 0; i < slidesCount; i++) {
         const size =
           perView === 'auto'
-            ? getElementSize(elems[i])
-            : 1 / (perView as number) - spacing + spacingPortion
+            ? Math.floor(getElementSize(elems[i]))
+            : 1 / Math.floor((perView as number)) - spacing + spacingPortion
         const origin =
           originOption === 'center'
             ? 0.5 - size / 2
