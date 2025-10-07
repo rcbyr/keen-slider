@@ -5,6 +5,7 @@
   "main": "keen-slider.cjs.js",
   "jsnext:main": "keen-slider.es.js",
   "module": "keen-slider.es.js",
+  "sideEffects": false,
   "types": "keen-slider.d.ts",
   "files": [
     "keen-slider.*",
